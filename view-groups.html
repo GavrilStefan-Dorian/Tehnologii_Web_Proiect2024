@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group View</title>
+<link rel="stylesheet" href="view-groups.css">
+</head>
+<body>
+
+<div class="sidebar">
+</div>
+
+<div class="main-content">
+  <section class="main-content-header">
+    <div class="search-group">
+      <input type="text" class="search-bar" placeholder="Search">
+    </div>
+    <button class="create-group-btn">Create group</button>
+  </section>
+  
+  <section class="your-groups">
+    <div class="section-header">
+      <h2>Your groups</h2>
+      <a href="#">See all</a>
+    </div>
+    <div class="group-cards-container" id="your-groups-container">
+    </div>
+  </section>
+
+  <section class="popular-groups">
+    <div class="section-header">
+      <h2>Popular groups</h2>
+      <a href="#">See all</a>
+    </div>
+    <div class="group-cards-container group-cards-container--popular">
+      <!-- analog to above -->
+    </div>
+  </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #f4f1ea;
+  margin: 0;
+  padding: 0;
+}
+.sidebar {
+  /* background-color: #ffffff; */
+  width: 75px; /* Arbitrary width for the sidebar */
+    background-color: #f4f1ea;
+    height: 100vh;
+    float: left;
+  /* Styles for sidebar */
+}
+.main-content {
+  padding: 20px;
+  background-color: #f4f1ea;
+}
+.main-content-header {
+  background-color: #f4f1ea;
+  display: flex;
+  position: sticky;
+  top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.search-bar {
+  background-color: #ffffff;
+  border: none;
+  padding: 8px;
+  border-radius: 100px;
+  margin-right: 20px;
+}
+.create-group-btn {
+  background-color: #52c41a;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+.group-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  /* padding: 15px; somewhat prefer without*/
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.group-card img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+.group-title {
+  font-weight: 500;
+  margin-top: 8px;
+}
+.members-count,
+.owner-name {
+  font-size: 0.875rem;
+  color: #262626;
+}
+.section-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.section-header h2 {
+  font-size: 1.5rem;
+  color: #1f1f1f;
+}
+.section-header a {
+  font-size: 0.875rem;
+  text-decoration: underline;
+  color: #4096ff;
+  font-weight: 500;
+}
+.group-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}

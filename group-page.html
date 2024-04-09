@@ -1,0 +1,70 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Group Page</title>
+  <link rel="stylesheet" href="group-page.css">
+</head>
+<body>
+  <div class="sidebar">
+  </div>
+  
+  <div class="content">
+    <header>
+      <h1 id="group-name"></h1>
+      <p id="group-description"></p>
+    </header>
+
+    <div class="book-section" id="to-read">
+      <h2>To Read</h2>
+    </div>
+
+    <!-- <div class="book-section">
+        <h2>To Read</h2>
+        <div id="to-read-books">
+        </div>
+      </div> -->
+
+    <div class="book-section" id="reading">
+      <h2>Reading</h2>
+    </div>
+  </div>
+
+  <aside class="members-section">
+    <h3>Members</h3>
+    <button id="invite-btn" onclick="inviteMember()">Invite</button>
+        <div id="member-list">
+        </div>
+  </aside>
+
+  <script src="script.js"></script>
+  <script>
+    // document.addEventListener('DOMContentLoaded', () => {
+    //   loadGroupData();
+    // });
+
+    function loadGroupData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const groupName = urlParams.get('group');
+      if (groupName) {
+       //TODO: GET FROM serv
+        const groupData = {
+          name: groupName,
+          description: 'Group description here', 
+          // owner, member count etc..
+        };
+
+        document.getElementById('group-name').textContent = groupData.name;
+        document.getElementById('group-description').textContent = groupData.description;
+      } else {
+        // alert('No group selected.');
+        // window.location.href = 'index.html';
+      }
+    }
+    loadGroupData();
+
+  </script>
+</body>
+</html>

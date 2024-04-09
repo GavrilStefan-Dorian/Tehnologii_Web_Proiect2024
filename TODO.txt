@@ -1,0 +1,6 @@
+templatise components
+align the cards more to the right
+touch up on group-page.html/css
+? arrows for navigating cards
+? list of added members when create group
+contact page

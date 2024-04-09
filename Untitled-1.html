@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group View</title>
+<style>
+  body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f4f1ea;
+    margin: 0;
+    padding: 0;
+  }
+  .sidebar {
+    background-color: #ffffff;
+    /* Styles for sidebar */
+  }
+  .main-content {
+    padding: 20px;
+    background-color: #f4f1ea;
+  }
+  .search-bar {
+    background-color: #ffffff;
+    border: none;
+    padding: 8px;
+    border-radius: 9999px;
+    margin-right: 20px;
+  }
+  .create-group-btn {
+    background-color: #52c41a;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    cursor: pointer;
+  }
+  .group-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .group-card img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  .group-title {
+    font-weight: 500;
+    margin-top: 8px;
+  }
+  .members-count,
+  .owner-name {
+    font-size: 0.875rem;
+    color: #262626;
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .section-header h2 {
+    font-size: 1.5rem;
+    color: #1f1f1f;
+  }
+  .section-header a {
+    font-size: 0.875rem;
+    text-decoration: underline;
+    color: #4096ff;
+    font-weight: 500;
+  }
+  .group-cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <!-- Sidebar content -->
+</div>
+
+<div class="main-content">
+  <div class="search-create-group">
+    <input type="text" class="search-bar" placeholder="Search">
+    <button class="create-group-btn">Create group</button>
+  </div>
+
+  <section class="your-groups">
+    <div class="section-header">
+      <h2>Your groups</h2>
+      <a href="#">See all</a>
+    </div>
+    <div class="group-cards-container">
+      <!-- Group cards will be inserted here by JavaScript -->
+    </div>
+  </section>
+
+  <section class="popular-groups">
+    <div class="section-header">
+      <h2>Popular groups</h2>
+      <a href="#">See all</a>
+    </div>
+    <div class="group-cards-container">
+      <!-- Similar to the "Your groups" cards -->
+    </div>
+  </section>
+</div>
+
+<script>
+  // Example data, you would typically fetch this from a server
+  const groupCardData = [
+    {
+      title: 'Book worms1',
+      membersCount: 21,
+      ownerName: 'person',
+      imageSrc: 'path-to-your-image.jpg'
+    },
+    // ... more group data
+  ];
+
+  // Function to create a group card
+  function createGroupCard(cardData) {
+    return `
+      <div class="group-card">
+        <img src="${cardData.imageSrc}" alt="${cardData.title}">
+        <h3 class="group-title">${cardData.title}</h3>
+        <p class="members-count">${cardData.membersCount} members</p>
+        <p class="owner-name">Owner: ${cardData.ownerName}</p>
+      </div>
+    `;
+  }
+
+  // Insert group cards into the container
+  document.addEventListener('DOMContentLoaded', () => {
+    const containers = document.querySelectorAll('.group-cards-container');
+    containers.forEach(container => {
+      const cardsHtml = groupCardData.map(createGroupCard).join('');
+      container.innerHTML = cardsHtml;
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group View</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <!-- Sidebar content -->
+</div>
+
+<div class="main-content">
+  <div class="search-create-group">
+    <input type="text" class="search-bar" placeholder="Search">
+    <button class="create-group-btn">Create group</button>
+  </div>
+
+  <section class="your-groups">
+    <div class="section-header">
+      <h2>Your groups</h2>
+      <a href="#">See all</a>
+    </div>
+    <div class="group-cards-container">
+      <!-- Group cards will be inserted here by JavaScript -->
+    </div>
+  </section>
+
+  <section class="popular-groups">
+    <div class="section-header">
+      <h2>Popular groups</h2>
+      <a href="#">See all</a>
+    </div>
+    <div class="group-cards-container">
+      <!-- Similar to the "Your groups" cards -->
+    </div>
+  </section>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #f4f1ea;
+}
+
+.sidebar {
+  /* Sidebar styles here */
+  width: 250px;
+  background: #ffffff;
+  height: 100vh;
+  float: left;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+}
+
+.create-group-btn {
+  background-color: #52c41a;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.group-section {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.group-section h2 {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.see-all-btn {
+  background: none;
+  border: none;
+  color: #4096ff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.group-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.group-card {
+  background: #ffffff;
+  width: 147px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.group-image {
+  width: 100%;
+  height: auto;
+}
+
+.group-name {
+  font-size: 10px;
+  color: #262626;
+}
+
+.group-members,
+.group-owner {
+  font-size: 7px;
+  color: #262626;
+}
