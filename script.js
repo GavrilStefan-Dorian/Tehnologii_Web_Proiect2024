@@ -43,14 +43,12 @@ const popularGroupCardData = [
 
   const containers = document.querySelectorAll('.group-cards-container');
   containers.forEach(container => {
-    const cardsHtml = groupCardData.map(createGroupCard).join('');
-    container.innerHTML = cardsHtml;
+    container.innerHTML = groupCardData.map(createGroupCard).join('');
   });
 
   const popularContainers = document.querySelectorAll('.group-cards-container--popular');
   popularContainers.forEach(container => {
-    const cardsHtml = popularGroupCardData.map(createGroupCard).join('');
-    container.innerHTML = cardsHtml;
+    container.innerHTML = popularGroupCardData.map(createGroupCard).join('');
   });
 // ^ GROUP CARDS
 
