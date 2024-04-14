@@ -1,43 +1,55 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Group Page</title>
   <link rel="stylesheet" href="group-page.css">
 </head>
 <body>
-  <div class="sidebar">
-  </div>
-  
-  <div class="content">
-    <header>
+  <div class="sidebar"></div>
+
+  <div class="group-info-wrapper">
+    <div class="overlay"></div>
+    <div class="group-info">
       <h1 id="group-name"></h1>
       <p id="group-description"></p>
-    </header>
-
-    <div class="book-section" id="to-read">
-      <h2>To Read</h2>
-    </div>
-
-    <!-- <div class="book-section">
-        <h2>To Read</h2>
-        <div id="to-read-books">
-        </div>
-      </div> -->
-
-    <div class="book-section" id="reading">
-      <h2>Reading</h2>
     </div>
   </div>
 
-  <aside class="members-section">
-    <h3>Members</h3>
-    <button id="invite-btn" onclick="inviteMember()">Invite</button>
-        <div id="member-list">
-        </div>
-  </aside>
+  <div class="content">
+    <div class="group-sections">
+      <div class="group-section">
+        <h2>To Read</h2>
+        <p>Book 1</p>
+        <p>Book 2</p>
+        <p>Book 3</p>
+      </div>
+      <div class="group-section">
+        <h2>Reading</h2>
+        <p>Book 4</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="members-sidebar">
+    <div class="members-header">
+      <h3>Members</h3>
+      <button class="invite-btn">Invite</button>
+    </div>
+    <div class="member">
+      <img src="" alt="Avatar">
+      <p>User 1</p>
+    </div>
+    <div class="member">
+      <img src="" alt="Avatar">
+      <p>User 2</p>
+    </div>
+    <div class="member">
+      <img src="" alt="Avatar">
+      <p>User 3</p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
   <script>
@@ -48,16 +60,15 @@
     function loadGroupData() {
       const urlParams = new URLSearchParams(window.location.search);
       const groupName = urlParams.get('group');
+      const imageSrc = urlParams.get('img');
+      const descSrc = urlParams.get('desc');
       if (groupName) {
        //TODO: GET FROM serv
-        const groupData = {
-          name: groupName,
-          description: 'Group description here', 
-          // owner, member count etc..
-        };
 
-        document.getElementById('group-name').textContent = groupData.name;
-        document.getElementById('group-description').textContent = groupData.description;
+        // overlay.style.backgroundImage = `url(${imageUrl})`;
+        document.querySelector('.overlay').style.backgroundImage = `url(${imageSrc})`;
+        document.getElementById('group-name').textContent = groupName;
+        document.getElementById('group-description').textContent = descSrc;
       } else {
         // alert('No group selected.');
         // window.location.href = 'index.html';
@@ -66,5 +77,6 @@
     loadGroupData();
 
   </script>
+
 </body>
 </html>

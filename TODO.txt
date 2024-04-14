@@ -1,6 +1,281 @@
-templatise components
-align the cards more to the right
-touch up on group-page.html/css
 ? arrows for navigating cards
 ? list of added members when create group
-contact page
+improve 'about us' and 'create group' pages
+admin, help pages
+decide between page background designs
+
+
+
+
+/* Most Desktops */
+@media (min-width: 1024px) {
+  .wrap-login100 {
+    width: 960px;
+    padding: 177px 130px 33px 95px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .wrap-login100 {
+    width: 80%;
+    padding: 100px 50px 20px 50px;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 767px) {
+  .wrap-login100 {
+    width: 90%;
+    padding: 100px 20px 20px 20px;
+  }
+  .login100-pic {
+    width: 100%;
+    text-align: center;
+  }
+  .login100-pic img {
+    max-width: 80%;
+  }
+  .login100-form {
+    width: 100%;
+  }
+  .login100-form-title {
+    font-size: 20px;
+    padding-bottom: 30px;
+  }
+  .wrap-input100 {
+    margin-bottom: 20px;
+  }
+  .input100 {
+    height: 45px;
+    padding: 0 25px;
+  }
+  .container-login100-form-btn {
+    padding-top: 10px;
+  }
+  .login100-form-btn {
+    height: 45px;
+    padding: 0 20px;
+    font-size: 14px;
+  }
+}
+
+
+* {
+box-sizing: border-box;
+padding: 0;
+margin: 0;
+font-family: 'Lato', sans-serif;
+}
+
+
+html, body {
+width: 100%;
+height: 100%;
+margin: 0;
+padding: 0;
+display: flex;
+}
+
+.sidebar {
+min-width: 85px; /* Arbitrary width for the sidebar */
+background-color: #f4f1ea;
+position: sticky;
+float: left;
+}
+
+a {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #000000;
+  margin: 0px;
+  transition: all 0.4s;
+
+}
+
+a:hover {
+  text-decoration: none;
+color: #57b846;
+}
+
+
+/*---------------------------------------------*/
+input {
+  outline: none;
+  border: none;
+}
+
+
+/*---------------------------------------------*/
+button {
+  border: none;
+  background: transparent;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+
+/*//////////////////////////////////////////////////////////////////
+[ Utility ]*/
+.txt1 {
+font-family: 'Lato', sans-serif;
+font-size: 13px;
+line-height: 1.5;
+color: #999999;
+}
+
+.txt2 {
+font-family: 'Lato', sans-serif;
+font-size: 13px;
+line-height: 1.5;
+color: #666666;
+}
+
+
+/*//////////////////////////////////////////////////////////////////
+[ login ]*/
+
+
+.content {
+width: 100%;  
+height: 100%;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+padding: 15px;
+align-items: center;
+background: linear-gradient(-135deg, #CCE4F1,#EEDAF1, #EEDBD1);
+}
+
+.wrap-login100 {
+width: auto;
+height: auto;
+background: #f6f3fa;
+border-radius: 10px;
+box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+}
+
+.login100-pic {
+width: 316px;
+max-width: 100%;
+}
+
+.login100-form {
+width: 290px;
+}
+
+.login100-form-title {
+font-family: 'Lato', sans-serif;
+font-size: 24px;
+color: #333333;
+line-height: 1.2;
+text-align: center;
+width: 100%;
+display: block;
+padding-bottom: 54px;
+}
+
+
+/*---------------------------------------------*/
+.wrap-input100 {
+position: relative;
+width: 100%;
+z-index: 1;
+margin-bottom: 10px;
+}
+
+.input100 {
+font-family: 'Lato', sans-serif;
+font-size: 15px;
+line-height: 1.5;
+color: #666666;
+display: block;
+width: 100%;
+background: #e6e6e6;
+height: 50px;
+border-radius: 25px;
+padding: 0 30px 0 68px;
+}
+
+
+/*------------------------------------------------------------------
+[ Focus ]*/
+.focus-input100 {
+display: block;
+position: absolute;
+border-radius: 25px;
+bottom: 0;
+left: 0;
+z-index: -1;
+width: 100%;
+height: 100%;
+box-shadow: 0px 0px 0px 0px;
+color: rgba(87,184,70, 0.8);
+}
+
+.input100:focus + .focus-input100 {
+animation: anim-shadow 0.5s ease-in-out forwards;
+}
+
+@keyframes anim-shadow {
+to {
+  box-shadow: 0px 0px 20px 15px;
+  opacity: 0;
+}
+}
+
+.container-login100-form-btn {
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+padding-top: 20px;
+}
+
+.login100-form-btn {
+font-family: 'Lato', sans-serif;
+font-size: 15px;
+line-height: 1.5;
+color: #fff;  
+width: 100%;
+height: 50px;
+border-radius: 25px;
+background: #57b846;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 0 25px;
+transition: all 0.4s;
+}
+
+.login100-form-btn:hover {
+background: #333333;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

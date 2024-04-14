@@ -3,102 +3,111 @@
     padding: 0;
     margin: 0;
     font-family: 'Lato', sans-serif;
-}
-
-body {
+  }
+  
+  body {
     width: 100%;
     height: 100%;
     display: flex;
+    background: linear-gradient(-135deg, #CCE4F1, #EEDAF1, #EEDBD1);
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar {
+    min-width: 85px;
     background-color: #f4f1ea;
-}
-
-.sidebar {
     height: 100vh;
-    width: 69.5px; /* Sidebar width from Figma */
-    background-color: #D9D9D9; /* Sidebar background color from Figma */
-    /* Further styling for sidebar */
-}
-
-.contact-form-wrapper {
-    margin-top: 6vw;
-    margin-bottom: 6vw;
-    width: 70vw;
-    display: flex; /* Aligns form and image side by side */
+  }
+  
+  .content-wrapper {
+    flex: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: auto; /* Ensure sidebar is to the left */
-    margin-right: auto; /* Optional to center the form on the page */
-    background-color: #fff; /* Background color for the form area */
-    border: 1px solid #000; /* Border for the form area from Figma */
-    box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.1); /* Drop shadow for the form from Figma */
-    position: relative;
-}
-
-.contact-form-content {
-    height: 100%;
-    padding: 40px; /* Padding around the content */
-    background-color: #ffe9d3;
-    position: relative; /* Position relative to allow content to be positioned on top */
-    z-index: 0; /* Ensure content is above blurred image */
-}
-
-
-h1 {
-    font-size: 30px; /* Title size from Figma */
-    font-weight: 600; /* Font weight from Figma */
-    color: #000000ff;
-    margin-bottom: 24px; /* Space between title and description */
-}
-
-p {
-    font-size: 16px; /* Description size from Figma */
-    line-height: 19.2px; /* Line height from Figma */
-    font-weight: 600; /* Weight from Figma */
-    color: #000000ff;
-    margin-bottom: 32px; /* Space between description and form fields */
-}
-
-.contact-form {
+  }
+  .contact-form-wrapper {
+    max-width: 600px; 
     display: flex;
-    flex-direction: column;
-}
-
-input[type="text"],
-input[type="email"],
-textarea {
-    width: fit-content;
-    background-color: #ffffffff; /* Background color for input fields */
-    border: 0.3px solid #000000ff;  /* Border color from Figma */
-    border-radius: 5px; /* Border radius from Figma */
-    padding: 8px; /* Padding inside fields */
-    margin-bottom: 16px; /* Space between each field */
-    font-size: 12px; /* Input text size from Figma */
-}
-
-textarea {
-    width:auto;
-    height: 76px; /* Height for textarea from Figma */
-    resize: none; /* Disable resize */
-}
-
-.submit{
-    background-color: #57b846; /* Button background from Figma */
-    color: #ffffffff; /* Button text color */
-    font-size: 14px; /* Button text size from Figma */
-    border-radius: 5px; /* Button border radius from Figma */
-    padding: 10px 25px;
-    border: none; /* No border as per design */
-    cursor: pointer;
-    width: fit-content; /* Button width */
-}
-
-.contact-form-image {
-    height: 100%;
+    align-items: stretch;
+    background-image: url('contact-image.avif');
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+  }
+  
+  .contact-form-content {
+    flex: 1;
+    padding: 20px; 
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+  
+  
+  h1, p {
+    color: #333;
+  }
+  
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .contact-form {
     width: 100%;
-    background-image: url('contact-image.avif'); /* Path to your background image */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Cover the div completely with image */
-}
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    background-color: #eff3f6;
+  }
+  
+  textarea {
+    height: 120px;
+    resize: none;
+  }
+  
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  textarea:focus {
+    border-color: #57b846;
+    outline: none;
+  }
+  
+  .submit {
+    padding: 10px 25px;
+    border-radius: 20px;
+    border: none;
+    background-color: #57b846;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit:hover {
+    background-color: #409e15;
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+    }
+  }
+  
 
-/* Media Queries, adjust as needed based on your previous CSS */
+  

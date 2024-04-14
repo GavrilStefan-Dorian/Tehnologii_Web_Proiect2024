@@ -8,41 +8,33 @@
 </head>
 <body>
     <div class="sidebar"></div>
-
-<div class="container">
-  <div class="header">
-    <h1>Create group</h1>
-  </div>
-  <form class="form">
-    
-    <div class="input-group">
-      <label for="group-name">Group name</label>
-      <input type="text" id="group-name" value="Book Worms2">
-    </div>
-    
-    <div class="input-group">
-      <label for="group-description">Group description</label>
-      <textarea id="group-description">Group for tracking progress of book club B2</textarea>
-    </div>
-    
-    <div class="input-group">
-      <label>Group image</label>
-      <div class="image-upload">
-        <input type="file" id="file-upload">
-        <!-- TODO: Pretty it up -->
-        <!-- <label for="file-upload" class="upload-label">Upload Image</label> -->
-        <!-- <div class="image-text">Drop your files here or browse<br>Maximum upload file size: 10MB</div> -->
-      </div>
-    </div>
-    
-    <div class="input-group">
-      <label>Group members</label>
-      <button type="button" class="add-members-btn">Add members</button>
-        <div id="members-list" class="members-list">
+    <div class="container">
+        <div class="container-wrapper">
+            <div class="header">
+                <h1>Create group</h1>
+            </div>
+            
+            <div class="input-group">
+                <label for="group-name">Group name</label>
+                <input type="text" id="group-name">
+            </div>
+            
+            <div class="input-group">
+                <label for="group-description">Group description</label>
+                <textarea id="group-description" rows="4"></textarea>
+            </div>
+            
+            <div class="input-wrapper">
+                <div class="input-group file-upload-wrapper">
+                    <label for="file-upload">Group image</label>
+                    <input type="file" id="file-upload" accept="image/*">
+                </div>
+                
+                <div class="add-member-wrapper">
+                    <button type="button" class="add-members-btn">Add members</button>
+                </div>
+            </div>
         </div>
     </div>
-
-  </form>
-</div>
 </body>
 </html>

@@ -1,23 +1,23 @@
 body {
   font-family: 'Lato', sans-serif;
-  background-color: #f4f1ea;
+  background: #f4f1ea;
+  /* background: linear-gradient(-135deg, #CCE4F1,#EEDAF1, #EEDBD1); */
   margin: 0;
   padding: 0;
+  display: flex;
 }
 .sidebar {
-  /* background-color: #ffffff; */
-  width: 75px; /* Arbitrary width for the sidebar */
-    background-color: #f4f1ea;
-    height: 100vh;
+    min-width: 85px; /* Arbitrary width for the sidebar */
+    background-color: #f6f3fa;
+    position: sticky;
     float: left;
-  /* Styles for sidebar */
 }
 .main-content {
   padding: 20px;
-  background-color: #f4f1ea;
+  /* background: linear-gradient(-135deg, #CCE4F1,#EEDAF1, #EEDBD1); */
 }
 .main-content-header {
-  background-color: #f4f1ea;
+  background: transparent;
   display: flex;
   position: sticky;
   top: 0;
@@ -25,7 +25,7 @@ body {
   padding-bottom: 5px;
 }
 .search-bar {
-  background-color: #ffffff;
+  background-color: #f6f3fa;
   border: none;
   padding: 8px;
   border-radius: 100px;
@@ -40,7 +40,7 @@ body {
   cursor: pointer;
 }
 .group-card {
-  background-color: #ffffff;
+  background-color: #f6f3fa;
   border-radius: 10px;
   /* padding: 15px; somewhat prefer without*/
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
