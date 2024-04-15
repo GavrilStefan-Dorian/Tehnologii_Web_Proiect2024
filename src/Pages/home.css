@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  background-color: #F4F1EA;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-items: center;
+}
+
+.sidebar {
+  min-width: 85px;
+  background-color: #f6f3fa;
+  position: fixed;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .about-wrapper {
+    width: 90vw;
+    margin: 20px auto;
+  }
+}
+
+/*# sourceMappingURL=home.css.map */

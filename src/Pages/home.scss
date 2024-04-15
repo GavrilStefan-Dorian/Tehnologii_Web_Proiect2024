@@ -1,0 +1,40 @@
+$primary-color: #CCE4F1;
+$secondary-color: #EEDAF1;
+$tertiary-color: #EEDBD1;
+$sidebar-color: #f6f3fa;
+$about-bg-color: #f4f1ea;
+
+$primary-100: #F4F1EA;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: $primary-100;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-items: center;
+}
+
+.sidebar {
+  min-width: 85px;
+  background-color: $sidebar-color;
+  position: fixed;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .about-wrapper {
+    width: 90vw;
+    margin: 20px auto;
+  }
+}
