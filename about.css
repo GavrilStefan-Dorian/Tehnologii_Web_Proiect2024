@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   background: linear-gradient(-135deg, #CCE4F1, #EEDAF1, #EEDBD1);
   margin: 0;
   padding: 0;
@@ -21,40 +21,32 @@ body {
 }
 
 .about-wrapper {
-  /* background: #f4f1ea; */
-  /* background: #eff3f6; */
   background: #f4f1ea;
   border-radius: 20px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   width: 600px;
   max-width: 80%;
-  margin: 50px auto 0; 
+  margin: 50px auto 0;
 }
-
-.about-content {
+.about-wrapper .about-content {
   padding: 50px;
 }
-
-.card {
+.about-wrapper .about-content .card {
   background: #f4f1ea;
-  /* background: #f9f9f9; */
   margin-bottom: 30px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.card__title {
+.about-wrapper .about-content .card .card__title {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 15px;
 }
-
-.card__hr {
+.about-wrapper .about-content .card .card__hr {
   margin-top: 0;
 }
-
-.card__paragraph {
+.about-wrapper .about-content .card .card__paragraph {
   font-size: 16px;
   line-height: 1.6;
 }
@@ -63,9 +55,10 @@ body {
   .sidebar {
     display: none;
   }
-
   .about-wrapper {
     width: 90vw;
     margin: 20px auto;
   }
 }
+
+/*# sourceMappingURL=about.css.map */
