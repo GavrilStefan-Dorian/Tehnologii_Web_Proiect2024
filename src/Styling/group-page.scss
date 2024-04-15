@@ -1,6 +1,7 @@
 @import "colors";
 @import "sizes";
 @import "other";
+@import "common";
 $sidebar-width: 85px;
 $sidebar-bg-color: #f6f3fa;
 $primary-bg-color: #f4f1ea;
@@ -14,19 +15,6 @@ $button-hover-color: #409e15;
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
-}
-
-body {
-  background: $primary-bg-color;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar {
-  width: $sidebar-width;
-  background-color: $sidebar-bg-color;
-  position: fixed;
-  height: 100vh;
 }
 
 .group-info-wrapper {
@@ -50,7 +38,6 @@ body {
 
 .group-info {
   padding: 40px;
-  background-color: $overlay-bg-color;
   border-radius: 10px;
   display: flex;
   flex-direction: column;

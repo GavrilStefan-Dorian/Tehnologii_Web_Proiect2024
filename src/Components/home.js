@@ -26,7 +26,7 @@ function createBookList(title, books) {
 
 function createBook(title, author, image) {
     return `
-    <div class="books__items__item">
+    <a class="books__items__item" href="./book.html">
         <div class="books__items__item__cover">
           <img class="books__items__item__cover__image" src=${image}>
         </div>
@@ -35,6 +35,6 @@ function createBook(title, author, image) {
           <p class="books__items__item__data__title">${title}</p>
           <p class="books__items__item__data__author">${author}</p>
         </div>
-      </div>
+      </a>
     `;
 }

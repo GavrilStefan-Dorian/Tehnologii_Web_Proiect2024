@@ -7,6 +7,8 @@ $question-color: #57b846;
 $answer-color: #333;
 $border-color: #ddd;
 
+@import "colors";
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,30 +17,19 @@ $border-color: #ddd;
 
 body {
   font-family: 'Lato', sans-serif;
-  background: $gradient-color;
+  background: $primary-100;
   margin: 0;
   padding: 0;
   display: flex;
 }
 
-.sidebar {
-  width: $sidebar-width;
-  background-color: $sidebar-bg-color;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-}
-
 .help-container {
-  margin-left: $sidebar-width;
-  width: calc(100% - #{$sidebar-width});
+  width: 100%;
   padding: 20px;
 }
 
 .help-container__content {
-  background-color: $form-bg-color;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
 
@@ -117,13 +108,17 @@ body {
   }
 }
 
-/* 
+/*
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
 
-@media (min-width: 481px) and (max-width: 767px) {
+@media (max-width: 767px) {
   .help-container {
     padding: 10px;
+  }
+
+  .help-container__title, .help-section__title {
+    text-align: center;
   }
 }

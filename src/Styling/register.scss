@@ -7,20 +7,7 @@ $button-hover-color: #409e15;
 $text-color: #333;
 $shadow-color: rgba(0, 0, 0, 0.1);
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: "Lato", sans-serif;
-  background: linear-gradient(-135deg, $primary-color, $secondary-color, $tertiary-color);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-items: center;
-}
+@import "common";
 
 html {
   height: 100%;

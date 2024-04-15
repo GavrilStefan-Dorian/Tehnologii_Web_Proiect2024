@@ -6,30 +6,19 @@
 
 body {
   font-family: "Lato", sans-serif;
-  background: linear-gradient(-135deg, #CCE4F1, #EEDAF1, #EEDBD1);
+  background: #F4F1EA;
   margin: 0;
   padding: 0;
   display: flex;
 }
 
-.sidebar {
-  width: 85px;
-  background-color: #f6f3fa;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-}
-
 .help-container {
-  margin-left: 85px;
-  width: calc(100% - 85px);
+  width: 100%;
   padding: 20px;
 }
 
 .help-container__content {
-  background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
 
@@ -103,13 +92,16 @@ body {
     max-width: 700px;
   }
 }
-/* 
+/*
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
-@media (min-width: 481px) and (max-width: 767px) {
+@media (max-width: 767px) {
   .help-container {
     padding: 10px;
+  }
+  .help-container__title, .help-section__title {
+    text-align: center;
   }
 }
 

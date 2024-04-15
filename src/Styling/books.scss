@@ -91,6 +91,8 @@
 
   position: absolute;
   bottom: $xs;
+
+  text-decoration: none;
 }
 
 .books__list__item__info__view__text {
@@ -131,5 +133,11 @@
 
 .books__list__item__buttons__button {
   width: $xs * 2;
+}
+
+@media (max-width: 768px) {
+  .books__list__item {
+    width: 100%;
+  }
 }
 

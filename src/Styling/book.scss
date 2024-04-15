@@ -1,7 +1,7 @@
-@import "../Styling/common";
-@import "../Styling/colors";
-@import "../Styling/sizes";
-@import "../Styling/other";
+@import "common";
+@import "colors";
+@import "sizes";
+@import "other";
 
 .book {
   padding: $s * 3;
