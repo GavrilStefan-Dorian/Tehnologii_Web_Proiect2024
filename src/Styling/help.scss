@@ -24,8 +24,7 @@ body {
 }
 
 .help-container {
-  margin-left: $sidebar-width;
-  width: calc(100% - #{$sidebar-width});
+  width: 100%;
   padding: 20px;
 }
 
@@ -109,13 +108,17 @@ body {
   }
 }
 
-/* 
+/*
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
 
-@media (min-width: 481px) and (max-width: 767px) {
+@media (max-width: 767px) {
   .help-container {
     padding: 10px;
+  }
+
+  .help-container__title, .help-section__title {
+    text-align: center;
   }
 }
