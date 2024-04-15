@@ -127,4 +127,15 @@ body {
   font-size: 14px;
 }
 
+.group-section__items {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 12px; /* Add space between book items */
+}
+
+.group-section__item {
+  width: calc(50% - 6px); /* Display two items per row */
+  margin-bottom: 12px; /* Add bottom margin to create space between rows */
+}
+
 /*# sourceMappingURL=group-page.css.map */

@@ -116,7 +116,7 @@
   font-size: $xs;
   font-weight: 600;
   display: block;
-  margin-left: $xs / 4;
+  margin-left: calc($xs / 4);
 }
 
 .books__list__item__buttons {
@@ -125,10 +125,11 @@
   flex-direction: row;
   justify-items: end;
   align-items: start;
-  padding: $xs / 4;
-  gap: $xs / 4;
+  padding: calc($xs / 4);
+  gap: calc($xs / 4);
 }
 
 .books__list__item__buttons__button {
   width: $xs * 2;
 }
+

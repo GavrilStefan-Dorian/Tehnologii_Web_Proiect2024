@@ -19,7 +19,7 @@ function createBook(title, author, image, rating, ratings) {
                  <div class="books__list__item">
                     <img class="books__list__item__image" src=${image}>
                     <div class="books__list__item__info">
-                        <p class="books__list__item__info__title">${title}s</p>
+                        <p class="books__list__item__info__title">${title}</p>
                         <p class="books__list__item__info__author">${author}</p>
                         <div class="books__list__item__info__rating">
                             <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">

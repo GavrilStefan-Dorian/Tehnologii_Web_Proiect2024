@@ -138,3 +138,14 @@ body {
 .member__name {
   font-size: 14px;
 }
+
+.group-section__items {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: $s; /* Add space between book items */
+}
+
+.group-section__item {
+  width: calc(50% - #{$s / 2}); /* Display two items per row */
+  margin-bottom: $s; /* Add bottom margin to create space between rows */
+}
