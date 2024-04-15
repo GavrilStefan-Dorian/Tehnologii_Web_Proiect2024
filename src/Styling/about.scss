@@ -66,12 +66,12 @@ $about-bg-color: #f4f1ea;
 }
 
 @media (max-width: 767px) {
-  .sidebar {
-    display: none;
-  }
 
   .about-wrapper {
+    margin-top: $xl * 1.5;
     width: 90vw;
-    margin: 20px auto;
+    margin-left: $m;
+    margin-right: $m;
+    margin-bottom: $m auto;
   }
 }

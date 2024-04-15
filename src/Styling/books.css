@@ -141,4 +141,10 @@ body {
   width: 16px;
 }
 
+@media (max-width: 768px) {
+  .books__list__item {
+    width: 100%;
+  }
+}
+
 /*# sourceMappingURL=books.css.map */
