@@ -21,7 +21,9 @@ body {
 }
 
 .about-wrapper {
-  background: #eff3f6;
+  /* background: #f4f1ea; */
+  /* background: #eff3f6; */
+  background: #f4f1ea;
   border-radius: 20px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.1);
   width: 600px;
@@ -34,7 +36,8 @@ body {
 }
 
 .card {
-  background: #f9f9f9;
+  background: #f4f1ea;
+  /* background: #f9f9f9; */
   margin-bottom: 30px;
   padding: 20px;
   border-radius: 8px;

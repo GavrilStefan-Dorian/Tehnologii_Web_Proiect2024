@@ -6,14 +6,15 @@
 }
 
 body {
-  background: #eff3f6;
+  background: #f4f1ea;
+  /* background: #eff3f6; */
   display: flex;
   flex-direction: column;
 }
 
 .sidebar {
   width: 85px;
-  background-color: #f4f1ea;
+  background-color: #f6f3fa;
   position: fixed;
   height: 100vh;
 }

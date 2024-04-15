@@ -6,7 +6,8 @@
 
 body {
   font-family: 'Lato', sans-serif;
-  background: #eff3f6;
+  /* background: #eff3f6; */
+  background: linear-gradient(-135deg, #CCE4F1, #EEDAF1, #EEDBD1);
   margin: 0;
   padding: 0;
   display: flex;
@@ -20,21 +21,25 @@ body {
   height: 100%;
 }
 
-.login-container {
+.forgot-pass-container {
   background: #f6f3fa;
   border-radius: 20px;
-  background: linear-gradient(-135deg, #CCE4F1,#EEDAF1, #EEDBD1);
+  background-image: url('contact-image.avif');
+  background-size: cover;
+  overflow: auto;
+  /* background: linear-gradient(-135deg, #CCE4F1,#EEDAF1, #EEDBD1); */
   box-shadow: 0 8px 16px rgba(0,0,0,0.1);
   width: 500px;
   max-width: 80%;
   margin: 100px auto 0;
 }
 
-.login-form-container {
+.forgot-pass-form-container {
   padding: 50px;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
-.login-form-header__title {
+.forgot-pass-form-header__title {
   color: #333;
   margin-bottom: 20px;
   text-align: center;
@@ -75,12 +80,12 @@ body {
   background-color: #409e15;
 }
 
-.login-form-footer {
+.forgot-pass-form-footer {
   margin-top: 20px;
   text-align: center;
 }
 
-.login-form-footer__link {
+.forgot-pass-form-footer__link {
   text-decoration: none;
   color: #666;
   font-size: 14px;
@@ -88,6 +93,6 @@ body {
   margin: 5px 10px;
 }
 
-.login-form-footer__link:hover {
+.forgot-pass-form-footer__link:hover {
   color: #57b846;
 }
