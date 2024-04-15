@@ -1,72 +1,95 @@
-// @import 'variables.scss';
+@import "../Styling/common";
+@import "../Styling/colors";
+@import "../Styling/sizes";
+@import "../Styling/other";
 
-.container {
-  width: 100%;  
+.list {
+  width: 100%;
+}
+
+.books {
+  width: 100%;
+  padding: $s * 3;
+}
+
+.books__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.books__header__arrow {
+  width: $s * 3;
+}
+
+.books__title {
   height: 100%;
   display: flex;
+  flex-direction: column;
+  align-content: center;
   justify-content: center;
-  align-items: flex-start;
-  padding: 15px;
 }
 
-.container__wrapper {
-  flex-grow: 1;
-  width: auto;
-  height: auto;
-  padding: 15px;
-  border-radius: 10px;
-}
-
-.header {
+.books__title__text {
+  color: $neutral-800;
+  font-weight: 600;
+  font-size: $m;
   text-align: center;
-  margin-bottom: 20px;
 }
 
-.header__title {
-  font-size: 24px;
+.books__title__subtitle {
+  color: $positive-500;
+  font-weight: 500;
+  font-size: $s;
+  text-align: center;
 }
 
-.action-section {
+.books__items {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
+  gap: $m;
   justify-content: center;
+  margin-top: $m;
 }
 
-.action-card {
-  width: calc(50% - 20px);
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  padding: 20px;
-  margin-bottom: 20px;
+.books__items__item {
+  width: $xl * 2;
+  height: $xl * 2;
+  border-radius: $xs;
+  background-color: $neutral-white;
+  box-shadow: $surface-bottom-md;
 }
 
-.action-card__title {
-  font-size: 18px;
-  margin-bottom: 10px;
+.books__items__item__cover {
+  width: 100%;
+  height: $xl + $xs * 2;
+  background-color: $neutral-200;
+  position: relative;
+  overflow: clip;
 }
 
-.action-card__description {
-  margin-bottom: 10px;
+.books__items__item__cover__image {
+  height: $xl + $m;
+  left: 50%;
+  transform: translateX(-50%);
+  top: $xs;
+  position: absolute;
 }
 
-.action-card__button {
-  display: inline-block;
-  padding: 10px 20px;
-  border: none;
-  color: white;
-  font-size: 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  text-decoration: none;
-  &:hover {
-  }
+.books__items__item__data {
+  padding-left: $xs;
+  padding-top: $xs / 2;
 }
 
-@media (max-width: 768px) {
-  .action-card {
-    width: calc(100% - 20px);
-  }
+.books__items__item__data__title {
+  color: $neutral-800;
+  font-weight: 600;
+  font-size: $s;
+  margin-bottom: $xs / 4;
+}
+
+.books__items__item__data__author {
+  color: $neutral-800;
+  font-weight: 400;
+  font-size: $xs;
 }
