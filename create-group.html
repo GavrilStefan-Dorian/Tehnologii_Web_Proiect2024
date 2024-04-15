@@ -9,25 +9,25 @@
 <body>
     <div class="sidebar"></div>
     <div class="container">
-        <div class="container-wrapper">
+        <div class="container__wrapper">
             <div class="header">
-                <h1>Create group</h1>
+                <h1 class="header__title">Create group</h1>
             </div>
             
             <div class="input-group">
-                <label for="group-name">Group name</label>
-                <input type="text" id="group-name">
+                <label for="group-name" class="input-group__label">Group name</label>
+                <input type="text" id="group-name" class="input-group__input">
             </div>
             
             <div class="input-group">
-                <label for="group-description">Group description</label>
-                <textarea id="group-description" rows="4"></textarea>
+                <label for="group-description" class="input-group__label">Group description</label>
+                <textarea id="group-description" rows="4" class="input-group__textarea"></textarea>
             </div>
             
             <div class="input-wrapper">
                 <div class="input-group file-upload-wrapper">
-                    <label for="file-upload">Group image</label>
-                    <input type="file" id="file-upload" accept="image/*">
+                    <label for="file-upload" class="input-group__label">Group image</label>
+                    <input type="file" id="file-upload" accept="image/*" class="input-group__file-upload">
                 </div>
                 
                 <div class="add-member-wrapper">

@@ -1,22 +1,20 @@
 body {
   font-family: 'Lato', sans-serif;
   background: #f4f1ea;
-  /* background: linear-gradient(-135deg, #CCE4F1,#EEDAF1, #EEDBD1); */
   margin: 0;
   padding: 0;
   display: flex;
 }
 .sidebar {
-    min-width: 85px; /* Arbitrary width for the sidebar */
-    background-color: #f6f3fa;
-    position: sticky;
-    float: left;
+  min-width: 85px;
+  background-color: #f6f3fa;
+  position: sticky;
+  float: left;
 }
 .main-content {
   padding: 20px;
-  /* background: linear-gradient(-135deg, #CCE4F1,#EEDAF1, #EEDBD1); */
 }
-.main-content-header {
+.main-content__header {
   background: transparent;
   display: flex;
   position: sticky;
@@ -24,7 +22,7 @@ body {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.search-bar {
+.search-group__bar {
   background-color: #f6f3fa;
   border: none;
   padding: 8px;
@@ -42,7 +40,6 @@ body {
 .group-card {
   background-color: #f6f3fa;
   border-radius: 10px;
-  /* padding: 15px; somewhat prefer without*/
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   margin-bottom: 16px;
   text-align: center;
@@ -80,4 +77,16 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+}
+
+.your-groups__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popular-groups__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -1,0 +1,89 @@
+// Variables
+$form-bg-color: rgba(255, 255, 255, 0.75);
+$input-bg-color: #eff3f6;
+$button-bg-color: #57b846;
+
+// Mixins
+@mixin button-style {
+  padding: 10px 25px;
+  border-radius: 20px;
+  border: none;
+  background-color: $button-bg-color;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: darken($button-bg-color, 10%);
+  }
+}
+
+// Styles
+.sidebar {
+  min-width: 85px;
+  background-color: #f4f1ea;
+  height: 100vh;
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-form-wrapper {
+  max-width: 600px;
+  display: flex;
+  align-items: stretch;
+  background-image: url('contact-image.avif');
+  background-size: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.contact-form-content {
+  flex: 1;
+  padding: 20px;
+  background-color: $form-bg-color;
+
+  .contact-form {
+    width: 100%;
+
+    .contact-form__input,
+    .contact-form__textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      background-color: $input-bg-color;
+
+      &:focus {
+        border-color: #57b846;
+        outline: none;
+      }
+    }
+
+    .contact-form__submit {
+      @include button-style;
+    }
+  }
+
+  .contact-form__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .contact-form__description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #333;
+  }
+}

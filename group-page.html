@@ -10,44 +10,44 @@
   <div class="sidebar"></div>
 
   <div class="group-info-wrapper">
-    <div class="overlay"></div>
+    <div class="group-info-wrapper__overlay"></div>
     <div class="group-info">
-      <h1 id="group-name"></h1>
-      <p id="group-description"></p>
+      <h1 class="group-info__name" id="group-name"></h1>
+      <p class="group-info__description" id="group-description"></p>
     </div>
   </div>
 
   <div class="content">
     <div class="group-sections">
       <div class="group-section">
-        <h2>To Read</h2>
-        <p>Book 1</p>
-        <p>Book 2</p>
-        <p>Book 3</p>
+        <h2 class="group-section__title">To Read</h2>
+        <p class="group-section__item">Book 1</p>
+        <p class="group-section__item">Book 2</p>
+        <p class="group-section__item">Book 3</p>
       </div>
       <div class="group-section">
-        <h2>Reading</h2>
-        <p>Book 4</p>
+        <h2 class="group-section__title">Reading</h2>
+        <p class="group-section__item">Book 4</p>
       </div>
     </div>
   </div>
 
   <div class="members-sidebar">
     <div class="members-header">
-      <h3>Members</h3>
-      <button class="invite-btn">Invite</button>
+      <h3 class="members-header__title">Members</h3>
+      <button class="members-header__invite-btn">Invite</button>
     </div>
     <div class="member">
-      <img src="" alt="Avatar">
-      <p>User 1</p>
+      <img src="" alt="Avatar" class="member__avatar">
+      <p class="member__name">User 1</p>
     </div>
     <div class="member">
-      <img src="" alt="Avatar">
-      <p>User 2</p>
+      <img src="" alt="Avatar" class="member__avatar">
+      <p class="member__name">User 2</p>
     </div>
     <div class="member">
-      <img src="" alt="Avatar">
-      <p>User 3</p>
+      <img src="" alt="Avatar" class="member__avatar">
+      <p class="member__name">User 3</p>
     </div>
   </div>
 
@@ -66,7 +66,7 @@
        //TODO: GET FROM serv
 
         // overlay.style.backgroundImage = `url(${imageUrl})`;
-        document.querySelector('.overlay').style.backgroundImage = `url(${imageSrc})`;
+        document.querySelector('.group-info-wrapper__overlay').style.backgroundImage = `url(${imageSrc})`;
         document.getElementById('group-name').textContent = groupName;
         document.getElementById('group-description').textContent = descSrc;
       } else {
