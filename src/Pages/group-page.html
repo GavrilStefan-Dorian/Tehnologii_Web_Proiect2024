@@ -6,9 +6,12 @@
   <title>Group Page</title>
   <link rel="stylesheet" href="../Styling/group-page.css">
   <link rel="stylesheet" href="../Styling/sidebar.css">
+  <script src="../JavaScript/components.js"></script>
+  <script src="../Components/books.js"></script>
+  <link rel="stylesheet" href="../Styling/books.css">
 </head>
 <body>
-  <script src="../JavaScript/components.js"></script>
+
   <script>
     createSidebar(0);
   </script>
@@ -24,13 +27,15 @@
     <div class="group-sections">
       <div class="group-section">
         <h2 class="group-section__title">To Read</h2>
-        <p class="group-section__item">Book 1</p>
-        <p class="group-section__item">Book 2</p>
-        <p class="group-section__item">Book 3</p>
+        <div class="group-section__items" id="to-read-section"></div>
       </div>
       <div class="group-section">
         <h2 class="group-section__title">Reading</h2>
-        <p class="group-section__item">Book 4</p>
+        <div class="group-section__items" id="reading-section"></div>
+      </div>
+      <div class="group-section">
+        <h2 class="group-section__title">Finished</h2>
+        <div class="group-section__items" id="finished-section"></div>
       </div>
     </div>
   </div>
@@ -56,30 +61,50 @@
 
   <script src="../JavaScript/script.js"></script>
   <script>
-    // document.addEventListener('DOMContentLoaded', () => {
-    //   loadGroupData();
-    // });
+function loadGroupData() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const groupName = urlParams.get('group');
+  const imageSrc = urlParams.get('img');
+  const desc = urlParams.get('desc');
+  if (groupName) {
+    document.querySelector('.group-info-wrapper__overlay').style.backgroundImage = `url(${imageSrc})`;
+    document.getElementById('group-name').textContent = decodeURIComponent(groupName);
+    document.getElementById('group-description').textContent = decodeURIComponent(desc);
 
-    function loadGroupData() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const groupName = urlParams.get('group');
-      const imageSrc = urlParams.get('img');
-      const descSrc = urlParams.get('desc');
-      if (groupName) {
-       //TODO: GET FROM serv
+    // Simulated book data for demonstration
+    const toReadBooks = [
+      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+    ];
+    const readingBooks = [
+      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+    ];
+    const finishedBooks = [
+      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+    ];
 
-        // overlay.style.backgroundImage = `url(${imageUrl})`;
-        document.querySelector('.group-info-wrapper__overlay').style.backgroundImage = `url(${imageSrc})`;
-        document.getElementById('group-name').textContent = groupName;
-        document.getElementById('group-description').textContent = descSrc;
-      } else {
-        // alert('No group selected.');
-        // window.location.href = 'index.html';
-      }
-    }
-    loadGroupData();
+    // Populate 'To Read' section
+    const toReadSection = document.getElementById("to-read-section");
+    toReadBooks.forEach(book => {
+      toReadSection.innerHTML += book;
+    });
+
+    // Populate 'Reading' section
+    const readingSection = document.getElementById("reading-section");
+    readingBooks.forEach(book => {
+      readingSection.innerHTML += book;
+    });
+
+    // Populate 'Finished' section
+    const finishedSection = document.getElementById("finished-section");
+    finishedBooks.forEach(book => {
+      finishedSection.innerHTML += book;
+    });
+  }
+}
+
+loadGroupData();
 
   </script>
-
 </body>
 </html>
