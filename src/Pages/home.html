@@ -9,8 +9,30 @@
   <script src="../components.js"></script>
 </head>
 <body>
+  <div class="sidebar-padded">
+    <div class="list">
+
+    </div>
+  </div>
+
   <script>
     createSidebar(0);
+
+    const books = [
+      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png"),
+      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png"),
+      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png"),
+      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png"),
+    ];
+
+    const bookLists = [
+      createBookList("New and Popular", books),
+      createBookList("All-Time Sellers", books),
+      createBookList("New York Times Specials", books)
+    ]
+
+    const bookList = document.getElementsByClassName("list")[0];
+    bookLists.forEach(x => bookList.innerHTML += x);
   </script>
 </body>
 </html>

@@ -52,6 +52,11 @@
   filter: $svg-positive-600;
 }
 
+.sidebar-padded {
+  padding-left: $xl;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     display: none;

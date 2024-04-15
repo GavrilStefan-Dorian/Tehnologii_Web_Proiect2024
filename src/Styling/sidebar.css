@@ -46,6 +46,11 @@
   filter: invert(70%) sepia(80%) saturate(6295%) hue-rotate(71deg) brightness(98%) contrast(90%);
 }
 
+.sidebar-padded {
+  padding-left: 64px;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     display: none;
