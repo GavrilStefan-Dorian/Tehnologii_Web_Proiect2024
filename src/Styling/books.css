@@ -98,6 +98,7 @@ body {
   align-items: center;
   position: absolute;
   bottom: 8px;
+  text-decoration: none;
 }
 
 .books__list__item__info__view__text {

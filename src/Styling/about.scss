@@ -1,23 +1,13 @@
+@import "common";
+@import "sizes";
+@import "other";
+@import "colors";
+
 $primary-color: #CCE4F1;
 $secondary-color: #EEDAF1;
 $tertiary-color: #EEDBD1;
 $sidebar-color: #f6f3fa;
 $about-bg-color: #f4f1ea;
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Lato', sans-serif;
-  background: linear-gradient(-135deg, $primary-color, $secondary-color, $tertiary-color);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-items: center;
-}
 
 .sidebar {
   min-width: 85px;
@@ -27,7 +17,7 @@ body {
 }
 
 .about-wrapper {
-  background: $about-bg-color;
+  background: $neutral-white;
   border-radius: 20px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   width: 600px;
@@ -35,14 +25,14 @@ body {
   margin: 50px auto 0;
 
   .about-content {
-    padding: 50px;
+    padding-top: $m;
+    padding-left: $m;
+    padding-right: $m;
 
     .card {
-      background: $about-bg-color;
       margin-bottom: 30px;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
       .card__title {
         font-size: 24px;
@@ -52,6 +42,7 @@ body {
 
       .card__hr {
         margin-top: 0;
+        margin-bottom: $m;
       }
 
       .card__paragraph {

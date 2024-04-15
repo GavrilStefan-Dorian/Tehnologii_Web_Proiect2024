@@ -31,9 +31,9 @@ function createBook(title, author, image, rating, ratings) {
                         </div>
                         <p class="books__list__item__info__ratings">${ratings} ratings</p>
 
-                        <div class="books__list__item__info__view">
+                        <a class="books__list__item__info__view" href="./book.html">
                             <p class="books__list__item__info__view__text">View</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="books__list__item__buttons">
                         <img class="books__list__item__buttons__button" src="../Resources/Svg/bookmark.svg">

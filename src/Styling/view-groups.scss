@@ -1,3 +1,6 @@
+@import "sizes";
+@import "common";
+
 $primary-bg-color: #f4f1ea;
 $sidebar-width: 85px;
 $sidebar-bg-color: #f6f3fa;
@@ -6,21 +9,6 @@ $card-bg-color: #f6f3fa;
 $text-color: #262626;
 $section-header-color: #1f1f1f;
 $link-color: #4096ff;
-
-body {
-  font-family: 'Lato', sans-serif;
-  background: $primary-bg-color;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.sidebar {
-  min-width: $sidebar-width;
-  background-color: $sidebar-bg-color;
-  position: sticky;
-  float: left;
-}
 
 .main-content {
   padding: 20px;
@@ -54,6 +42,8 @@ body {
 }
 
 .group-card {
+  margin-top: $s * 3;
+  padding-bottom: $s;
   background-color: $card-bg-color;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);

@@ -8,20 +8,7 @@ $button-bg-color: #57b846;
 $button-hover-color: #409e15;
 $border-color: #ddd;
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Lato', sans-serif;
-  background: $gradient-color;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-items: center;
-}
+@import "common";
 
 html {
   height: 100%;

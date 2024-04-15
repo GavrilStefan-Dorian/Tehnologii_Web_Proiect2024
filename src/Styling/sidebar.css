@@ -38,6 +38,10 @@
   width: 24px;
 }
 
+.sidebar__items__container__link {
+  width: 24px;
+}
+
 .sidebar__items__container--selected {
   border-left: 2px solid #389E0D;
 }

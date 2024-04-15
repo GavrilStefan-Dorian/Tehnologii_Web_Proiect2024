@@ -44,6 +44,10 @@
   width: $m;
 }
 
+.sidebar__items__container__link {
+  width: $m;
+}
+
 .sidebar__items__container--selected {
   border-left: 2px solid $positive-600;
 }

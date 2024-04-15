@@ -9,7 +9,8 @@ html, body {
 
 body {
   display: flex;
-  background: linear-gradient(-135deg, #CCE4F1, #EEDAF1, #EEDBD1);
+  font-family: "Lato", sans-serif;
+  background-color: #F4F1EA;
 }
 
 .container {
@@ -31,9 +32,7 @@ body {
   height: auto;
   overflow: auto;
   padding: 15px;
-  background: linear-gradient(-135deg, #CCE4F1, #EEDAF1, #EEDBD1);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-left: 85px;
 }
 
@@ -55,7 +54,7 @@ body {
 
 .action-card {
   width: calc(50% - 20px);
-  background-color: #f4f1ea;
+  background-color: #FFFFFF;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   padding: 20px;

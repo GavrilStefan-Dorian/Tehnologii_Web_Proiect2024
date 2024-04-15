@@ -1,3 +1,18 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  background-color: #F4F1EA;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-items: center;
+}
+
 /* 
      ##Device = Desktops
      ##Screen = 1281px to higher resolution desktops
@@ -39,7 +54,7 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  background: linear-gradient(-135deg, #CCE4F1, #EEDAF1, #EEDBD1);
+  background: #F4F1EA;
 }
 
 .sidebar {

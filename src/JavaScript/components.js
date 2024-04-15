@@ -1,9 +1,11 @@
 function createSidebar(selected) {
     const selectableItems = [
-        '<img class="sidebar__items__container__item" src="../Resources/Svg/home.svg">',
-        '<img class="sidebar__items__container__item" src="../Resources/Svg/book.svg">',
-        '<img class="sidebar__items__container__item" src="../Resources/Svg/search.svg">',
-        '<img class="sidebar__items__container__item" src="../Resources/Svg/groups.svg">'
+        '<a class="sidebar__items__container__link" href="./home.html"><img class="sidebar__items__container__item" src="../Resources/Svg/home.svg"></a>',
+        '<a class="sidebar__items__container__link" href="./books.html"><img class="sidebar__items__container__item" src="../Resources/Svg/book.svg"></a>',
+        '<a class="sidebar__items__container__link" href="./search.html"><img class="sidebar__items__container__item" src="../Resources/Svg/search.svg"></a>',
+        '<a class="sidebar__items__container__link" href="./view-groups.html"><img class="sidebar__items__container__item" src="../Resources/Svg/groups.svg"></a>',
+        '<a class="sidebar__items__container__link" href="./help.html"><img class="sidebar__items__container__item" src="../Resources/Svg/question.svg"></a>',
+        '<a class="sidebar__items__container__link" href="./about.html"><img class="sidebar__items__container__item" src="../Resources/Svg/info.svg"></a>'
     ];
 
     let html = `
