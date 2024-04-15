@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Boo - Book Reviewer</title>
+    <link rel="stylesheet" href="search.css">
+    <link rel="stylesheet" href="../Styling/sidebar.css">
+    <script src="../components.js"></script>
+    <script src="../Components/search.js"></script>
+</head>
+<body>
+<div class="sidebar-padded">
+    <div class="list">
+        <div class="list__search">
+            <img class="list__search__icon" src="../Resources/Svg/search.svg">
+            <input class="list__search__input" placeholder="Search...">
+        </div>
+        <p class="list__alternative">Search by category</p>
+        <div class="list__categories">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    createSidebar(2);
+
+    const categories = [
+        createCategory("Art"),
+        createCategory("Non-fiction"),
+        createCategory("Etc..."),
+    ];
+
+    const list = document.getElementsByClassName("list__categories")[0];
+    categories.forEach(x => list.innerHTML += x);
+</script>
+</body>
+</html>
