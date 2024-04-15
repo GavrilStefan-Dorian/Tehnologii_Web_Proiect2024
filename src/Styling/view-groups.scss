@@ -12,7 +12,6 @@ $link-color: #4096ff;
 
 .main-content {
   padding: 20px;
-  margin-left: $sidebar-width; // Add margin to prevent overlap
 }
 
 .main-content__header {
@@ -52,7 +51,7 @@ $link-color: #4096ff;
 }
 
 .group-card img {
-  max-width: 100%;
+  width: $xl * 4;
   border-radius: 10px;
 }
 
@@ -98,3 +97,10 @@ $link-color: #4096ff;
   flex-direction: column;
   align-items: center;
 }
+
+@media (max-width: 768px) {
+  .group-cards-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
