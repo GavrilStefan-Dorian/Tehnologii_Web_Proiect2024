@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="../Styling/login.css">
+  <link rel="stylesheet" href="../Styling/sidebar.css">
+</head>
+<body>
+  <script src="../JavaScript/components.js"></script>
+  <script>
+    createSidebar(0);
+  </script>
+  <div class="login-container">
+    <div class="login-container__form-container">
+      <div class="login-container__form-header">
+        <h2 class="login-container__form-title">Member Login</h2>
+      </div>
+      <form class="login-form">
+        <div class="login-form__input-container">
+          <input type="email" placeholder="Email" class="login-form__input">
+        </div>
+        <div class="login-form__input-container">
+          <input type="password" placeholder="Password" class="login-form__input">
+        </div>
+        <div class="login-form__button-container">
+          <button type="submit" class="login-form__button">Login</button>
+        </div>
+        <div class="login-form__footer">
+          <a href="forgot-pass.html" class="login-form__footer-link">Forgot Username / Password?</a>
+          <a href="register.html" class="login-form__footer-link">Sign Up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

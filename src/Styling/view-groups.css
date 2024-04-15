@@ -1,0 +1,101 @@
+body {
+  font-family: "Lato", sans-serif;
+  background: #f4f1ea;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.sidebar {
+  min-width: 85px;
+  background-color: #f6f3fa;
+  position: sticky;
+  float: left;
+}
+
+.main-content {
+  padding: 20px;
+  margin-left: 85px;
+}
+
+.main-content__header {
+  background: transparent;
+  display: flex;
+  position: sticky;
+  top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.search-group__bar {
+  background-color: #f6f3fa;
+  border: none;
+  padding: 8px;
+  border-radius: 100px;
+  margin-right: 20px;
+}
+
+.create-group-btn {
+  background-color: #57b846;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.group-card {
+  background-color: #f6f3fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.group-card img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.group-title {
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.members-count,
+.owner-name {
+  font-size: 0.875rem;
+  color: #262626;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.section-header h2 {
+  font-size: 1.5rem;
+  color: #1f1f1f;
+}
+.section-header a {
+  font-size: 0.875rem;
+  text-decoration: underline;
+  color: #4096ff;
+  font-weight: 500;
+}
+
+.group-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.your-groups__header,
+.popular-groups__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*# sourceMappingURL=view-groups.css.map */
