@@ -1,0 +1,203 @@
+@import "../Styling/common";
+@import "../Styling/colors";
+@import "../Styling/sizes";
+@import "../Styling/other";
+
+.book {
+  padding: $s * 3;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.book__image {
+  height: $xl * 4;
+  flex-grow: 0;
+}
+
+.book__info {
+  display: flex;
+  flex-direction: column;
+  margin-left: $s * 2;
+}
+
+.book__info__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.book__info__header__info {
+  margin-top: $xs * 2;
+}
+
+.book__info__header__info__title {
+  color: $neutral-800;
+  font-size: $s * 3;
+  font-weight: 600;
+}
+
+.book__info__header__info__author {
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 400;
+}
+
+.book__info__header__info__rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: $xs;
+  gap: 0;
+}
+
+.book__info__header__info__rating__star {
+  filter: $svg-warning-500;
+  width: $xs * 2;
+}
+
+.book__info__header__info__rating_text {
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 400;
+  padding-left: $xs / 2;
+}
+
+.book__info__header__info__ratings {
+  color: $neutral-800;
+  font-size: $s;
+  font-weight: 400;
+}
+
+.book__info__summary {
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 400;
+  padding-top: $xs * 2;
+}
+
+.book__info__header__buttons__button {
+  width: $s * 3;
+}
+
+.book__info__download {
+  margin-top: $xs * 2;
+  background-color: $positive-500;
+  border-radius: 9999px;
+  width: $xl * 2;
+  height: $s * 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: $surface-bottom-md;
+}
+
+.book__info__download__text {
+  color: $neutral-white;
+  font-size: $xs * 2;
+  font-weight: 500;
+  text-align: center;
+}
+
+.details {
+  padding-left: $s * 3;
+  padding-right: $s * 3;
+}
+
+.details__about {
+  color: $neutral-800;
+  font-size: $m;
+  font-weight: 600;
+  text-align: center;
+}
+
+.details__description {
+  margin-top: $xs * 2;
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 400;
+}
+
+.details__review {
+  color: $neutral-800;
+  font-size: $m;
+  font-weight: 600;
+  margin-top: $s * 3;
+  text-align: center;
+}
+
+.details__reviews {
+  margin-top: $m;
+}
+
+.details__reviews__item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $xl;
+}
+
+.details__reviews__item__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.details__reviews__item__header__image {
+  flex-grow: 0;
+  height: $s * 3;
+}
+
+.details__reviews__item__header__info {
+  flex-grow: 100;
+  padding-left: $xs;
+  display: flex;
+  flex-direction: column;
+}
+
+.details__reviews__item__header__info__top {
+  display: flex;
+  flex-direction: row;
+}
+
+.details__reviews__item__header__info__top__name {
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 600;
+}
+
+.details__reviews__item__header__info__top__rated {
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 400;
+  padding-left: $xs / 2;
+}
+
+.book__info__header__info__rating {
+  display: flex;
+  flex-direction: row;
+}
+
+.details__reviews__item__header__info__top__rating {
+  padding-left: $xs / 2;
+}
+
+.details__reviews__item__header__info__date {
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 400;
+}
+
+.details__reviews__item__header__buttons {
+  flex-grow: 1;
+}
+
+.details__reviews__item__header__buttons__button {
+  height: $s * 2;
+}
+
+.details__reviews__item__description {
+  margin-top: $xs * 2;
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 400;
+}

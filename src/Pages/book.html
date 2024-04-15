@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Boo - Book Reviewer</title>
+    <link rel="stylesheet" href="book.css">
+    <link rel="stylesheet" href="../Styling/sidebar.css">
+    <script src="../components.js"></script>
+    <script src="../Components/book.js"></script>
+</head>
+<body>
+<div class="sidebar-padded">
+    <div class="book">
+        <img class="book__image" src="../Resources/Images/BookFull.png">
+        <div class="book__info">
+            <div class="book__info__header">
+                <div class="book__info__header__info">
+                    <p class="book__info__header__info__title">Atomic Habits</p>
+                    <p class="book__info__header__info__author">by James Clear</p>
+                    <div class="book__info__header__info__rating">
+                        <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
+                        <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
+                        <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
+                        <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
+                        <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
+                        <p class="book__info__header__info__rating_text">4.08</p>
+                    </div>
+                    <p class="book__info__header__info__ratings">123,493 ratings</p>
+                </div>
+                <div class="book__info__header__buttons">
+                    <img class="book__info__header__buttons__button" src="../Resources/Svg/bookmark.svg">
+                    <img class="book__info__header__buttons__button" src="../Resources/Svg/heart.svg">
+                    <img class="book__info__header__buttons__button" src="../Resources/Svg/options.svg">
+                </div>
+            </div>
+            <p class="book__info__summary">This breakthrough book from James Clear is the most comprehensive guide on how to change your habits and get 1% better every day.</p>
+
+            <div class="book__info__download">
+                <p class="book__info__download__text">Download</p>
+            </div>
+        </div>
+    </div>
+    <div class="details">
+        <p class="details__about">About this book</p>
+        <p class="details__description">No matter your goals, Atomic Habits offers a proven framework for improving--every day. James Clear, one of the world's leading experts on habit formation, reveals practical strategies that will teach you exactly how to form good habits, break bad ones, and master the tiny behaviors that lead to remarkable results.<br><br>If you're having trouble changing your habits, the problem isn't you. The problem is your system. Bad habits repeat themselves again and again not because you don't want to change, but because you have the wrong system for change. You do not rise to the level of your goals. You fall to the level of your systems. Here, you'll get a proven system that can take you to new heights.</p>
+
+        <p class="details__review">Reviews</p>
+        <div class="details__reviews">
+        </div>
+    </div>
+</div>
+
+<script>
+    createSidebar(1);
+
+    const review = createReview("Dan Popescu", "Apr 2, 2024, 1:27PM", `I previously wrote this review right after reading the book. Today, February 15th, after applying James’s system for 100 days on a few tiny habits, I feel compelled to share updates with you because they have sincerely worked.
+
+                    <br><br>I will divide the review into 5 parts. The first part is a summary of the book with short excerpts highlighted while taking notes. Next, I hope to share pieces of advice that have motivated me while building new habits. Following that, I will share how I implemented the first 3 habits throughout these months. Then, some thoughts to whom I would recommend reading the book. Last, there are 4 complementary readings.
+
+                    <br><br>SUMMARY
+
+                    <br><br>[Introduction] James starts by sharing personal strategies he implemented to recover from a serious accident in high school. That event forced him to improve the quality of his routine to get his life in order, coming to the conclusion that “we all deal with setbacks, but in the long run, the quality of our lives often depends on the quality of our habits. With the same habits, you will end up with the same results. But with better habits, anything is possible.`)
+
+    const reviewList = document.getElementsByClassName("details__reviews")[0];
+    reviewList.innerHTML += review;
+    reviewList.innerHTML += review;
+    reviewList.innerHTML += review;
+</script>
+</body>
+</html>
