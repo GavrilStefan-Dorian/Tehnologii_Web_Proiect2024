@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  background-color: #F4F1EA;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-items: center;
+}
+
+.list {
+  width: 100%;
+}
+
+.books {
+  width: 100%;
+  padding-left: 36px;
+  padding-top: 36px;
+}
+
+.books__title {
+  color: #262626;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.books__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.books__list__item {
+  width: 50%;
+  height: 96px;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 4px 6px -1px rgba(31, 31, 31, 0.1);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 8px;
+  position: relative;
+}
+
+.books__list__item__image {
+  flex: 0;
+  height: 100%;
+  padding: 8px;
+}
+
+.books__list__item__data {
+  height: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.books__list__item__info__title {
+  color: #262626;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.books__list__item__info__author {
+  color: #262626;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.books__list__item__info__ratings {
+  color: #262626;
+  font-size: 8px;
+  font-weight: 400;
+}
+
+.books__list__item__info {
+  flex: 100;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  position: relative;
+}
+
+.books__list__item__info__view {
+  background-color: #52C41A;
+  border-radius: 9999px;
+  width: 48px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 8px;
+  text-decoration: none;
+}
+
+.books__list__item__info__view__text {
+  color: #FFFFFF;
+  font-size: 8px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.books__list__item__info__rating {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+.books__list__item__info__rating__star {
+  filter: invert(67%) sepia(79%) saturate(1071%) hue-rotate(350deg) brightness(103%) contrast(96%);
+  width: 8px;
+}
+
+.books__list__item__info__rating_text {
+  color: #262626;
+  font-size: 8px;
+  font-weight: 600;
+  display: block;
+  margin-left: 2px;
+}
+
+.books__list__item__buttons {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-items: end;
+  align-items: start;
+  padding: 2px;
+  gap: 2px;
+}
+
+.books__list__item__buttons__button {
+  width: 16px;
+}
+
+@media (max-width: 768px) {
+  .books__list__item {
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=books.css.map */

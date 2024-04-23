@@ -1,0 +1,143 @@
+@import "../Styling/common";
+@import "../Styling/colors";
+@import "../Styling/sizes";
+@import "../Styling/other";
+
+.list {
+  width: 100%;
+}
+
+.books {
+  width: 100%;
+  padding-left: $s * 3;
+  padding-top: $s * 3;
+}
+
+.books__title {
+  color: $neutral-800;
+  font-size: $m;
+  font-weight: 600;
+  margin-bottom: $s;
+}
+
+.books__list {
+  display: flex;
+  flex-direction: column;
+  gap: $xs;
+}
+
+.books__list__item {
+  width: 50%;
+  height: $xl * 1.5;
+  border-radius: $xs;
+  background-color: $neutral-white;
+  box-shadow: $surface-bottom-md;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: $xs;
+
+  position: relative;
+}
+
+.books__list__item__image {
+  flex: 0;
+  height: 100%;
+  padding: $xs;
+}
+
+.books__list__item__data {
+  height: 100%;
+  padding-top: $xs;
+  padding-bottom: $xs;
+  display: flex;
+  flex-direction: column;
+}
+
+.books__list__item__info__title {
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 600;
+}
+
+.books__list__item__info__author {
+  color: $neutral-800;
+  font-size: $s;
+  font-weight: 400;
+}
+
+.books__list__item__info__ratings {
+  color: $neutral-800;
+  font-size: $xs;
+  font-weight: 400;
+}
+
+.books__list__item__info {
+  flex: 100;
+  padding-bottom: $xs;
+  padding-top: $xs;
+  position: relative;
+}
+
+.books__list__item__info__view {
+  background-color: $positive-500;
+  border-radius: 9999px;
+  width: $s * 4;
+  height: $xs * 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  bottom: $xs;
+
+  text-decoration: none;
+}
+
+.books__list__item__info__view__text {
+  color: $neutral-white;
+  font-size: $xs;
+  font-weight: 500;
+  text-align: center;
+}
+
+.books__list__item__info__rating {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+.books__list__item__info__rating__star {
+  filter: $svg-warning-500;
+  width: $xs;
+}
+
+.books__list__item__info__rating_text {
+  color: $neutral-800;
+  font-size: $xs;
+  font-weight: 600;
+  display: block;
+  margin-left: calc($xs / 4);
+}
+
+.books__list__item__buttons {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-items: end;
+  align-items: start;
+  padding: calc($xs / 4);
+  gap: calc($xs / 4);
+}
+
+.books__list__item__buttons__button {
+  width: $xs * 2;
+}
+
+@media (max-width: 768px) {
+  .books__list__item {
+    width: 100%;
+  }
+}
+

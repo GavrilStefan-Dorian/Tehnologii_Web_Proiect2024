@@ -1,0 +1,124 @@
+$primary-bg-color: #eff3f6;
+$gradient-color: linear-gradient(-135deg, #CCE4F1, #EEDAF1, #EEDBD1);
+$sidebar-width: 85px;
+$sidebar-bg-color: #f6f3fa;
+$form-bg-color: #fff;
+$question-color: #57b846;
+$answer-color: #333;
+$border-color: #ddd;
+
+@import "colors";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: $primary-100;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.help-container {
+  width: 100%;
+  padding: 20px;
+}
+
+.help-container__content {
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.help-container__header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.help-container__title {
+  color: $question-color;
+}
+
+.help-container__subtitle {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.help-section {
+  margin-bottom: 30px;
+}
+
+.help-section__title {
+  font-size: 18px;
+  color: $question-color;
+  margin-bottom: 15px;
+}
+
+.help-item {
+  background-color: $form-bg-color;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.help-item__question {
+  font-weight: bold;
+  color: $question-color;
+  margin-bottom: 10px;
+}
+
+.help-item__answer {
+  color: $answer-color;
+}
+
+.help-link {
+    color: #57b846;
+    text-decoration: none;
+  }
+  
+  .help-link:hover {
+    text-decoration: underline;
+  }
+  
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  .help-container {
+    max-width: 1000px;
+    margin-left: calc(($sidebar-width + 20px) * 2);
+  }
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .help-container {
+    max-width: 700px;
+  }
+}
+
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (max-width: 767px) {
+  .help-container {
+    padding: 10px;
+  }
+
+  .help-container__title, .help-section__title {
+    text-align: center;
+  }
+}

@@ -1,0 +1,106 @@
+@import "sizes";
+@import "common";
+
+$primary-bg-color: #f4f1ea;
+$sidebar-width: 85px;
+$sidebar-bg-color: #f6f3fa;
+$accent-color: #57b846;
+$card-bg-color: #f6f3fa;
+$text-color: #262626;
+$section-header-color: #1f1f1f;
+$link-color: #4096ff;
+
+.main-content {
+  padding: 20px;
+}
+
+.main-content__header {
+  background: transparent;
+  display: flex;
+  position: sticky;
+  top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.search-group__bar {
+  background-color: $sidebar-bg-color;
+  border: none;
+  padding: 8px;
+  border-radius: 100px;
+  margin-right: 20px;
+}
+
+.create-group-btn {
+  background-color: $accent-color;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.group-card {
+  margin-top: $s * 3;
+  padding-bottom: $s;
+  background-color: $card-bg-color;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.group-card img {
+  width: $xl * 4;
+  border-radius: 10px;
+}
+
+.group-title {
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.members-count,
+.owner-name {
+  font-size: 0.875rem;
+  color: $text-color;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 1.5rem;
+    color: $section-header-color;
+  }
+
+  a {
+    font-size: 0.875rem;
+    text-decoration: underline;
+    color: $link-color;
+    font-weight: 500;
+  }
+}
+
+.group-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.your-groups__header,
+.popular-groups__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .group-cards-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
