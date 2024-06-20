@@ -31,7 +31,7 @@ function createBook(title, author, image, rating, ratings) {
                         </div>
                         <p class="books__list__item__info__ratings">${ratings} ratings</p>
 
-                        <a class="books__list__item__info__view" href="./book.html">
+                        <a class="books__list__item__info__view" href="/book">
                             <p class="books__list__item__info__view__text">View</p>
                         </a>
                     </div>

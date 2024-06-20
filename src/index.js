@@ -1,78 +1,22 @@
 const http = require('http');
-const path = require('path');
-const fs = require('fs');
 const { sendFile } = require('./scripts/utils');
-
-const hostname = '127.0.0.1';
-const port = 3000;
-
-const routes = require('./scripts/routes');
-
-const formidable = require('formidable');
-const { getUsers, insertUser } = require('./scripts/users');
+const routes = require('./scripts/routes'); 
 
 const server = http.createServer((req, res) => {
     console.log(`Received ${req.method} request for ${req.url}`);
 
-    if (req.method === 'GET' && req.url === '/users') {
-        console.log('Fetching users...');
+    const route = routes.find(r => r.url === req.url && r.method === req.method);
 
-        getUsers((error, result) => {
-            if (error) {
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Internal Server Error');
-            } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify(result));
-            }
-        });
-    } else if (req.method === 'POST' && req.url === '/register') {
-        const form = new formidable.IncomingForm();
-
-        form.parse(req, (err, fields) => {
-            if (err) {
-                console.error('Error parsing form data:', err);
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Internal Server Error');
-                return;
-            }
-
-            const { username, email, password } = fields;
-
-            console.log('Received registration data:');
-            console.log('Username:', username);
-            console.log('Email:', email);
-            console.log('Password:', password);
-
-            insertUser(username, email, password, (result) => {
-                if (result.success) {
-                    res.writeHead(302, { 'Location': '/home.html' });
-                } else {
-                    res.writeHead(500, { 'Content-Type': 'text/plain' });
-                    res.end('Error registering user');
-                }
-                res.end();
-            });
-        });
+    if (route) {
+        console.log(`Matched route: ${route.method} ${route.url}`);
+        route.handler(req, res);
     } else {
-        const route = req.url;
-
-        // Check if the route matches any defined routes
-        let foundRoute = false;
-        routes.forEach((x) => {
-            if (x.url === route) {
-                x.action(req, res);
-                foundRoute = true;
-            }
-        });
-
-        // If no specific route found, attempt to serve file
-        if (!foundRoute) {
-            sendFile(route, res);
-        }
+        console.log(`No matching route found for ${req.method} ${req.url}`);
+        sendFile(req.url, res);
     }
 });
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

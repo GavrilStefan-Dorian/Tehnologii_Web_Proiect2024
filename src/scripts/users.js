@@ -13,10 +13,10 @@ function getUsers(callback) {
         });
 }
 
-function insertUser(username, email, password, callback) {
+function insertUser(username, email, password, role, callback) {
     console.log('Attempting to insert user:', { username, email, password });
 
-    db`INSERT INTO users (username, email, password, role) VALUES (${username}, ${email}, ${password}, 'client') RETURNING *`
+    db`INSERT INTO users (username, email, password, role) VALUES (${username}, ${email}, ${password}, ${role}) RETURNING *`
         .then(result => {
             console.log('User inserted:', result);
             callback({ success: true, data: result });
@@ -27,7 +27,83 @@ function insertUser(username, email, password, callback) {
         });
 }
 
-module.exports = { 
+
+// Function to fetch a single user by username
+function getUserByName(username, callback) {
+    db`SELECT * FROM users WHERE username = ${username}`
+        .then(result => {
+            if (result.length > 0) {
+                console.log('User fetched:', result[0]);
+                callback(null, result[0]);
+            } else {
+                console.log('User not found');
+                callback(null, null); // Return null if user not found
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user:', error);
+            callback(error, null);
+        });
+}
+
+function getUserByEmail(email, callback) {
+    db`SELECT * FROM users WHERE email = ${email}`
+        .then(result => {
+            if (result.length > 0) {
+                console.log('User fetched:', result[0]);
+                callback(null, result[0]);
+            } else {
+                console.log('User not found');
+                callback(null, null); // Return null if user not found
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user:', error);
+            callback(error, null);
+        });
+}
+
+// Function to update user details
+function updateUser(userId, updates, callback) {
+    db`UPDATE users SET ${updates} WHERE id = ${userId} RETURNING *`
+        .then(result => {
+            if (result.length > 0) {
+                console.log('User updated:', result[0]);
+                callback(null, result[0]);
+            } else {
+                console.log('User not found');
+                callback(null, null); // Return null if user not found
+            }
+        })
+        .catch(error => {
+            console.error('Error updating user:', error);
+            callback(error, null);
+        });
+}
+
+// Function to delete a user
+function deleteUser(userId, callback) {
+    db`DELETE FROM users WHERE id = ${userId} RETURNING *`
+        .then(result => {
+            if (result.length > 0) {
+                console.log('User deleted:', result[0]);
+                callback(null, result[0]);
+            } else {
+                console.log('User not found');
+                callback(null, null); // Return null if user not found
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting user:', error);
+            callback(error, null);
+        });
+}
+
+module.exports = {
     getUsers,
-    insertUser 
+    getUserByEmail,
+    getUserByName,
+    insertUser,
+    updateUser,
+    deleteUser
 };

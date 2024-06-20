@@ -34,6 +34,37 @@
 
     const bookList = document.getElementsByClassName("list")[0];
     bookLists.forEach(x => bookList.innerHTML += x);
+
+
+
+    
+    function getToken() {
+      return localStorage.getItem('jwtToken');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const links = document.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', function(event) {
+          event.preventDefault(); 
+          const url = this.getAttribute('href');
+
+          fetch(url, {
+            method: 'GET',
+            headers: {
+              'Authorization': 'Bearer ' + getToken()
+            }
+          }).then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            window.location.href = url; 
+          }).catch(error => {
+            console.error('Error fetching data:', error);
+          });
+        });
+      });
+    });
   </script>
 </body>
 </html>
