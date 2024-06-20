@@ -1,12 +1,9 @@
-// utils.js
 const fs = require("fs");
 const path = require("path");
 
 function sendFile(url, res) {
-    // Extract the file name from the URL
     const fileName = path.basename(url.split('?')[0]);
 
-    // Construct the file path
     let filePath;
 
     const extname = path.extname(fileName);
@@ -46,14 +43,12 @@ function sendFile(url, res) {
     console.log(filePath);
     console.log();
 
-    // Check if the file exists
     if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('File not found');
         return false;
     }
 
-    // Determine the content type based on file extension
     let contentType = 'text/html';
     switch (path.extname(filePath)) {
         case '.js':
@@ -79,7 +74,6 @@ function sendFile(url, res) {
             break;
     }
 
-    // Read the file and send it as response
     res.writeHead(200, { 'Content-Type': contentType });
     const fileContent = fs.readFileSync(filePath);
     res.end(fileContent);

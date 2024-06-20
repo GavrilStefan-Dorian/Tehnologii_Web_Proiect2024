@@ -28,7 +28,6 @@ function insertUser(username, email, password, role, callback) {
 }
 
 
-// Function to fetch a single user by username
 function getUserByName(username, callback) {
     db`SELECT * FROM users WHERE username = ${username}`
         .then(result => {
@@ -37,7 +36,7 @@ function getUserByName(username, callback) {
                 callback(null, result[0]);
             } else {
                 console.log('User not found');
-                callback(null, null); // Return null if user not found
+                callback(null, null);
             }
         })
         .catch(error => {
@@ -54,7 +53,7 @@ function getUserByEmail(email, callback) {
                 callback(null, result[0]);
             } else {
                 console.log('User not found');
-                callback(null, null); // Return null if user not found
+                callback(null, null);
             }
         })
         .catch(error => {
@@ -63,7 +62,6 @@ function getUserByEmail(email, callback) {
         });
 }
 
-// Function to update user details
 function updateUser(userId, updates, callback) {
     db`UPDATE users SET ${updates} WHERE id = ${userId} RETURNING *`
         .then(result => {
@@ -72,7 +70,7 @@ function updateUser(userId, updates, callback) {
                 callback(null, result[0]);
             } else {
                 console.log('User not found');
-                callback(null, null); // Return null if user not found
+                callback(null, null); 
             }
         })
         .catch(error => {
@@ -81,7 +79,6 @@ function updateUser(userId, updates, callback) {
         });
 }
 
-// Function to delete a user
 function deleteUser(userId, callback) {
     db`DELETE FROM users WHERE id = ${userId} RETURNING *`
         .then(result => {
@@ -90,7 +87,7 @@ function deleteUser(userId, callback) {
                 callback(null, result[0]);
             } else {
                 console.log('User not found');
-                callback(null, null); // Return null if user not found
+                callback(null, null); 
             }
         })
         .catch(error => {

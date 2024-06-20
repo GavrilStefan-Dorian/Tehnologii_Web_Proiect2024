@@ -3,7 +3,6 @@
 // document.addEventListener('DOMContentLoaded', function () {
 //     const token = localStorage.getItem('jwtToken');
 
-//     console.log("HAAAAAAAAA", token);
 //     if (token) {
        
 //                 const originalFetch = window.fetch;

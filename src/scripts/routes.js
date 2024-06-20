@@ -82,17 +82,14 @@ const routes = [
                 } else {
                     bcrypt.compare(password[0], user.password, (err, result) => {
                         if (err) {
-                            // Handle error
                             console.error('Error comparing passwords:', err);
                             res.writeHead(500, { 'Content-Type': 'application/json' });
                             res.end(JSON.stringify({ error: 'Internal server error' }));
                         } else if (!result) {
-                            // Passwords do not match
                             console.log('Passwords do not match');
                             res.writeHead(401, { 'Content-Type': 'application/json' });
                             res.end(JSON.stringify({ error: 'Invalid credentials' }));
                         } else {
-                            // Passwords match, proceed with login
                             const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, jwtSecret, { expiresIn: '1h' });
                             res.writeHead(200, { 'Content-Type': 'application/json' });
                             res.end(JSON.stringify({ message: 'Login successful', token: token }));
@@ -193,7 +190,7 @@ const routes = [
         });
     }),
 
-    // Add other routes as needed
+    // Add other routes 
 ];
 
 function sendError(res, statusCode, message) {
