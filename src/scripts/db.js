@@ -1,11 +1,9 @@
 const postgres = require('postgres');
 const fs = require('fs');
-const faker = require('@faker-js/faker')
 const csv = require('csv-parser')
-require('dotenv').config({ path: './src/.env' });
+require('dotenv').config();
 
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
-
 
 const sql = postgres({
     host: PGHOST,

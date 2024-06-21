@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = require('./config').jwtSecret;
 const formidable = require('formidable');
 
+const homeRoute = require('./Routes/home');
+const path = require("path");
 
 function authenticateToken(req, res, next) {
     const token = req.headers.authorization;
@@ -43,9 +45,7 @@ const routes = [
         sendFile('./Pages/home.html', res);
     }),
 
-    new Route('/home', 'GET', (req, res) => {
-        sendFile('./Pages/home.html', res);
-    }),
+    homeRoute,
 
     new Route('/login', 'GET', (req, res) => {
         sendFile('./Pages/login.html', res);
@@ -197,7 +197,6 @@ const routes = [
     }),
     // Add other routes 
 ];
-
 
 function sendUrl(url, res) {
     res.writeHead(200, { 'Content-Type': 'application/json' });

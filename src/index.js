@@ -1,5 +1,5 @@
 const http = require('http');
-const { sendFile } = require('./scripts/utils');
+const { sendFile, isResource, getResourceRoute} = require('./scripts/utils');
 const routes = require('./scripts/routes');
 const {processCSV} = require("./scripts/db");
 const {insertUser} = require("./scripts/users");
@@ -7,7 +7,10 @@ const {insertUser} = require("./scripts/users");
 const server = http.createServer((req, res) => {
     console.log(`Received ${req.method} request for ${req.url}`);
 
-    const route = routes.find(r => r.url === req.url && r.method === req.method);
+    let route = routes.find(r => r.url === req.url && r.method === req.method);
+
+    if(!route)
+        route = getResourceRoute(req.url);
 
     if (route) {
         console.log(`Matched route: ${route.method} ${route.url}`);
