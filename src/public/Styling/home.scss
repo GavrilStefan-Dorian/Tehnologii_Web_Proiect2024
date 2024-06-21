@@ -3,6 +3,11 @@
 @import "../Styling/sizes";
 @import "../Styling/other";
 
+body
+{
+  overflow-x: hidden;
+}
+
 .list {
   width: 100%;
 }
@@ -48,30 +53,40 @@
   display: flex;
   flex-direction: row;
   gap: $m;
-  justify-content: center;
+  justify-content: start;
   margin-top: $m;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.books__items::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .books__items__item {
-  width: $xl * 2;
-  height: $xl * 2;
+  width: $xl * 3;
+  height: $xl * 3;
   border-radius: $xs;
   background-color: $neutral-white;
   box-shadow: $surface-bottom-md;
   text-decoration: none;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .books__items__item__cover {
   width: 100%;
-  height: $xl + $xs * 2;
+  height: $xl * 1.5 + $xs * 2;
   background-color: $neutral-200;
   position: relative;
   overflow: clip;
 }
 
 .books__items__item__cover__image {
-  height: $xl + $m;
+  height: $xl * 2;
   left: 50%;
   transform: translateX(-50%);
   top: $xs;
@@ -80,18 +95,23 @@
 
 .books__items__item__data {
   padding-left: $xs;
+  padding-right: $xs;
   padding-top: $xs / 2;
+  padding-bottom: $xs / 2;
 }
 
 .books__items__item__data__title {
   color: $neutral-800;
   font-weight: 600;
-  font-size: $s;
+  font-size: $xs * 2;
   margin-bottom: $xs / 4;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .books__items__item__data__author {
   color: $neutral-800;
   font-weight: 400;
-  font-size: $xs;
+  font-size: $s;
 }

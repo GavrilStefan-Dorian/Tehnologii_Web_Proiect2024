@@ -1,5 +1,15 @@
 const fs = require("fs");
 const path = require("path");
+const Route = require("./route");
+
+function readFileContents(url)
+{
+    if (!fs.existsSync(url) || !fs.lstatSync(url).isFile()) {
+        return null;
+    }
+
+    return fs.readFileSync(url, 'utf8');
+}
 
 function sendFile(url, res) {
     const fileName = path.basename(url.split('?')[0]);
@@ -9,21 +19,21 @@ function sendFile(url, res) {
     const extname = path.extname(fileName);
     switch (extname) {
         case '.html':
-            filePath = path.join(__dirname, '../public/Pages', fileName);
+            filePath = path.join(process.cwd(), './public/Pages', fileName);
             break;
         case '.css':
-            filePath = path.join(__dirname, '../public/Styling', fileName);
+            filePath = path.join(process.cwd(), './public/Styling', fileName);
             break;
         case '.js':
-            filePath = path.join(__dirname, '../public/JavaScript', fileName);
+            filePath = path.join(process.cwd(), './public/JavaScript', fileName);
             break;
         case '.png':
         case '.jpg':
         case '.avif':
-            filePath = path.join(__dirname, '../public/Resources/Images', fileName);
+            filePath = path.join(process.cwd(), './public/Resources/Images', fileName);
             break;
         case '.svg':
-            filePath = path.join(__dirname, '../public/Resources/Svg', fileName);
+            filePath = path.join(process.cwd(), './public/Resources/Svg', fileName);
             break;
         default:
             // For unknown file types, return 404
@@ -77,9 +87,38 @@ function sendFile(url, res) {
     return true;
 }
 
+function sendHTML(contents, res) {
+    let contentType = 'text/html';
+    res.writeHead(200, { 'Content-Type': contentType });
+    res.end(contents);
+}
 
+function getResourceRoute(url)
+{
+    if (!fs.existsSync(url) || !fs.lstatSync(url).isFile()) {
+        return null;
+    }
 
+    const extname = path.extname(url);
+    switch (extname) {
+        case '.html':
+        case '.css':
+        case '.js':
+        case '.png':
+        case '.jpg':
+        case '.avif':
+        case '.svg':
+            return new Route(url, 'GET', (req, res) => {
+                sendFile(url, res);
+            });
+        default:
+            return null;
+    }
+}
 
 module.exports = {
-    sendFile
+    sendFile,
+    readFileContents,
+    sendHTML,
+    getResourceRoute
 }

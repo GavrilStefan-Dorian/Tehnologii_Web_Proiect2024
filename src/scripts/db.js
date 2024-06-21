@@ -1,10 +1,9 @@
 const postgres = require('postgres');
 const fs = require('fs');
-const faker = require('@faker-js/faker')
-require('dotenv').config({ path: './src/.env' });
+const csv = require('csv-parser')
+require('dotenv').config();
 
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
-
 
 const sql = postgres({
     host: PGHOST,
@@ -18,35 +17,55 @@ const sql = postgres({
     },
 });
 
-async function insertBook(title, description, language, publication_date, pages, publisher, edition, reviews, author, genre) {
-    await sql`CALL insert_book(${title}, ${description}, ${language}, TO_DATE(${publication_date}, 'MM/DD/YYYY'), ${pages}, ${publisher}, ${edition}, ${reviews}, ${author}, ${genre})`;
+async function insertBook(bookId, title, series, author, rating, description, language, isbn, genres, bookFormat, edition, pages, publisher, publishDate, numRatings, coverImg, price) {
+    await sql`CALL insert_book(${bookId}::varchar, ${title}::varchar, ${series}::varchar, ${author}::varchar, ${rating}::float, ${description}::varchar, ${language}::varchar, ${isbn}::varchar, ${bookFormat}::varchar, ${edition}::varchar, ${pages}::int, ${publisher}::varchar, TO_DATE(${publishDate}, 'MM/DD/YY'), ${numRatings}::int, ${coverImg}::varchar, ${price}::float)`;
+    let i = 0;
+    for(i = 0; i < genres.length; i++)
+    {
+        await sql`CALL insert_book_genre(${bookId}::varchar, ${genres[i]}::varchar)`;
+    }
 }
 
 async function processCSV(path)
 {
-    const content = fs.readFileSync(path, 'utf8');
-    const lines = content.split('\n');
-    for (const line of lines.slice(1)) {
-        try
-        {
-            const params = line.split(",");
-            const title = params[1];
-            const description = '';
-            const language = params[6];
-            const publication_date = params[10];
-            const pages = parseInt(params[7]);
-            const publisher = params[11];
-            const edition = '';
-            const reviews = parseInt(params[9]);
-            const author = params[2];
-            const genre = faker.faker.music.genre();
-            console.log("Inserting " + title);
-            await insertBook(title, description, language, publication_date, pages, publisher, edition, reviews, author, genre);
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
+    const results = [];
+    fs.createReadStream(path)
+        .pipe(csv())
+        .on('data', async (data) => {
+            results.push(data);
+        })
+        .on('end', async () => {
+            for(let i = 0; i < results.length; i++)
+            {
+                try {
+                    console.log(`Inserting ${i}/${results.length}`);
+                    let data = results[i];
+                    await insertBook(
+                        data["bookId"],
+                        data["title"],
+                        data["series"],
+                        data["author"],
+                        parseFloat(data["rating"]),
+                        data["description"],
+                        data["language"],
+                        data["isbn"],
+                        data["genres"].replace('[', '').replace(']', '').split(', '),
+                        data["bookFormat"],
+                        data["edition"],
+                        parseInt(data["pages"]),
+                        data["publisher"],
+                        data["publishDate"],
+                        parseInt(data["numRatings"]),
+                        data["coverImg"],
+                        parseFloat(data["price"]),
+                    );
+                }
+                catch (ex)
+                {
+                    console.log(ex);
+                }
+            }
+        });
 }
 
 async function extractBookReviewsCSV(bookID)

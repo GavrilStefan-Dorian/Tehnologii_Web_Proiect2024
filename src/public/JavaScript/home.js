@@ -2,17 +2,17 @@ function createBookList(title, books) {
     let html = `
     <div class="books">
         <div class="books__header">
-          <img class="books__header__arrow" src="../Resources/Svg/chevron-left.svg">
+          <img class="books__header__arrow" src="../Resources/Svg/chevron-left.svg" onclick="deadvanceList('${title}')">
     
           <div class="books__title">
             <p class="books__title__text">${title}</p>
             <p class="books__title__subtitle">See All</p>
           </div>
     
-          <img class="books__arrow" src="../Resources/Svg/chevron-right.svg">
+          <img class="books__arrow" src="../Resources/Svg/chevron-right.svg" onclick="advanceList('${title}')">
         </div>
     
-        <div class="books__items">
+        <div id="${title}_items" class="books__items">
     `;
 
     books.forEach(x => html += x);
