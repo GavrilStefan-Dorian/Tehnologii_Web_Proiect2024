@@ -1,6 +1,7 @@
 const postgres = require('postgres');
 const fs = require('fs');
 const faker = require('@faker-js/faker')
+const csv = require('csv-parser')
 require('dotenv').config();
 
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
@@ -18,48 +19,54 @@ const sql = postgres({
 });
 
 async function insertBook(bookId, title, series, author, rating, description, language, isbn, genres, bookFormat, edition, pages, publisher, publishDate, numRatings, coverImg, price) {
-    await sql`CALL insert_book(${bookId}, ${title}, ${series}, ${author}, ${rating}, ${description}, ${language}, ${isbn}, ${bookFormat}, ${edition}, ${pages}, ${publisher}, TO_DATE(${publishDate}, 'MM/DD/YY'), ${numRatings}, ${coverImg}, ${price})`;
+    await sql`CALL insert_book(${bookId}::varchar, ${title}::varchar, ${series}::varchar, ${author}::varchar, ${rating}::float, ${description}::varchar, ${language}::varchar, ${isbn}::varchar, ${bookFormat}::varchar, ${edition}::varchar, ${pages}::int, ${publisher}::varchar, TO_DATE(${publishDate}, 'MM/DD/YY'), ${numRatings}::int, ${coverImg}::varchar, ${price}::float)`;
     let i = 0;
     for(i = 0; i < genres.length; i++)
     {
-        await sql`CALL insert_book_genre(${bookId}, ${genres[i]})`;
+        await sql`CALL insert_book_genre(${bookId}::varchar, ${genres[i]}::varchar)`;
     }
 }
 
 async function processCSV(path)
 {
-    const content = fs.readFileSync(path, 'utf8').replaceAll('"', '');
-    const lines = content.split('\n');
-    let i = 1;
-    const booksTotal = lines.length;
-    for (const line of lines.slice(1)) {
-        try
-        {
-            const params = line.split(/,(?!\s)/);
-            const bookId = params[0];
-            const title = params[1];
-            const series = params[2];
-            const author = params[3];
-            const rating = parseFloat(params[4]);
-            const description = params[5];
-            const language = params[6];
-            const isbn = params[7];
-            const genres = params[8].replace('[', '').replace(']', '').split(', ');
-            const bookFormat = params[10];
-            const edition = params[11];
-            const pages = parseInt(params[12]);
-            const publisher = params[13];
-            const publishDate = params[14];
-            const numRatings = parseInt(params[17]);
-            const coverImg = params[21];
-            const price = parseFloat(params[24]);
-            console.log(`Inserting ${i++}/${booksTotal}`);
-            await insertBook(bookId, title, series, author, rating, description, language, isbn, genres, bookFormat, edition, pages, publisher, publishDate, numRatings, coverImg, price);
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
+    const results = [];
+    fs.createReadStream(path)
+        .pipe(csv())
+        .on('data', async (data) => {
+            results.push(data);
+        })
+        .on('end', async () => {
+            for(let i = 0; i < results.length; i++)
+            {
+                try {
+                    console.log(`Inserting ${i}/${results.length}`);
+                    let data = results[i];
+                    await insertBook(
+                        data["bookId"],
+                        data["title"],
+                        data["series"],
+                        data["author"],
+                        parseFloat(data["rating"]),
+                        data["description"],
+                        data["language"],
+                        data["isbn"],
+                        data["genres"].replace('[', '').replace(']', '').split(', '),
+                        data["bookFormat"],
+                        data["edition"],
+                        parseInt(data["pages"]),
+                        data["publisher"],
+                        data["publishDate"],
+                        parseInt(data["numRatings"]),
+                        data["coverImg"],
+                        parseFloat(data["price"]),
+                    );
+                }
+                catch (ex)
+                {
+                    console.log(ex);
+                }
+            }
+        });
 }
 
 async function extractBookReviewsCSV(bookID)
