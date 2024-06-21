@@ -17,30 +17,44 @@ const sql = postgres({
     },
 });
 
-async function insertBook(title, description, language, publication_date, pages, publisher, edition, reviews, author, genre) {
-    await sql`CALL insert_book(${title}, ${description}, ${language}, TO_DATE(${publication_date}, 'MM/DD/YYYY'), ${pages}, ${publisher}, ${edition}, ${reviews}, ${author}, ${genre})`;
+async function insertBook(bookId, title, series, author, rating, description, language, isbn, genres, bookFormat, edition, pages, publisher, publishDate, numRatings, coverImg, price) {
+    await sql`CALL insert_book(${bookId}, ${title}, ${series}, ${author}, ${rating}, ${description}, ${language}, ${isbn}, ${bookFormat}, ${edition}, ${pages}, ${publisher}, TO_DATE(${publishDate}, 'MM/DD/YY'), ${numRatings}, ${coverImg}, ${price})`;
+    let i = 0;
+    for(i = 0; i < genres.length; i++)
+    {
+        await sql`CALL insert_book_genre(${bookId}, ${genres[i]})`;
+    }
 }
 
 async function processCSV(path)
 {
-    const content = fs.readFileSync(path, 'utf8');
+    const content = fs.readFileSync(path, 'utf8').replaceAll('"', '');
     const lines = content.split('\n');
+    let i = 1;
+    const booksTotal = lines.length;
     for (const line of lines.slice(1)) {
         try
         {
-            const params = line.split(",");
+            const params = line.split(/,(?!\s)/);
+            const bookId = params[0];
             const title = params[1];
-            const description = '';
+            const series = params[2];
+            const author = params[3];
+            const rating = parseFloat(params[4]);
+            const description = params[5];
             const language = params[6];
-            const publication_date = params[10];
-            const pages = parseInt(params[7]);
-            const publisher = params[11];
-            const edition = '';
-            const reviews = parseInt(params[9]);
-            const author = params[2];
-            const genre = faker.faker.music.genre();
-            console.log("Inserting " + title);
-            await insertBook(title, description, language, publication_date, pages, publisher, edition, reviews, author, genre);
+            const isbn = params[7];
+            const genres = params[8].replace('[', '').replace(']', '').split(', ');
+            const bookFormat = params[10];
+            const edition = params[11];
+            const pages = parseInt(params[12]);
+            const publisher = params[13];
+            const publishDate = params[14];
+            const numRatings = parseInt(params[17]);
+            const coverImg = params[21];
+            const price = parseFloat(params[24]);
+            console.log(`Inserting ${i++}/${booksTotal}`);
+            await insertBook(bookId, title, series, author, rating, description, language, isbn, genres, bookFormat, edition, pages, publisher, publishDate, numRatings, coverImg, price);
         }
         catch (e) {
             console.log(e);
