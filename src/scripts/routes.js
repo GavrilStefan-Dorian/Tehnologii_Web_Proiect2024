@@ -43,6 +43,10 @@ const routes = [
         sendFile('./Pages/home.html', res);
     }),
 
+    new Route('/home', 'GET', (req, res) => {
+        sendFile('./Pages/home.html', res);
+    }),
+
     new Route('/login', 'GET', (req, res) => {
         sendFile('./Pages/login.html', res);
     }),
@@ -102,15 +106,17 @@ const routes = [
 
 
     new Route('/register', 'POST', (req, res) => {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-        req.on('end', async () => {
-            const formData = new URLSearchParams(body);
-            const username = formData.get('username');
-            const email = formData.get('email');
-            const password = formData.get('password');
+        const form = new formidable.IncomingForm();
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Error parsing form data' }));
+                return;
+            }
+
+            const email = fields.email;
+            const password = fields.password;
+            const username = fields.username;
             const role = 'client';
 
             const hashedPassword = await bcrypt.hash(password[0], 10);
@@ -145,7 +151,7 @@ const routes = [
     new Route('/book', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             requireLogin(req, res, () => {
-                sendFile('./Pages/book.html', res);
+                sendUrl('/book.html', res);
             });
         });
     }),
@@ -153,7 +159,7 @@ const routes = [
     new Route('/books', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             requireLogin(req, res, () => {
-                sendFile('./Pages/books.html', res);
+                sendUrl('/books.html', res);
             });
         });
     }),
@@ -161,7 +167,7 @@ const routes = [
     new Route('/group-page', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             requireLogin(req, res, () => {
-                sendFile('./Pages/group-page.html', res);
+                sendUrl('/group-page.html', res);
             });
         });
     }),
@@ -169,7 +175,7 @@ const routes = [
     new Route('/search', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             requireLogin(req, res, () => {
-                sendFile('./Pages/search.html', res);
+                sendUrl('/search.html', res);
             });
         });
     }),
@@ -177,7 +183,7 @@ const routes = [
     new Route('/view-groups', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             requireLogin(req, res, () => {
-                sendFile('./Pages/view-groups.html', res);
+                sendUrl('/view-groups.html', res);
             });
         });
     }),
@@ -185,13 +191,18 @@ const routes = [
     new Route('/admin', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             restrictToAdmin(req, res, () => {
-                sendFile('./Pages/admin.html', res);
+                sendUrl('/admin.html', res);
             });
         });
     }),
-
     // Add other routes 
 ];
+
+
+function sendUrl(url, res) {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ url: url }));
+}
 
 function sendError(res, statusCode, message) {
     res.writeHead(statusCode, { 'Content-Type': 'application/json' });

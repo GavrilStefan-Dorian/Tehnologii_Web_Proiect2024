@@ -9,9 +9,13 @@
 </head>
 <body>
   <script src="../JavaScript/components.js"></script>
+  <script src="../JavaScript/req_wrapper_jwt.js"></script> 
   <script>
     createSidebar(0);
-  </script>
+    document.addEventListener('DOMContentLoaded', function() {
+      handleNavigation();
+    });
+    </script>
   <div class="content-wrapper">
     <div class="contact-form-wrapper">
       <div class="contact-form-wrapper__content">

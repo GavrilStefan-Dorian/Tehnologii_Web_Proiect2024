@@ -9,11 +9,14 @@
 </head>
 <body>
   <script src="../JavaScript/components.js"></script>
-  <script src="../../scripts/auth.js"></script>
-
+  <script src="../JavaScript/req_wrapper_jwt.js"></script> 
   <script>
     createSidebar(0);
-  </script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      handleNavigation();
+    });
+    </script>
   <div class="container">
     <div class="container__wrapper">
       <div class="header">

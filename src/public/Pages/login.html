@@ -9,18 +9,21 @@
 </head>
 <body>
     <script src="../JavaScript/components.js"></script>
+    <script src="../JavaScript/req_wrapper_jwt.js"></script> 
     <script>
         createSidebar(0);
-
+        
         document.addEventListener('DOMContentLoaded', function() {
+            handleNavigation();
+            
             document.querySelector('.login-form').addEventListener('submit', async function(event) {
                 event.preventDefault();
-
+                
                 const formData = new FormData(event.target);
                 console.log("Form Data:", formData);
 
                 try {
-                    const response = await fetch('http://127.0.0.1:3000/login', {
+                    const response = await fetch('/login', {
                         method: 'POST',
                         body: formData
                     });
@@ -28,7 +31,7 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-
+                    
                     const responseData = await response.json();
                     localStorage.setItem('jwtToken', responseData.token);
                     window.location.href='/';
@@ -39,22 +42,22 @@
                 }
             });
         });
-    </script>
+        </script>
 
-    <div class="login-container">
-        <div class="login-container__form-container">
-            <div class="login-container__form-header">
-                <h2 class="login-container__form-title">Member Login</h2>
+<div class="login-container">
+    <div class="login-container__form-container">
+        <div class="login-container__form-header">
+            <h2 class="login-container__form-title">Member Login</h2>
+        </div>
+        <form class="login-form">
+            <div class="login-form__input-container">
+                <input type="email" name="email" placeholder="Email" class="login-form__input" required autocomplete="username">
             </div>
-            <form class="login-form">
-                <div class="login-form__input-container">
-                    <input type="email" name="email" placeholder="Email" class="login-form__input" required autocomplete="username">
-                </div>
-                <div class="login-form__input-container">
-                    <input type="password" name="password" placeholder="Password" class="login-form__input" required autocomplete="current-password">
-                </div>
-                <div class="login-form__button-container">
-                    <button type="submit" class="login-form__button">Login</button>
+            <div class="login-form__input-container">
+                <input type="password" name="password" placeholder="Password" class="login-form__input" required autocomplete="current-password">
+            </div>
+            <div class="login-form__button-container">
+                <button type="submit" class="login-form__button">Login</button>
                 </div>
                 <div class="login-form__footer">
                     <a href="/forgot-pass" class="login-form__footer-link">Forgot Username / Password?</a>

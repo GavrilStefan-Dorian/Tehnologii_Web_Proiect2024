@@ -38,11 +38,6 @@ function sendFile(url, res) {
     //     filePath = path.join(__dirname, '../public', fileName);
     // }
 
-    console.log(url);
-    console.log(fileName);
-    console.log(filePath);
-    console.log();
-
     if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('File not found');

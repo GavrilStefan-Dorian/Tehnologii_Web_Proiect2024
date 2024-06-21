@@ -9,8 +9,13 @@
 </head>
 <body>
   <script src="../JavaScript/components.js"></script>
+  <script src="../JavaScript/req_wrapper_jwt.js"></script> 
   <script>
     createSidebar(0);
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      handleNavigation();
+    });
   </script>
   <div class="forgot-pass-container">
     <div class="forgot-pass-form-container">
