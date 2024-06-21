@@ -1,4 +1,4 @@
-const Route = require('./Route');
+const Route = require('./route');
 const { sendFile } = require('./utils');
 const { getUserByEmail, insertUser } = require('./users');
 const bcrypt = require('bcryptjs');
@@ -43,9 +43,7 @@ function restrictToAdmin(req, res, next) {
 }
 
 const routes = [
-    new Route('/', 'GET', (req, res) => {
-        sendFile('./Pages/home.html', res);
-    }),
+    new Route('/', homeRoute.method, homeRoute.handler),
 
     homeRoute,
 

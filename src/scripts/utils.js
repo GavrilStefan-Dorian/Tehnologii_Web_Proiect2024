@@ -39,6 +39,7 @@ function sendFile(url, res) {
             // For unknown file types, return 404
             res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.end('File not found');
+
             return false;
     }
 
@@ -51,6 +52,7 @@ function sendFile(url, res) {
     if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('File not found');
+    
         return false;
     }
 
@@ -83,6 +85,7 @@ function sendFile(url, res) {
     res.writeHead(200, { 'Content-Type': contentType });
     const fileContent = fs.readFileSync(filePath);
     res.end(fileContent);
+
 
     return true;
 }
