@@ -7,33 +7,64 @@
     <link rel="stylesheet" href="../Styling/books.css">
     <link rel="stylesheet" href="../Styling/sidebar.css">
     <script src="../JavaScript/components.js"></script>
-    <script src="../Components/books.js"></script>
+    <script src="../JavaScript/books.js"></script>
+    <script src="../../scripts/auth.js"></script>
 </head>
 <body>
-<div class="sidebar-padded">
-    <div class="list">
-
+    <div class="sidebar-padded">
+        <div class="list">
+            <!-- Books will be dynamically inserted here -->
+        </div>
     </div>
-</div>
 
-<script>
-    createSidebar(1);
+    <script>
+        createSidebar(1);
 
-    const books = [
-        createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-        createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-        createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-        createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-    ];
+        const books = [
+            createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+            createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+            createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+            createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+        ];
 
-    const bookLists = [
-        createBookList("To Read", books),
-        createBookList("Reading", books),
-        createBookList("Finished", books)
-    ]
+        const bookLists = [
+            createBookList("To Read", books),
+            createBookList("Reading", books),
+            createBookList("Finished", books)
+        ];
 
-    const bookList = document.getElementsByClassName("list")[0];
-    bookLists.forEach(x => bookList.innerHTML += x);
-</script>
+        const bookList = document.getElementsByClassName("list")[0];
+        bookLists.forEach(x => bookList.innerHTML += x);
+
+        function getToken() {
+            return localStorage.getItem('jwtToken');
+        }
+
+        function fetchData(url) {
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + getToken(),
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(data => {
+                console.log('Data fetched successfully:', data);
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        }
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('books__list__item__info__view__text')) {
+                const url = event.target.parentElement.getAttribute('href');
+                fetchData(url);
+            }
+        });
+    </script>
 </body>
 </html>

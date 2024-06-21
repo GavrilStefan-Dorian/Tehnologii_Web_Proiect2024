@@ -71,9 +71,12 @@ popularContainers.forEach(container => {
 // ^ GROUP CARDS
 
 //  ˇ  GROUP CREATE
-document.querySelector('.create-group-btn').addEventListener('click', function() {
-  window.location.href = 'create-group.html';
-});
+
+// No longer offer create rights to regular users, use admin panel!!
+
+// document.querySelector('.create-group-btn').addEventListener('click', function() {
+//   window.location.href = 'create-group.html';
+// });
 // ^ group create
 
 //  ˇ

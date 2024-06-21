@@ -17,24 +17,24 @@
       <div class="register-container__form-header">
         <h2 class="register-container__form-title">Register</h2>
       </div>
-      <form class="register-form">
+      <form class="register-form" action="http://127.0.0.1:3000/register" method="POST">
         <div class="register-form__input-container">
-          <input type="text" placeholder="Username" class="register-form__input">
+          <input type="text" name="username" placeholder="Username" class="register-form__input" required>
         </div>
         <div class="register-form__input-container">
-          <input type="email" placeholder="Email" class="register-form__input">
+          <input type="email" name="email" placeholder="Email" class="register-form__input">
         </div>
         <div class="register-form__input-container">
-          <input type="password" placeholder="Password" class="register-form__input">
+          <input type="password" name="password" placeholder="Password" class="register-form__input">
         </div>
         <div class="register-form__input-container">
-          <input type="password" placeholder="Confirm Password" class="register-form__input">
+          <input type="password" name="confirm_password" placeholder="Confirm Password" class="register-form__input">
         </div>
         <div class="register-form__button-container">
           <button type="submit" class="register-form__button">Register</button>
         </div>
         <div class="register-form__footer">
-          <a href="login.html" class="register-form__footer-link">Already have an account? Login</a>
+          <a href="/login" class="register-form__footer-link">Already have an account? Login</a>
         </div>
       </form>
     </div>
