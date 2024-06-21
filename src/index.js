@@ -7,6 +7,7 @@ const routes  = require("./scripts/routes");
 const path = require("path");
 const fs = require("fs");
 const {sendFile} = require("./scripts/utils");
+const {getTopBooks, getPopularBooks, extractBookReviewsCSV, extractBookReviewsXML} = require("./scripts/db");
 
 const server = http.createServer((req, res) => {
     const route = req.url;
@@ -22,6 +23,8 @@ const server = http.createServer((req, res) => {
         return;
 });
 
-server.listen(port, hostname, () => {
+server.listen(port, hostname, async () => {
+    console.log(await getPopularBooks(2));
+
     console.log(`Server running at http://${hostname}:${port}/`);
 });
