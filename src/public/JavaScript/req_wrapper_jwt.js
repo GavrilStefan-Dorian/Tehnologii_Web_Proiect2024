@@ -35,6 +35,7 @@ function handleNavigation() {
                     window.location.href = newUrl;
                 }
             }).catch(error => {
+                window.location.href = '/';
                 console.error('Error fetching data:', error);
             });
         });

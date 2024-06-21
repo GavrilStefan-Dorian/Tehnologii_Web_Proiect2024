@@ -106,15 +106,17 @@ const routes = [
 
 
     new Route('/register', 'POST', (req, res) => {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-        req.on('end', async () => {
-            const formData = new URLSearchParams(body);
-            const username = formData.get('username');
-            const email = formData.get('email');
-            const password = formData.get('password');
+        const form = new formidable.IncomingForm();
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Error parsing form data' }));
+                return;
+            }
+
+            const email = fields.email;
+            const password = fields.password;
+            const username = fields.username;
             const role = 'client';
 
             const hashedPassword = await bcrypt.hash(password[0], 10);

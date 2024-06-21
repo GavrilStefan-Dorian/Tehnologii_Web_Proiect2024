@@ -14,6 +14,8 @@
         createSidebar(0);
         
         document.addEventListener('DOMContentLoaded', function() {
+            handleNavigation();
+            
             document.querySelector('.login-form').addEventListener('submit', async function(event) {
                 event.preventDefault();
                 
@@ -39,11 +41,6 @@
                     alert("An error occurred while logging in.");
                 }
             });
-        });
-
-        
-        document.addEventListener('DOMContentLoaded', function() {
-          handleNavigation();
         });
         </script>
 
