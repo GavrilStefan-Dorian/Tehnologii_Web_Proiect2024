@@ -8,25 +8,25 @@
     <link rel="stylesheet" href="../Styling/sidebar.css">
     <script src="../JavaScript/components.js"></script>
     <script src="../JavaScript/search.js"></script>
-    <script src="../../scripts/auth.js"></script>
+    <script src="../JavaScript/req_wrapper_jwt.js"></script> 
 </head>
 <body>
-<div class="sidebar-padded">
-    <div class="list">
-        <div class="list__search">
-            <img class="list__search__icon" src="../Resources/Svg/search.svg">
-            <input class="list__search__input" placeholder="Search...">
-        </div>
-        <p class="list__alternative">Search by category</p>
-        <div class="list__categories">
-
-        </div>
+    <div class="sidebar-padded">
+        <div class="list">
+            <div class="list__search">
+                <img class="list__search__icon" src="../Resources/Svg/search.svg">
+                <input class="list__search__input" placeholder="Search...">
+            </div>
+            <p class="list__alternative">Search by category</p>
+            <div class="list__categories">
+                
+            </div>
     </div>
 </div>
 
 <script>
     createSidebar(2);
-
+    
     const categories = [
         createCategory("Art"),
         createCategory("Non-fiction"),
@@ -35,6 +35,10 @@
 
     const list = document.getElementsByClassName("list__categories")[0];
     categories.forEach(x => list.innerHTML += x);
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    handleNavigation();
+    });
 </script>
 </body>
 </html>

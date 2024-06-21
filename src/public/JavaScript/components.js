@@ -1,3 +1,4 @@
+
 var navbarHidden = true;
 var navbar = null;
 
@@ -75,27 +76,8 @@ function createSidebar(selected) {
         menu.addEventListener("click", toggleNavbar);
     }
 
-    const links = document.querySelectorAll('a');
-  links.forEach(link => {
-    link.addEventListener('click', function(event) {
-      event.preventDefault(); 
-      const url = this.getAttribute('href');
-
-      fetch(url, {
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + getToken()
-        }
-      }).then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        window.location.href = url; 
-      }).catch(error => {
-        console.error('Error fetching data:', error);
-      });
-    });
-  });
+    handleNavigation();
+    
 }
 
 function toggleNavbar() {
@@ -118,9 +100,39 @@ function logout() {
 
 function getToken() {
     const token = localStorage.getItem('jwtToken');
+    console.log(token);
     if(token) {
         return token;
     }
     return null;
 }
 
+function handleNavigation() {
+    const links = document.querySelectorAll('a');
+
+    links.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const url = this.getAttribute('href');
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + getToken()
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(data => {
+                const newUrl = data.url;
+                console.log("Navigating to:", newUrl);
+                window.location.href = newUrl; 
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        });
+    });
+}
