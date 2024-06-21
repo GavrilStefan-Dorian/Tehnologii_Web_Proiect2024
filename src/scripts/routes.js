@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtSecret = require('./config').jwtSecret;
 const formidable = require('formidable');
+const generateRSSFeed = require('./rssFeed');
+
 
 
 function authenticateToken(req, res, next) {
@@ -194,6 +196,11 @@ const routes = [
                 sendUrl('/admin.html', res);
             });
         });
+    }),
+    new Route('/rssFeed', 'GET', async (req, res) => {
+        const rssContent = await generateRSSFeed();
+        res.writeHead(200, { 'Content-Type': 'application/rss+xml' });
+        res.end(rssContent);
     }),
     // Add other routes 
 ];

@@ -6,6 +6,7 @@
     "dotenv": "^16.4.5",
     "formidable": "^3.5.1",
     "jsonwebtoken": "^9.0.2",
-    "postgres": "^3.4.4"
+    "postgres": "^3.4.4",
+    "xmllint": "^0.1.1"
   }
 }

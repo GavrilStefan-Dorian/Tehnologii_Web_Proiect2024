@@ -69,11 +69,40 @@ async function getPopularBooks(category)
     return await sql`SELECT get_popular_books(${category})`;
 }
 
+
+async function getLatestReviews(limit = 10) {
+    const reviews = await sql`
+        SELECT r.id, r.rating, r.description, r.creation_date,
+                u.username AS username,
+                b.book_id AS book_id, b.title AS book_title
+        FROM reviews r
+        INNER JOIN users u ON r.user_id = u.user_id
+        INNER JOIN books b ON r.book_id = b.book_id
+        ORDER BY r.creation_date DESC
+        LIMIT ${limit};
+    `;
+    
+    return reviews.map(review => ({
+        id: review.id,
+        rating: review.rating,
+        description: review.description,
+        creation_date: review.creation_date,
+        user: {
+            username: review.username
+        },
+        book: {
+            book_id: review.book_id,
+            title: review.book_title
+        }
+    }));
+}
+
 module.exports = {
     processCSV,
     extractBookReviewsCSV,
     extractBookReviewsXML,
     getTopBooks,
     getPopularBooks,
+    getLatestReviews,
     sql
 }

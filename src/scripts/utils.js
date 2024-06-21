@@ -67,6 +67,7 @@ function sendFile(url, res) {
         case '.svg':
             contentType = 'image/svg+xml';
             break;
+        
     }
 
     res.writeHead(200, { 'Content-Type': contentType });
