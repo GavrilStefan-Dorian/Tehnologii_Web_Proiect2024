@@ -48,6 +48,21 @@
         <p id="description" class="details__description">No matter your goals, Atomic Habits offers a proven framework for improving--every day. James Clear, one of the world's leading experts on habit formation, reveals practical strategies that will teach you exactly how to form good habits, break bad ones, and master the tiny behaviors that lead to remarkable results.<br><br>If you're having trouble changing your habits, the problem isn't you. The problem is your system. Bad habits repeat themselves again and again not because you don't want to change, but because you have the wrong system for change. You do not rise to the level of your goals. You fall to the level of your systems. Here, you'll get a proven system that can take you to new heights.</p>
         !-->
         <p class="details__review">Reviews</p>
+        <p id="starsText" class="details__review__text">What would you rate this book?</p>
+        <div id="stars" class="details__review__stars">
+            <img onmouseover="onStarsHovered(1)" onmouseleave="onStarsUnhovered()" onmousedown="onStarsClicked(1)" class="details__review__stars__star" src="../Resources/Svg/star.svg" alt>
+            <img onmouseover="onStarsHovered(2)" onmouseleave="onStarsUnhovered()" onmousedown="onStarsClicked(2)" class="details__review__stars__star" src="../Resources/Svg/star.svg" alt>
+            <img onmouseover="onStarsHovered(3)" onmouseleave="onStarsUnhovered()" onmousedown="onStarsClicked(3)" class="details__review__stars__star" src="../Resources/Svg/star.svg" alt>
+            <img onmouseover="onStarsHovered(4)" onmouseleave="onStarsUnhovered()" onmousedown="onStarsClicked(4)" class="details__review__stars__star" src="../Resources/Svg/star.svg" alt>
+            <img onmouseover="onStarsHovered(5)" onmouseleave="onStarsUnhovered()" onmousedown="onStarsClicked(5)" class="details__review__stars__star" src="../Resources/Svg/star.svg" alt>
+        </div>
+        <div id="details__more" class="details__review__more" style="display: none">
+            <p class="details__review__more__text">Tell us about your experience...</p>
+            <span id="review__input" class="details__review__more__input" role="textbox" contenteditable placeholder="Tell us about your experience..."></span>
+            <button class="details__review__more__button" onclick="onSendReview()">
+                <p class="details__review__more__button__text">Send</p>
+            </button>
+        </div>
         <div class="details__reviews">
         </div>
     </div>
@@ -57,10 +72,70 @@
     
     createSidebar(1);
 
+    let starList = document.getElementById("stars");
+
+    let clicked = false;
+    let userRating = 0;
+
+    function onStarsClicked(stars)
+    {
+        if(clicked)
+            return;
+
+        clicked = true;
+        userRating = stars;
+        document.getElementById("details__more").style.display = "";
+    }
+
+    function onStarsUnhovered()
+    {
+        if(clicked)
+            return;
+
+        for(let i = 0; i < starList.childElementCount; i++)
+        {
+            starList.children[i].classList.remove("details__review__stars__star");
+            starList.children[i].classList.remove("details__review__stars__star--gold");
+        }
+
+        for(let i = 0; i < starList.childElementCount; i++)
+        {
+            starList.children[i].classList.add("details__review__stars__star");
+        }
+    }
+    function onStarsHovered(starCount)
+    {
+        if(clicked)
+            return;
+
+        for(let i = 0; i < starList.childElementCount; i++)
+        {
+            starList.children[i].classList.remove("details__review__stars__star");
+            starList.children[i].classList.remove("details__review__stars__star--gold");
+        }
+
+        for(let i = 0; i < starCount; i++)
+        {
+            starList.children[i].classList.add("details__review__stars__star--gold");
+        }
+
+        for(let i = starCount; i < starList.childElementCount; i++)
+        {
+            starList.children[i].classList.add("details__review__stars__star");
+        }
+    }
+
+    [|user|]
     [|book|]
     [|reviews|]
 
     console.log(book);
+
+    if(!user || user.reviewedBook)
+    {
+        starList.style.display = "none";
+        document.getElementById("starsText").style.display = "none";
+    }
 
     document.getElementById("title").innerText = book.title;
     document.getElementById("author").innerText = book.author;
@@ -73,7 +148,21 @@
     reviews.forEach(x => htmlReviews.push(createReview(x.username, x.creation_date, x.description, x.rating)));
     const reviewList = document.getElementsByClassName("details__reviews")[0];
     htmlReviews.forEach(x => reviewList.innerHTML += x);
-    
+
+    function onSendReview()
+    {
+        let input = document.getElementById("review__input");
+        let text = input.innerText;
+
+        if(!text)
+            return;
+
+        reviewList.innerHTML = createReview(user.username, Date.now(), text, userRating) + reviewList.innerHTML;
+        starList.style.display = "none";
+        document.getElementById("starsText").style.display = "none";
+        document.getElementById("details__more").style.display = "none";
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         handleNavigation(() => {
 

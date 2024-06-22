@@ -25,6 +25,15 @@ async function getBook(id, user = null)
     return books[0];
 }
 
+async function getUserReview(user, book)
+{
+    const reviews = sql`SELECT * FROM users LEFT JOIN reviews on users.user_id = reviews.user_id WHERE users.user_id = ${user} AND reviews.book_id = '${book}';`;
+    if(!reviews)
+        return null;
+
+    return reviews[0];
+}
+
 async function getBooks(ids)
 {
     const books = [];
@@ -130,5 +139,6 @@ module.exports = {
     getCategoryBooks,
     getLikedBooks,
     getBookmarkedBooks,
-    getBookStatuses
+    getBookStatuses,
+    getUserReview
 }

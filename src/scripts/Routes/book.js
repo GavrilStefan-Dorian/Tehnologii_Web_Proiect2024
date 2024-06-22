@@ -1,6 +1,6 @@
 const {sendFile, readFileContents, sendHTML, processToken} = require("../utils");
 const Route = require("../route");
-const {getBooks, getBook, getReviews} = require("../DAOs/booksDAO");
+const {getBooks, getBook, getReviews, getUserReview} = require("../DAOs/booksDAO");
 
 const bookRoute = new Route((req) => {
     const params = req.url.split('/');
@@ -25,9 +25,11 @@ const bookRoute = new Route((req) => {
             if(req.user)
                 user_id = req.user.userId;
 
+            const user = await getUserReview(user_id, req.book);
             const book = await getBook(req.book, user_id);
             const reviews = await getReviews(req.book);
 
+            contents = contents.replace("[|user|]", `const user=${JSON.stringify(user)};`);
             contents = contents.replace("[|book|]", `const book=${JSON.stringify(book)};`);
             contents = contents.replace("[|reviews|]", `const reviews=${JSON.stringify(reviews)};`);
 
