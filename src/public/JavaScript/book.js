@@ -1,4 +1,6 @@
-function createReview(name, date, text) {
+function createReview(name, date, text, rating) {
+    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    let parsedDate  = new Date(date);
     return `<div class="details__reviews__item">
                 <div class="details__reviews__item__header">
                     <img class="details__reviews__item__header__image" src="../Resources/Images/Profile.png">
@@ -7,15 +9,15 @@ function createReview(name, date, text) {
                             <p class="details__reviews__item__header__info__top__name">${name}</p>
                             <p class="details__reviews__item__header__info__top__rated">rated it </p>
                             <div class="details__reviews__item__header__info__top__rating">
-                                <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
-                                <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
-                                <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
-                                <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
-                                <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg">
+                                <img class="${rating >= 1 ? "book__info__header__info__rating__star" : "book__info__header__info__rating__empty"}" src="../Resources/Svg/star.svg">
+                                <img class="${rating >= 2 ? "book__info__header__info__rating__star" : "book__info__header__info__rating__empty"}" src="../Resources/Svg/star.svg">
+                                <img class="${rating >= 3 ? "book__info__header__info__rating__star" : "book__info__header__info__rating__empty"}" src="../Resources/Svg/star.svg">
+                                <img class="${rating >= 4 ? "book__info__header__info__rating__star" : "book__info__header__info__rating__empty"}" src="../Resources/Svg/star.svg">
+                                <img class="${rating >= 5 ? "book__info__header__info__rating__star" : "book__info__header__info__rating__empty"}" src="../Resources/Svg/star.svg">
                             </div>
                         </div>
 
-                        <p class="details__reviews__item__header__info__date">${date}</p>
+                        <p class="details__reviews__item__header__info__date">${parsedDate.toLocaleDateString("en-US", options)}</p>
                     </div>
 
                     <div class="details__reviews__item__header__buttons">

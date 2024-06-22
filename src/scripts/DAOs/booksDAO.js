@@ -23,7 +23,17 @@ async function getBooks(ids)
     return books;
 }
 
+async function getReviews(bookId)
+{
+    const books = await sql`SELECT * FROM reviews NATURAL JOIN users WHERE book_id = ${bookId};`;
+    if(!books)
+        return null;
+
+    return books;
+}
+
 module.exports = {
     getBook,
-    getBooks
+    getBooks,
+    getReviews
 }

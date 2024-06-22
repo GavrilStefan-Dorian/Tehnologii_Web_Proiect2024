@@ -14,7 +14,7 @@ function createBookList(title, books) {
     return html;
 }
 
-function createBook(title, author, image, rating, ratings) {
+function createBook(id, title, author, image, rating, ratings) {
     return `
                  <div class="books__list__item">
                     <img class="books__list__item__image" src=${image}>
@@ -31,7 +31,7 @@ function createBook(title, author, image, rating, ratings) {
                         </div>
                         <p class="books__list__item__info__ratings">${ratings} ratings</p>
 
-                        <a class="books__list__item__info__view" href="/book">
+                        <a class="books__list__item__info__view" href="/book/${id}">
                             <p class="books__list__item__info__view__text">View</p>
                         </a>
                     </div>

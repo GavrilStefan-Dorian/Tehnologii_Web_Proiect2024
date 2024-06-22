@@ -11,6 +11,7 @@ const generateRSSFeed = require('./rssFeed');
 const homeRoute = require('./Routes/home');
 const path = require("path");
 const booksRoute = require("./Routes/books");
+const bookRoute = require("./Routes/book");
 
 function authenticateToken(req, res, next) {
     const token = req.headers.authorization;
@@ -149,13 +150,7 @@ const routes = [
         sendFile('./Pages/about.html', res);
     }),
 
-    new Route('/book', 'GET', (req, res) => {
-        authenticateToken(req, res, () => {
-            requireLogin(req, res, () => {
-                sendUrl('/book.html', res);
-            });
-        });
-    }),
+    bookRoute,
 
     booksRoute,
 

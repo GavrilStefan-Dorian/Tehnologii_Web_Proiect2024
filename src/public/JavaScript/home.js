@@ -24,9 +24,9 @@ function createBookList(title, books) {
     return html;
 }
 
-function createBook(title, author, image) {
+function createBook(id, title, author, image) {
     return `
-    <a class="books__items__item" href="/book">
+    <a class="books__items__item" href="/book/${id}">
         <div class="books__items__item__cover">
           <img class="books__items__item__cover__image" src=${image}>
         </div>
