@@ -3,9 +3,11 @@
     "@faker-js/faker": "^8.4.1",
     "@supabase/supabase-js": "^2.43.4",
     "bcryptjs": "^2.4.3",
+    "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
     "formidable": "^3.5.1",
     "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "postgres": "^3.4.4",
     "xmllint": "^0.1.1"
   }

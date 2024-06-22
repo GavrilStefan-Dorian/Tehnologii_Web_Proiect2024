@@ -16,12 +16,12 @@ const searchRoute = require("./Routes/search");
 const viewBooksRoute = require("./Routes/view_books");
 
 function authenticateToken(req, res, next) {
-    const token = req.headers.authorization;
+    const token = req.headers.cookie.split(';').find(c => c.trim().startsWith('jwt=')).split('=')[1];
     if (!token) {
         return sendError(res, 401, 'Unauthorized: Missing token');
     }
 
-    jwt.verify(token.split(' ')[1], jwtSecret, (err, decoded) => {
+    jwt.verify(token, jwtSecret, (err, decoded) => {
         if (err) {
             return sendError(res, 403, 'Forbidden: Invalid token');
         }
@@ -98,6 +98,12 @@ const routes = [
                             res.end(JSON.stringify({ error: 'Invalid credentials' }));
                         } else {
                             const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, jwtSecret, { expiresIn: '1h' });
+
+                            res.setHeader('Set-Cookie', [
+                                `jwt=${token}; Max-Age=${60 * 60}; SameSite=Lax; Path=/`,
+                                `role=${user.role}; Max-Age=${60 * 60}; SameSite=Lax; Path=/`
+                              ]);
+
                             res.writeHead(200, { 'Content-Type': 'application/json' });
                             res.end(JSON.stringify({ message: 'Login successful', token: token , role: user.role}));
                         }
@@ -158,7 +164,7 @@ const routes = [
     new Route('/group-page', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             requireLogin(req, res, () => {
-                sendUrl('/group-page.html', res);
+                sendFile('./Pages/group-page.html', res);
             });
         });
     }),
@@ -170,7 +176,7 @@ const routes = [
     new Route('/view-groups', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             requireLogin(req, res, () => {
-                sendUrl('/view-groups.html', res);
+                sendFile('./Pages/view-groups.html', res);
             });
         });
     }),
@@ -178,7 +184,7 @@ const routes = [
     new Route('/admin', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             restrictToAdmin(req, res, () => {
-                sendUrl('/admin.html', res);
+                sendFile('./Pages/admin.html', res);
             });
         });
     }),
@@ -190,10 +196,10 @@ const routes = [
     // Add other routes 
 ];
 
-function sendUrl(url, res) {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ url: url }));
-}
+// function sendUrl(url, res) {
+//     res.writeHead(200, { 'Content-Type': 'application/json' });
+//     res.end(JSON.stringify({ url: url }));
+// }
 
 function sendError(res, statusCode, message) {
     res.writeHead(statusCode, { 'Content-Type': 'application/json' });

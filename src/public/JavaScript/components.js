@@ -1,9 +1,18 @@
-
 var navbarHidden = true;
 var navbar = null;
 let logged = false;
+let token;
 
 function createSidebar(selected) {
+    token = document.cookie.split(';').find(c => c.trim().startsWith('jwt='));
+    
+    if(token !== null && token !== undefined) {
+        token = token.split('=')[1];
+    }
+
+    console.log(token);
+
+
     const selectableItems = [
         '<a class="sidebar__items__container__link" href="/home"><img class="sidebar__items__container__item" src="../Resources/Svg/home.svg"></a>',
         '<a class="sidebar__items__container__link" href="/books"><img class="sidebar__items__container__item" src="../Resources/Svg/book.svg"></a>',
@@ -41,13 +50,17 @@ function createSidebar(selected) {
     </div>
 `;
 
-    if(getToken()) {
+    if(token !== null && token !== undefined) {
         logged = true;
+        role = document.cookie.split(';').find(c => c.trim().startsWith('role=')).split('=')[1];
+        console.log(role === 'admin');
+        console.log(role);
+
         html += `
         <div class="sidebar__items sidebar__items--bottom">
         `
 
-        if(localStorage.getItem('role') === 'admin') {
+        if(role === 'admin') {
             html += `
                 <div class="sidebar__items__container" id="adminButton">
                     <img class="sidebar__items__container__item" src="../Resources/Svg/admin.svg">
@@ -74,7 +87,7 @@ function createSidebar(selected) {
     <a class="navbar__links__link" href="/about">About</a>
     `
 
-    if(logged === true && localStorage.getItem('role') === 'admin') {
+    if(logged === true && role === 'admin') {
         html += `
             <a class="navbar__links__link" href="/admin">Admin Panel</a>
         `
@@ -92,36 +105,34 @@ function createSidebar(selected) {
     document.body.innerHTML += html;
 
     const logoutButton = document.getElementById("logoutButton");
-    if(logoutButton && getToken()) {
+    if(logoutButton && token) {
         logoutButton.addEventListener("click", logout);
     }
 
     const adminButton = document.getElementById("adminButton");
-    if(adminButton && getToken()) {
-        adminButton.addEventListener("click", function(event) {
-            event.preventDefault();
-
-            const url = '/admin';
-
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + getToken()
-                }
-            }).then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            }).then(data => {
-                const newUrl = data.url;
-                console.log("Navigating to:", newUrl);
-                window.location.href = newUrl; 
-            }).catch(error => {
-                console.error('Error fetching data:', error);
-            });
-        });
+    if(adminButton && logged) {
+        adminButton.addEventListener("click", admin);
     }
+
+    //         fetch(url, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Authorization': 'Bearer ' + token
+    //             }
+    //         }).then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('Network response was not ok');
+    //             }
+    //             return response.json();
+    //         }).then(data => {
+    //             const newUrl = data.url;
+    //             console.log("Navigating to:", newUrl);
+    //             window.location.href = newUrl; 
+    //         }).catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    //     });
+    // }
 
     const navbars = document.getElementsByClassName("navbar__links");
     if(navbars.length > 0) {
@@ -136,29 +147,23 @@ function createSidebar(selected) {
 
     const sidebarScrollable = document.querySelector('.sidebar__scrollable');
 
-sidebarScrollable.addEventListener('scroll', function() {
-    const scrollTop = this.scrollTop;
-    const scrollHeight = this.scrollHeight;
-    const clientHeight = this.clientHeight;
+    sidebarScrollable.addEventListener('scroll', function() {
+        const scrollTop = this.scrollTop;
+        const scrollHeight = this.scrollHeight;
+        const clientHeight = this.clientHeight;
 
-    if (scrollTop > 0) {
-        sidebarScrollable.classList.add('scrollable-top');
-    } else {
-        sidebarScrollable.classList.remove('scrollable-top');
-    }
+        if (scrollTop > 0) {
+            sidebarScrollable.classList.add('scrollable-top');
+        } else {
+            sidebarScrollable.classList.remove('scrollable-top');
+        }
 
-    if (scrollHeight - scrollTop > clientHeight) {
-        sidebarScrollable.classList.add('scrollable-bottom');
-    } else {
-        sidebarScrollable.classList.remove('scrollable-bottom');
-    }
-});
-
-
-
-
-    handleNavigation();
-    
+        if (scrollHeight - scrollTop > clientHeight) {
+            sidebarScrollable.classList.add('scrollable-bottom');
+        } else {
+            sidebarScrollable.classList.remove('scrollable-bottom');
+        }
+});    
 }
 
 function toggleNavbar() {
@@ -175,44 +180,23 @@ function toggleNavbar() {
 }
 
 function logout() {
-    localStorage.removeItem('jwtToken');
+    document.cookie = 'jwt=; Max-Age=0; path=/' 
     window.location.replace('/login');
 }
 
-function getToken() {
-    const token = localStorage.getItem('jwtToken');
-    if(token) {
-        return token;
-    }
-    return null;
+function admin() {
+    window.location.replace('/admin');
 }
 
-function handleNavigation() {
-    const links = document.querySelectorAll('a');
+// for some reason didnt run? for gettoken
 
-    links.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
+// function getToken() {
+//     const token = document.cookie.split(';').find(c => c.trim().startsWith('jwt=')).split('=')[1];
+//     console.log(token);
 
-            const url = this.getAttribute('href');
-
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + getToken()
-                }
-            }).then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            }).then(data => {
-                const newUrl = data.url;
-                console.log("Navigating to:", newUrl);
-                window.location.href = newUrl; 
-            }).catch(error => {
-                console.error('Error fetching data:', error);
-            });
-        });
-    });
-}
+//     console.log("HERE", token);
+//     if(token) {
+//         return token;
+//     }
+//     return null;
+// }
