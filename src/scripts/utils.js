@@ -1,6 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const Route = require("./route");
+const {getLikedBooks, getBookmarkedBooks, getBookStatuses} = require("./DAOs/booksDAO");
+const jwt = require("jsonwebtoken");
+const {jwtSecret} = require("./config");
 
 function readFileContents(url)
 {
@@ -136,10 +139,50 @@ function isResource(url)
     }
 }
 
+async function getUserBookData(req, contents)
+{
+    let likedBooks = [];
+    let bookmarkedBooks = [];
+    let bookStatuses = [];
+
+    if(req.user)
+    {
+        likedBooks = await getLikedBooks(req.user.user_id);
+        bookmarkedBooks = await getBookmarkedBooks(req.user.user_id);
+        bookStatuses = await getBookStatuses(req.user.user_id);
+    }
+
+    contents = contents.replace("[|likedBooks|]", `const likedBooks=${JSON.stringify(likedBooks)}`);
+    contents = contents.replace("[|bookmarkedBooks|]", `const bookmarkedBooks=${JSON.stringify(bookmarkedBooks)}`);
+    contents = contents.replace("[|bookStatuses|]", `const bookStatuses=${JSON.stringify(bookStatuses)}`);
+
+    return contents;
+}
+
+function processToken(req, res, next) {
+    const token = req.headers.authorization;
+    if (!token) {
+        next();
+        return;
+    }
+
+    jwt.verify(token.split(' ')[1], jwtSecret, (err, decoded) => {
+        if (err) {
+            next();
+            return;
+        }
+
+        req.user = decoded;
+        next();
+    });
+}
+
 module.exports = {
     sendFile,
     readFileContents,
     sendHTML,
     getResourceRoute,
-    isResource
+    isResource,
+    getUserBookData,
+    processToken
 }

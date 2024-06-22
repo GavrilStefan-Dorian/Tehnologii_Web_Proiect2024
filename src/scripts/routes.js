@@ -17,7 +17,6 @@ const viewBooksRoute = require("./Routes/view_books");
 
 function authenticateToken(req, res, next) {
     const token = req.headers.authorization;
-
     if (!token) {
         return sendError(res, 401, 'Unauthorized: Missing token');
     }

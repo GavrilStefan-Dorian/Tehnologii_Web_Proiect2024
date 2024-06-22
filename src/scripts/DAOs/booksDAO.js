@@ -1,8 +1,24 @@
 const {sql, getPopularBooks, getTopBooks, getRecentBooks} = require("../db");
 
-async function getBook(id)
+async function getBook(id, user = null)
 {
-    const books = await sql`SELECT * FROM books WHERE book_id = ${id}`;
+    let books = [];
+    if(!user)
+        books = await sql`SELECT * FROM books WHERE book_id = ${id}`;
+    else books = await sql`SELECT books.*, CASE 
+        WHEN liked_books.book_id IS NOT NULL THEN TRUE
+        ELSE FALSE
+    END AS liked, CASE 
+        WHEN bookmarked_books.book_id IS NOT NULL THEN TRUE
+        ELSE FALSE
+    END AS bookmarked, CASE 
+        WHEN book_reading_status.book_id IS NOT NULL THEN book_reading_status.status
+        ELSE NULL
+    END AS status FROM (SELECT * FROM books Where book_id = ${id}) books
+    LEFT JOIN (SELECT * FROM liked_books WHERE user_id = ${user}) liked_books ON liked_books.book_id = books.book_id
+    LEFT JOIN (SELECT * FROM bookmarked_books WHERE user_id = ${user}) bookmarked_books ON bookmarked_books.book_id = books.book_id
+    LEFT JOIN (SELECT * FROM book_reading_status WHERE user_id = ${user}) book_reading_status ON book_reading_status.book_id = books.book_id;`;
+
     if(!books)
         return null;
 
@@ -89,6 +105,21 @@ async function getCategoryBooks(id)
     return books;
 }
 
+async function getLikedBooks(user_id)
+{
+    return sql`SELECT * FROM liked_books WHERE user_id = ${user_id};`;
+}
+
+async function getBookmarkedBooks(user_id)
+{
+    return sql`SELECT * FROM bookmarked_books WHERE user_id = ${user_id};`;
+}
+
+async function getBookStatuses(user_id)
+{
+    return sql`SELECT * FROM book_reading_status WHERE user_id = ${user_id};`;
+}
+
 module.exports = {
     getBook,
     getBooks,
@@ -96,5 +127,8 @@ module.exports = {
     getCategories,
     getGenreBooks: getCategoryBooks,
     getGenre: getCategory,
-    getCategoryBooks
+    getCategoryBooks,
+    getLikedBooks,
+    getBookmarkedBooks,
+    getBookStatuses
 }

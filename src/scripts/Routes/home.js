@@ -1,6 +1,6 @@
 const {sendFile, readFileContents, sendHTML} = require("../utils");
 const Route = require("../route");
-const {getBooks} = require("../DAOs/booksDAO");
+const {getBooks, getLikedBooks, getBookmarkedBooks, getBookStatuses} = require("../DAOs/booksDAO");
 const {getPopularBooks, getTopBooks, getRecentBooks} = require("../db");
 
 function buildList(id, name, books)
