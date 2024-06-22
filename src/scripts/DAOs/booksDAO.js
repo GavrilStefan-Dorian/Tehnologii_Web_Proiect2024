@@ -41,9 +41,29 @@ async function getCategories()
     return categories;
 }
 
+async function getCategoryBooks(id)
+{
+    const books = await sql`SELECT * FROM books NATURAL JOIN genres WHERE genre_id = ${id}`;
+    if(!books)
+        return null;
+
+    return books;
+}
+
+async function getCategory(id)
+{
+    const categories = await sql`SELECT * FROM genres WHERE genre_id = ${id}`;
+    if(!categories)
+        return null;
+
+    return categories[0];
+}
+
 module.exports = {
     getBook,
     getBooks,
     getReviews,
-    getCategories
+    getCategories,
+    getCategoryBooks,
+    getCategory
 }

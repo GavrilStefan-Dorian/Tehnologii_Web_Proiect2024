@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Boo - Book Reviewer</title>
+  <link rel="stylesheet" href="../Styling/view_books.css">
+  <link rel="stylesheet" href="../Styling/sidebar.css">
+  <script src="../JavaScript/components.js"></script>
+  <script src="../JavaScript/home.js"></script>
+  <script src="../JavaScript/req_wrapper_jwt.js"></script>
+</head>
+<body>
+  <div class="sidebar-padded">
+    <p id="title" class="books__title__text"></p>
+    <div class="list">
+
+    </div>
+  </div>
+
+  <script>
+    createSidebar(1);
+
+    // This will be replaced with lists of books
+    [|title|]
+    [|books|]
+
+    document.getElementById("title").innerText = title;
+
+    const bookList = document.getElementsByClassName("list")[0];
+    let html = "";
+    books.forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg));
+    bookList.innerHTML = html;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      handleNavigation();
+    });
+
+  </script>
+</body>
+</html>

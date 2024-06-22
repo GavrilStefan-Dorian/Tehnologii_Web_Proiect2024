@@ -1,6 +1,6 @@
 function createCategory(id, title) {
-    return `<div class="list__categories__category">
+    return `<a class="list__categories__category" href="/view_books/${id}">
         <p class="list__categories__category__title">${title}</p>
         <img class="list__categories__category__arrow" src="../Resources/Svg/chevron-right.svg">
-    </div>`;
+    </a>`;
 }

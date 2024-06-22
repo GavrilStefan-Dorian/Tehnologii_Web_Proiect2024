@@ -13,6 +13,7 @@ const path = require("path");
 const booksRoute = require("./Routes/books");
 const bookRoute = require("./Routes/book");
 const searchRoute = require("./Routes/search");
+const viewBooksRoute = require("./Routes/view_books");
 
 function authenticateToken(req, res, next) {
     const token = req.headers.authorization;
@@ -164,6 +165,8 @@ const routes = [
     }),
 
     searchRoute,
+
+    viewBooksRoute,
 
     new Route('/view-groups', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
