@@ -22,6 +22,9 @@ function handleNavigation() {
                     return response.json();
                 } else if (contentType && contentType.includes('text/html')) {
                     return response.text();
+                } else if (contentType && contentType.includes('application/rss+xml')) {
+                    return response.text();
+                    // window.location.href = url;
                 } else {
                     throw new Error('Unsupported content type: ' + contentType);
                 }

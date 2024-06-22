@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .sidebar {
   min-width: 64px;
   background-color: #FFFFFF;
@@ -17,6 +18,47 @@
   gap: 24px;
 }
 
+.sidebar__scrollable {
+  width: 100%;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: none; /* Hide scrollbar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px; /* Adjust gap as needed */
+  max-height: calc(100vh - 200px); /* Adjust max-height as needed */
+  position: relative; /* Relative positioning for pseudo-elements */
+}
+
+.sidebar__scrollable::before,
+.sidebar__scrollable::after {
+  content: "▲"; /* Unicode for upward arrow */
+  font-size: 10px; /* Adjust arrow size */
+  color: #262626; /* Color of arrows */
+  position: fixed; /* Fixed positioning relative to viewport */
+  left: 30px; /* Center horizontally */
+  transform: translateX(-50%); /* Center horizontally */
+  opacity: 0; /* Initially hidden */
+  pointer-events: none; /* Ensure indicators don't interfere with scrolling */
+  transition: opacity 0.3s ease-out; /* Fade animation */
+  cursor: pointer; /* Add pointer cursor */
+  z-index: 1000; /* Ensure arrows appear above other content */
+}
+
+.sidebar__scrollable::before {
+  top: 55px; /* Adjust distance from top */
+}
+
+.sidebar__scrollable::after {
+  content: "▼"; /* Unicode for downward arrow */
+  bottom: 120px; /* Adjust distance from bottom */
+}
+
+.sidebar__scrollable.scrollable-top::before,
+.sidebar__scrollable.scrollable-bottom::after {
+  opacity: 1; /* Show arrows when appropriate */
+}
+
 .sidebar__items--bottom {
   position: absolute;
   bottom: 0;
@@ -31,7 +73,6 @@
   height: 36px;
   display: flex;
   align-content: center;
-  cursor: pointer;
   justify-content: center;
 }
 

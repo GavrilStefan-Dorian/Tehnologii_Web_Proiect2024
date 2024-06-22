@@ -1,7 +1,7 @@
 
 var navbarHidden = true;
 var navbar = null;
-let role;
+let logged = false;
 
 function createSidebar(selected) {
     const selectableItems = [
@@ -10,13 +10,20 @@ function createSidebar(selected) {
         '<a class="sidebar__items__container__link" href="/search"><img class="sidebar__items__container__item" src="../Resources/Svg/search.svg"></a>',
         '<a class="sidebar__items__container__link" href="/view-groups"><img class="sidebar__items__container__item" src="../Resources/Svg/groups.svg"></a>',
         '<a class="sidebar__items__container__link" href="/help"><img class="sidebar__items__container__item" src="../Resources/Svg/question.svg"></a>',
-        '<a class="sidebar__items__container__link" href="/about"><img class="sidebar__items__container__item" src="../Resources/Svg/info.svg"></a>'
+        '<a class="sidebar__items__container__link" href="/about"><img class="sidebar__items__container__item" src="../Resources/Svg/info.svg"></a>',
+        '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>',
+        '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>',
+        '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>',
+        '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>'
+
     ];
 
     let html = `
 <div class="sidebar">
     <div class="sidebar__items">
          <img class="sidebar__items__profile" src="../Resources/Images/Profile.png">
+         <div class="sidebar__scrollable">
+
     `;
 
     let index = 0;
@@ -26,14 +33,16 @@ function createSidebar(selected) {
         else html += '<div class="sidebar__items__container">';
 
         html += x;
-        html += '</div>';
+        html += '</div>'; 
     });
 
     html += `
+         </div>
     </div>
 `;
 
     if(getToken()) {
+        logged = true;
         html += `
         <div class="sidebar__items sidebar__items--bottom">
         `
@@ -63,6 +72,16 @@ function createSidebar(selected) {
     <a class="navbar__links__link" href="/view-groups">Groups</a>
     <a class="navbar__links__link" href="/help">FAQ</a>
     <a class="navbar__links__link" href="/about">About</a>
+    `
+
+    if(logged === true && localStorage.getItem('role') === 'admin') {
+        html += `
+            <a class="navbar__links__link" href="/admin">Admin Panel</a>
+        `
+    }
+
+
+    html += `
 </div>
 <div class="navbar">
     <img class="navbar__profile" src="../Resources/Images/Profile.png">
@@ -114,6 +133,29 @@ function createSidebar(selected) {
         var menu = menus[0];
         menu.addEventListener("click", toggleNavbar);
     }
+
+    const sidebarScrollable = document.querySelector('.sidebar__scrollable');
+
+sidebarScrollable.addEventListener('scroll', function() {
+    const scrollTop = this.scrollTop;
+    const scrollHeight = this.scrollHeight;
+    const clientHeight = this.clientHeight;
+
+    if (scrollTop > 0) {
+        sidebarScrollable.classList.add('scrollable-top');
+    } else {
+        sidebarScrollable.classList.remove('scrollable-top');
+    }
+
+    if (scrollHeight - scrollTop > clientHeight) {
+        sidebarScrollable.classList.add('scrollable-bottom');
+    } else {
+        sidebarScrollable.classList.remove('scrollable-bottom');
+    }
+});
+
+
+
 
     handleNavigation();
     
