@@ -181,7 +181,6 @@ function logout() {
 
 function getToken() {
     const token = localStorage.getItem('jwtToken');
-    console.log(token);
     if(token) {
         return token;
     }

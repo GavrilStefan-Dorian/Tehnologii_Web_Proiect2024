@@ -1,4 +1,4 @@
-const {sendFile, readFileContents, sendHTML} = require("../utils");
+const {sendFile, readFileContents, sendHTML, getUserBookData} = require("../utils");
 const Route = require("../route");
 const {getBooks} = require("../DAOs/booksDAO");
 

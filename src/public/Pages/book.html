@@ -60,6 +60,8 @@
     [|book|]
     [|reviews|]
 
+    console.log(book);
+
     document.getElementById("title").innerText = book.title;
     document.getElementById("author").innerText = book.author;
     document.getElementById("rating").innerText = book.rating;
@@ -73,7 +75,9 @@
     htmlReviews.forEach(x => reviewList.innerHTML += x);
     
     document.addEventListener('DOMContentLoaded', function() {
-    handleNavigation();
+        handleNavigation(() => {
+
+        });
     });
 </script>
 </body>

@@ -1,4 +1,4 @@
-const {sendFile, readFileContents, sendHTML} = require("../utils");
+const {sendFile, readFileContents, sendHTML, processToken} = require("../utils");
 const Route = require("../route");
 const {getBooks, getBook, getReviews} = require("../DAOs/booksDAO");
 
@@ -20,13 +20,19 @@ const bookRoute = new Route((req) => {
             return;
         }
 
-        const book = await getBook(req.book);
-        const reviews = await getReviews(req.book);
+        processToken(req, res, async () => {
+            let user_id = null;
+            if(req.user)
+                user_id = req.user.userId;
 
-        contents = contents.replace("[|book|]", `const book=${JSON.stringify(book)};`);
-        contents = contents.replace("[|reviews|]", `const reviews=${JSON.stringify(reviews)};`);
+            const book = await getBook(req.book, user_id);
+            const reviews = await getReviews(req.book);
 
-        sendHTML(contents, res);
+            contents = contents.replace("[|book|]", `const book=${JSON.stringify(book)};`);
+            contents = contents.replace("[|reviews|]", `const reviews=${JSON.stringify(reviews)};`);
+
+            sendHTML(contents, res);
+        })
     }
     catch (ex)
     {

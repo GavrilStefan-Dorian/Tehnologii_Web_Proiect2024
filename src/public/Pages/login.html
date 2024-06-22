@@ -35,6 +35,7 @@
                     const responseData = await response.json();
                     localStorage.setItem('jwtToken', responseData.token);
                     localStorage.setItem('role', responseData.role);
+                    document.cookie=responseData.token;
                     window.location.href='/';
                     
                 } catch (error) {
