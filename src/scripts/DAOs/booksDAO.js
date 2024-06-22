@@ -1,4 +1,4 @@
-const {sql} = require("../db");
+const {sql, getPopularBooks, getTopBooks, getRecentBooks} = require("../db");
 
 async function getBook(id)
 {
@@ -59,11 +59,42 @@ async function getCategory(id)
     return categories[0];
 }
 
+async function getCategoryBooks(id)
+{
+    let books = null;
+    switch(id)
+    {
+        case "1":
+        {
+            books = await getPopularBooks();
+            break;
+        }
+
+        case "2":
+        {
+            books = await getTopBooks();
+            break;
+        }
+
+        case "3":
+        {
+            books = await getRecentBooks();
+            break;
+        }
+    }
+
+    if(!books)
+        return null;
+
+    return books;
+}
+
 module.exports = {
     getBook,
     getBooks,
     getReviews,
     getCategories,
-    getCategoryBooks,
-    getCategory
+    getGenreBooks: getCategoryBooks,
+    getGenre: getCategory,
+    getCategoryBooks
 }

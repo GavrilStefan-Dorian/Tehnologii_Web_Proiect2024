@@ -78,14 +78,45 @@ async function extractBookReviewsXML(bookID)
     return await sql`SELECT get_book_reviews_xml(${bookID})`;
 }
 
-async function getTopBooks(category)
+let topBooks = null;
+async function getTopBooks()
 {
-    return await sql`SELECT get_books_by_rating(${category})`;
+    if(!topBooks)
+    {
+        topBooks = await sql`SELECT books.*, AVG(reviews.rating) AS avg_rating
+                FROM books
+                JOIN (
+                    SELECT book_id, rating
+                    FROM reviews
+                ) AS reviews ON books.book_id = reviews.book_id
+                GROUP BY books.book_id
+                ORDER BY avg_rating DESC, books.title;`;
+    }
+
+    return topBooks;
 }
 
-async function getPopularBooks(category)
+let popularBooks = null;
+async function getPopularBooks()
 {
-    return await sql`SELECT get_popular_books(${category})`;
+    if(!popularBooks)
+    {
+        popularBooks = await sql`SELECT books.*, AVG(reviews.rating) AS avg_rating
+FROM books
+JOIN (
+    SELECT book_id, rating
+    FROM reviews
+) AS reviews ON books.book_id = reviews.book_id
+GROUP BY books.book_id
+ORDER BY POWER(current_date - books.publishdate, 1 / (current_date - books.publishdate)) DESC;`;
+    }
+
+    return popularBooks;
+}
+
+async function getRecentBooks()
+{
+    return sql`SELECT * FROM books ORDER BY publishdate DESC`;
 }
 
 
@@ -123,5 +154,6 @@ module.exports = {
     getTopBooks,
     getPopularBooks,
     getLatestReviews,
+    getRecentBooks,
     sql
 }

@@ -26,6 +26,7 @@ body {
 }
 
 .books__title__text {
+  margin-top: 24px;
   color: #262626;
   font-weight: 600;
   font-size: 24px;

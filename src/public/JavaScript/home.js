@@ -1,4 +1,4 @@
-function createBookList(title, books) {
+function createBookList(id, title, books) {
     let html = `
     <div class="books">
         <div class="books__header">
@@ -6,7 +6,7 @@ function createBookList(title, books) {
     
           <div class="books__title">
             <p class="books__title__text">${title}</p>
-            <p class="books__title__subtitle">See All</p>
+            <a style="text-decoration: none" href="/view_books/category/${id}"><p class="books__title__subtitle">See All</p></a>
           </div>
     
           <img class="books__arrow" src="../Resources/Svg/chevron-right.svg" onclick="advanceList('${title}')">

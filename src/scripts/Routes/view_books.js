@@ -1,14 +1,17 @@
-const {sendFile, readFileContents, sendHTML} = require("../utils");
+const {sendFile, readFileContents, sendHTML, isResource} = require("../utils");
 const Route = require("../route");
-const {getBooks, getCategories, getCategoryBooks, getCategory} = require("../DAOs/booksDAO");
+const {getBooks, getCategories, getGenreBooks, getGenre, getCategoryBooks} = require("../DAOs/booksDAO");
 
 const viewBooksRoute = new Route((req) => {
+    if(isResource(req.url))
+        return;
     const params = req.url.split('/');
     if(params[1] !== "view_books")
         return false;
-    if(params.length !== 3)
+    if(params.length !== 4)
         return false;
-    req.category = params[2];
+    req.type = params[2];
+    req.category = params[3];
     return true;
 }, 'GET', async (req, res) => {
     try
@@ -20,10 +23,47 @@ const viewBooksRoute = new Route((req) => {
             return;
         }
 
-        const books = await getCategoryBooks(req.category);
-        let builder = `const books=${JSON.stringify(books)}`;
+        let books = null;
+        let title = "";
 
-        contents = contents.replace("[|title|]", `const title="${(await getCategory(req.category)).name.replaceAll("'", "")}";`);
+        switch(req.type)
+        {
+            case "genre":
+            {
+                books = await getGenreBooks(req.category);
+                title = (await getGenre(req.category)).name.replaceAll("'", "");
+                break;
+            }
+
+            case "category":
+            {
+                books = await getCategoryBooks(req.category);
+                switch(req.category)
+                {
+                    case "1":
+                    {
+                        title = "New and Popular";
+                        break;
+                    }
+
+                    case "2":
+                    {
+                        title = "All-Time Sellers";
+                        break;
+                    }
+
+                    case "3":
+                    {
+                        title = "Recent releases";
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        let builder = `const books=${JSON.stringify(books)}`;
+        contents = contents.replace("[|title|]", `const title="${title}";`);
         contents = contents.replace("[|books|]", builder);
 
         sendHTML(contents, res);
