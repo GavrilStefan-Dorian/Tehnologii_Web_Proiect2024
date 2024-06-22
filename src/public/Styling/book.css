@@ -17,11 +17,11 @@ body {
   padding: 36px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .book__image {
-  height: 256px;
+  height: 384px;
   flex-grow: 0;
 }
 
@@ -29,6 +29,7 @@ body {
   display: flex;
   flex-direction: column;
   margin-left: 24px;
+  flex-grow: 1;
 }
 
 .book__info__header {
@@ -63,6 +64,11 @@ body {
 
 .book__info__header__info__rating__star {
   filter: invert(67%) sepia(79%) saturate(1071%) hue-rotate(350deg) brightness(103%) contrast(96%);
+  width: 16px;
+}
+
+.book__info__header__info__rating__empty {
+  filter: invert(94%) sepia(13%) saturate(16%) hue-rotate(352deg) brightness(81%) contrast(86%);
   width: 16px;
 }
 

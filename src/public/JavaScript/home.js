@@ -1,4 +1,4 @@
-function createBookList(title, books) {
+function createBookList(id, title, books) {
     let html = `
     <div class="books">
         <div class="books__header">
@@ -6,7 +6,7 @@ function createBookList(title, books) {
     
           <div class="books__title">
             <p class="books__title__text">${title}</p>
-            <p class="books__title__subtitle">See All</p>
+            <a style="text-decoration: none" href="/view_books/category/${id}"><p class="books__title__subtitle">See All</p></a>
           </div>
     
           <img class="books__arrow" src="../Resources/Svg/chevron-right.svg" onclick="advanceList('${title}')">
@@ -24,9 +24,9 @@ function createBookList(title, books) {
     return html;
 }
 
-function createBook(title, author, image) {
+function createBook(id, title, author, image) {
     return `
-    <a class="books__items__item" href="/book">
+    <a class="books__items__item" href="/book/${id}">
         <div class="books__items__item__cover">
           <img class="books__items__item__cover__image" src=${image}>
         </div>

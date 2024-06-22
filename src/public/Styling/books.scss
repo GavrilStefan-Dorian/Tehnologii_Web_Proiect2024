@@ -9,8 +9,8 @@
 
 .books {
   width: 100%;
-  padding-left: $s * 3;
-  padding-top: $s * 3;
+  padding-left: $m * 2;
+  padding-top: $m * 2;
 }
 
 .books__title {
@@ -28,7 +28,8 @@
 
 .books__list__item {
   width: 50%;
-  height: $xl * 1.5;
+  min-width: 1048px;
+  height: $xl * 2;
   border-radius: $xs;
   background-color: $neutral-white;
   box-shadow: $surface-bottom-md;
@@ -57,34 +58,41 @@
 
 .books__list__item__info__title {
   color: $neutral-800;
-  font-size: $xs * 2;
+  font-size: $m;
   font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .books__list__item__info__author {
+  color: $neutral-800;
+  font-size: $xs * 2;
+  font-weight: 400;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.books__list__item__info__ratings {
   color: $neutral-800;
   font-size: $s;
   font-weight: 400;
 }
 
-.books__list__item__info__ratings {
-  color: $neutral-800;
-  font-size: $xs;
-  font-weight: 400;
-}
-
 .books__list__item__info {
   flex: 100;
-  padding-bottom: $xs;
+  padding-bottom: $s;
   padding-top: $xs;
   position: relative;
+  min-width: 0;
 }
 
 .books__list__item__info__view {
   background-color: $positive-500;
   border-radius: 9999px;
-  width: $s * 4;
-  height: $xs * 2;
+  width: $xl;
+  height: $m;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,7 +105,7 @@
 
 .books__list__item__info__view__text {
   color: $neutral-white;
-  font-size: $xs;
+  font-size: $xs * 2;
   font-weight: 500;
   text-align: center;
 }
@@ -110,12 +118,12 @@
 
 .books__list__item__info__rating__star {
   filter: $svg-warning-500;
-  width: $xs;
+  width: $s;
 }
 
 .books__list__item__info__rating_text {
   color: $neutral-800;
-  font-size: $xs;
+  font-size: $s;
   font-weight: 600;
   display: block;
   margin-left: calc($xs / 4);
@@ -132,7 +140,7 @@
 }
 
 .books__list__item__buttons__button {
-  width: $xs * 2;
+  width: $m;
 }
 
 @media (max-width: 768px) {

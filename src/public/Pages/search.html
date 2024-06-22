@@ -15,7 +15,7 @@
         <div class="list">
             <div class="list__search">
                 <img class="list__search__icon" src="../Resources/Svg/search.svg">
-                <input class="list__search__input" placeholder="Search...">
+                <input id="search" class="list__search__input" placeholder="Search...">
             </div>
             <p class="list__alternative">Search by category</p>
             <div class="list__categories">
@@ -26,18 +26,29 @@
 
 <script>
     createSidebar(2);
-    
-    const categories = [
-        createCategory("Art"),
-        createCategory("Non-fiction"),
-        createCategory("Etc..."),
-    ];
+
+    [|categories|]
+
+    const input = document.getElementById("search");
+    input.addEventListener('input', function (evt) {
+        filterCategories();
+    });
 
     const list = document.getElementsByClassName("list__categories")[0];
     categories.forEach(x => list.innerHTML += x);
+
+    function filterCategories()
+    {
+        let newHTML = "";
+        categories.forEach(x => {
+            if(x.toLowerCase().indexOf(input.value.toLowerCase()) !== -1)
+                newHTML += x;
+        });
+        list.innerHTML = newHTML;
+    }
     
     document.addEventListener('DOMContentLoaded', function() {
-    handleNavigation();
+        handleNavigation();
     });
 </script>
 </body>

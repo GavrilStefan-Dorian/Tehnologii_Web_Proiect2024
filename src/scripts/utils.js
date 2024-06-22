@@ -119,9 +119,27 @@ function getResourceRoute(url)
     }
 }
 
+function isResource(url)
+{
+    const extname = path.extname(url);
+    switch (extname) {
+        case '.html':
+        case '.css':
+        case '.js':
+        case '.png':
+        case '.jpg':
+        case '.avif':
+        case '.svg':
+            return true;
+        default:
+            return false;
+    }
+}
+
 module.exports = {
     sendFile,
     readFileContents,
     sendHTML,
-    getResourceRoute
+    getResourceRoute,
+    isResource
 }

@@ -1,4 +1,4 @@
-const {sql} = require("../db");
+const {sql, getPopularBooks, getTopBooks, getRecentBooks} = require("../db");
 
 async function getBook(id)
 {
@@ -23,7 +23,78 @@ async function getBooks(ids)
     return books;
 }
 
+async function getReviews(bookId)
+{
+    const books = await sql`SELECT * FROM reviews NATURAL JOIN users WHERE book_id = ${bookId};`;
+    if(!books)
+        return null;
+
+    return books;
+}
+
+async function getCategories()
+{
+    const categories = await sql`SELECT * FROM genres ORDER BY name;`;
+    if(!categories)
+        return null;
+
+    return categories;
+}
+
+async function getCategoryBooks(id)
+{
+    const books = await sql`SELECT * FROM books NATURAL JOIN genres WHERE genre_id = ${id}`;
+    if(!books)
+        return null;
+
+    return books;
+}
+
+async function getCategory(id)
+{
+    const categories = await sql`SELECT * FROM genres WHERE genre_id = ${id}`;
+    if(!categories)
+        return null;
+
+    return categories[0];
+}
+
+async function getCategoryBooks(id)
+{
+    let books = null;
+    switch(id)
+    {
+        case "1":
+        {
+            books = await getPopularBooks();
+            break;
+        }
+
+        case "2":
+        {
+            books = await getTopBooks();
+            break;
+        }
+
+        case "3":
+        {
+            books = await getRecentBooks();
+            break;
+        }
+    }
+
+    if(!books)
+        return null;
+
+    return books;
+}
+
 module.exports = {
     getBook,
-    getBooks
+    getBooks,
+    getReviews,
+    getCategories,
+    getGenreBooks: getCategoryBooks,
+    getGenre: getCategory,
+    getCategoryBooks
 }

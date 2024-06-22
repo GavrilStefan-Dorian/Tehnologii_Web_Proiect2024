@@ -10,6 +10,10 @@ const generateRSSFeed = require('./rssFeed');
 
 const homeRoute = require('./Routes/home');
 const path = require("path");
+const booksRoute = require("./Routes/books");
+const bookRoute = require("./Routes/book");
+const searchRoute = require("./Routes/search");
+const viewBooksRoute = require("./Routes/view_books");
 
 function authenticateToken(req, res, next) {
     const token = req.headers.authorization;
@@ -148,23 +152,9 @@ const routes = [
         sendFile('./Pages/about.html', res);
     }),
 
-    new Route('/book', 'GET', (req, res) => {
-        authenticateToken(req, res, () => {
-            requireLogin(req, res, () => {
-                sendUrl('/book.html', res);
-            });
-        });
-    }),
+    bookRoute,
 
-    new Route('/books', 'GET', (req, res) => {
-        authenticateToken(req, res, () => {
-            requireLogin(req, res, () => {
-                sendUrl('/books.html', res);
-            });
-            console.log(req.user);
-
-        });
-    }),
+    booksRoute,
 
     new Route('/group-page', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
@@ -174,13 +164,9 @@ const routes = [
         });
     }),
 
-    new Route('/search', 'GET', (req, res) => {
-        authenticateToken(req, res, () => {
-            requireLogin(req, res, () => {
-                sendUrl('/search.html', res);
-            });
-        });
-    }),
+    searchRoute,
+
+    viewBooksRoute,
 
     new Route('/view-groups', 'GET', (req, res) => {
         authenticateToken(req, res, () => {

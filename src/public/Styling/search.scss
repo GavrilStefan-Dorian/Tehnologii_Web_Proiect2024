@@ -65,7 +65,7 @@
 
 .list__categories__category {
   background-color: $neutral-white;
-  height: $s * 3;
+  height: $m * 2;
   width: 100%;
   border-radius: $xs;
   box-shadow: $surface-bottom-md;
@@ -78,7 +78,7 @@
 
 .list__categories__category__title {
   color: $neutral-800;
-  font-size: $s;
+  font-size: $xs * 2;
   font-weight: 600;
 }
 

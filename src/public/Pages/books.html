@@ -20,18 +20,8 @@
     <script>
         createSidebar(1);
 
-        const books = [
-            createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-            createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-            createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-            createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-        ];
-        
-        const bookLists = [
-            createBookList("To Read", books),
-            createBookList("Reading", books),
-            createBookList("Finished", books)
-        ];
+        //This will be later replaced server-side
+        [|books|]
         
         const bookList = document.getElementsByClassName("list")[0];
         bookLists.forEach(x => bookList.innerHTML += x);

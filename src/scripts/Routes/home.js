@@ -1,12 +1,13 @@
 const {sendFile, readFileContents, sendHTML} = require("../utils");
 const Route = require("../route");
 const {getBooks} = require("../DAOs/booksDAO");
+const {getPopularBooks, getTopBooks, getRecentBooks} = require("../db");
 
-function buildList(name, books)
+function buildList(id, name, books)
 {
-    let html = `createBookList("${name}", [`;
+    let html = `createBookList("${id}", "${name}", [`;
     books.forEach(x => {
-        html += `createBook("${x.title}", "${x.author}", "${x.coverimg}"),`;
+        html += `createBook("${x.book_id}", "${x.title.replaceAll("\"", "\\\"")}", "${x.author.replaceAll("\"", "\\\"")}", "${x.coverimg}"),`;
     })
     html += ']),';
     return html;
@@ -23,9 +24,9 @@ const homeRoute = new Route('/home', 'GET', async (req, res) => {
         }
 
         let booksBuilder = "const bookLists = [";
-        booksBuilder += buildList("New and Popular", await getBooks(["2767052-the-hunger-games", "2.Harry_Potter_and_the_Order_of_the_Phoenix", "2657.To_Kill_a_Mockingbird", "1885.Pride_and_Prejudice", "41865.Twilight", "19063.The_Book_Thief", "170448.Animal_Farm", "10614.Misery", "11127.The_Chronicles_of_Narnia", "30.J_R_R_Tolkien_4_Book_Boxed_Set", "18405.Gone_with_the_Wind", "11870085-the-fault-in-our-stars"]));
-        booksBuilder += buildList("All-Time Sellers", await getBooks(["2767052-the-hunger-games", "2.Harry_Potter_and_the_Order_of_the_Phoenix", "2657.To_Kill_a_Mockingbird", "1885.Pride_and_Prejudice", "41865.Twilight", "19063.The_Book_Thief", "170448.Animal_Farm", "10614.Misery", "11127.The_Chronicles_of_Narnia", "30.J_R_R_Tolkien_4_Book_Boxed_Set", "18405.Gone_with_the_Wind", "11870085-the-fault-in-our-stars"]));
-        booksBuilder += buildList("New York Times Specials", await getBooks(["2767052-the-hunger-games", "2.Harry_Potter_and_the_Order_of_the_Phoenix", "2657.To_Kill_a_Mockingbird", "1885.Pride_and_Prejudice", "41865.Twilight", "19063.The_Book_Thief", "170448.Animal_Farm", "10614.Misery", "11127.The_Chronicles_of_Narnia", "30.J_R_R_Tolkien_4_Book_Boxed_Set", "18405.Gone_with_the_Wind", "11870085-the-fault-in-our-stars"]));
+        booksBuilder += buildList(1, "New and Popular", (await getPopularBooks()).slice(0, 20));
+        booksBuilder += buildList(2, "All-Time Sellers", (await getTopBooks()).slice(0, 20));
+        booksBuilder += buildList(3, "Recent releases", (await getRecentBooks()).slice(0, 20));
         booksBuilder += "];";
 
         contents = contents.replace("[|books|]", booksBuilder);
