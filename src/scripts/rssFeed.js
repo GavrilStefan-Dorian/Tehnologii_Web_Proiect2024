@@ -11,8 +11,8 @@
         <channel>
           <title>Book Review RSS Feed</title>
           <description>Latest reviews and book updates</description>
-          <link>https://boo.com</link>
-          <atom:link href="https://localhost:3000/rssFeed" rel="self" type="application/rss+xml" />
+          <link>http://localhost:3000</link>
+          <atom:link href="http://localhost:3000/rssFeed" rel="self" type="application/rss+xml" />
           <language>en-us</language>
           <pubDate>${pubDate}</pubDate>
           <lastBuildDate>${pubDate}</lastBuildDate>
@@ -23,24 +23,23 @@
     rssContent += `
       <item>
         <title>${escapeXml(review.book.title)}</title>
-        <link>https://boo.com/book/${review.book.book_id}</link>
+        <link>http://localhost:3000/</link>
         <description>${escapeXml(review.user.username)} reviewed ${escapeXml(review.book.title)} with ${review.rating} stars: ${escapeXml(review.description)}</description>
         <pubDate>${new Date(review.creation_date).toUTCString()}</pubDate>
-        <guid>https://boo.com/review/${review.id}</guid>
+        <guid>http://localhost:3000/</guid>
       </item>
     `;
     });
     
 
   latestBooks.forEach(book => {
-    const coverImageLength = 12345; // Replace with the actual size in bytes if available
     rssContent += `
       <item>
         <title>${escapeXml(book.title)}</title>
-        <link>https://boo.com/book/${book.book_id}</link>
+        <link>http://localhost:3000/</link>
         <description>Check out the latest release: ${escapeXml(book.title)} by ${escapeXml(book.author)}. ${escapeXml(book.description)}</description>
         <pubDate>${new Date(book.creation_date).toUTCString()}</pubDate>
-        <guid>https://boo.com/book/${book.book_id}</guid>
+        <guid>http://localhost:3000/</guid>
         <enclosure url="${book.coverimg}" length="0" type="image/jpg"/>
       </item>
     `;

@@ -96,7 +96,7 @@ const routes = [
                         } else {
                             const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, jwtSecret, { expiresIn: '1h' });
                             res.writeHead(200, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ message: 'Login successful', token: token }));
+                            res.end(JSON.stringify({ message: 'Login successful', token: token , role: user.role}));
                         }
                     });                    
                 }
@@ -161,6 +161,8 @@ const routes = [
             requireLogin(req, res, () => {
                 sendUrl('/books.html', res);
             });
+            console.log(req.user);
+
         });
     }),
 

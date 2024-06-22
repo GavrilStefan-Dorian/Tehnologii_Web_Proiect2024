@@ -1,6 +1,7 @@
 
 var navbarHidden = true;
 var navbar = null;
+let role;
 
 function createSidebar(selected) {
     const selectableItems = [
@@ -35,6 +36,17 @@ function createSidebar(selected) {
     if(getToken()) {
         html += `
         <div class="sidebar__items sidebar__items--bottom">
+        `
+
+        if(localStorage.getItem('role') === 'admin') {
+            html += `
+                <div class="sidebar__items__container" id="adminButton">
+                    <img class="sidebar__items__container__item" src="../Resources/Svg/admin.svg">
+                </div>
+            `
+        }
+
+        html += `
             <div class="sidebar__items__container" id="logoutButton">
                 <img class="sidebar__items__container__item" src="../Resources/Svg/logout.svg">
             </div>
@@ -63,6 +75,33 @@ function createSidebar(selected) {
     const logoutButton = document.getElementById("logoutButton");
     if(logoutButton && getToken()) {
         logoutButton.addEventListener("click", logout);
+    }
+
+    const adminButton = document.getElementById("adminButton");
+    if(adminButton && getToken()) {
+        adminButton.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            const url = '/admin';
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + getToken()
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(data => {
+                const newUrl = data.url;
+                console.log("Navigating to:", newUrl);
+                window.location.href = newUrl; 
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        });
     }
 
     const navbars = document.getElementsByClassName("navbar__links");
