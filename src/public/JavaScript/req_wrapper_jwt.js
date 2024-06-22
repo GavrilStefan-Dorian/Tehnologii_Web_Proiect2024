@@ -52,3 +52,7 @@ function getToken() {
     }
     return null;
 }
+
+module.exports = {
+    getToken
+}

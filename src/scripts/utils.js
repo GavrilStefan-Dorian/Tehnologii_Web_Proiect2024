@@ -159,14 +159,27 @@ async function getUserBookData(req, contents)
     return contents;
 }
 
-function processToken(req, res, next) {
-    const token = req.headers.authorization;
+function authenticateToken(req, res, next) {
+    if(!req.headers.cookie)
+    {
+        next();
+        return;
+    }
+
+    const params = req.headers.cookie.split(';').find(c => c.trim().startsWith('jwt='));
+    if(!params)
+    {
+        next();
+        return;
+    }
+
+    const token = params.split('=')[1];
     if (!token) {
         next();
         return;
     }
 
-    jwt.verify(token.split(' ')[1], jwtSecret, (err, decoded) => {
+    jwt.verify(token, jwtSecret, (err, decoded) => {
         if (err) {
             next();
             return;
@@ -177,6 +190,13 @@ function processToken(req, res, next) {
     });
 }
 
+function requireLogin(req, res, next) {
+    if (!req.user) {
+        return sendFile('./Pages/login.html', res);
+    }
+    next();
+}
+
 module.exports = {
     sendFile,
     readFileContents,
@@ -184,5 +204,6 @@ module.exports = {
     getResourceRoute,
     isResource,
     getUserBookData,
-    processToken
+    authenticateToken,
+    requireLogin
 }

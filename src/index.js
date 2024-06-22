@@ -10,7 +10,6 @@ const server = http.createServer((req, res) => {
     let trimmedUrl = new URL(req.url, `http://${req.headers.host}`).pathname;
     console.log(trimmedUrl);
 
-
     // console.log(req.headers);
     let route = routes.find(r => (r.url === trimmedUrl || (typeof r.url === 'function' && r.url(req))) && r.method === req.method);
 
@@ -19,7 +18,32 @@ const server = http.createServer((req, res) => {
 
     if (route) {
         console.log(`Matched route: ${route.method} ${route.url}`);
-        route.handler(req, res);
+        let body = "";
+
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', () => {
+            try {
+                if(body)
+                {
+                    const parsedBody = JSON.parse(body);
+                    req.body = parsedBody;
+                }
+                route.handler(req, res);
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ message: 'Invalid JSON' }));
+            }
+        });
+
+        req.on('error', (err) => {
+            console.error('Error receiving data:', err);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Internal Server Error' }));
+        });
     } else {
         console.log(`No matching route found for ${req.method} ${req.url}`);
         sendFile(req.url, res);

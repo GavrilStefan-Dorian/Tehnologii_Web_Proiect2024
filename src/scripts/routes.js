@@ -1,5 +1,5 @@
 const Route = require('./route');
-const { sendFile } = require('./utils');
+const { sendFile, authenticateToken, requireLogin} = require('./utils');
 const { getUserByEmail, insertUser } = require('./users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -11,32 +11,9 @@ const generateRSSFeed = require('./rssFeed');
 const homeRoute = require('./Routes/home');
 const path = require("path");
 const booksRoute = require("./Routes/books");
-const bookRoute = require("./Routes/book");
+const {bookRoute, postReviewRoute} = require("./Routes/book");
 const searchRoute = require("./Routes/search");
 const viewBooksRoute = require("./Routes/view_books");
-
-function authenticateToken(req, res, next) {
-    const token = req.headers.cookie.split(';').find(c => c.trim().startsWith('jwt=')).split('=')[1];
-    if (!token) {
-        return sendError(res, 401, 'Unauthorized: Missing token');
-    }
-
-    jwt.verify(token, jwtSecret, (err, decoded) => {
-        if (err) {
-            return sendError(res, 403, 'Forbidden: Invalid token');
-        }
-
-        req.user = decoded;
-        next();
-    });
-}
-
-function requireLogin(req, res, next) {
-    if (!req.user) {
-        return sendError(res, 401, 'Unauthorized: Authentication required');
-    }
-    next();
-}
 
 function restrictToAdmin(req, res, next) {
     if (req.user.role !== 'admin') {
@@ -193,7 +170,8 @@ const routes = [
         res.writeHead(200, { 'Content-Type': 'application/rss+xml' });
         res.end(rssContent);
     }),
-    // Add other routes 
+    // Add other routes
+    postReviewRoute,
 ];
 
 // function sendUrl(url, res) {

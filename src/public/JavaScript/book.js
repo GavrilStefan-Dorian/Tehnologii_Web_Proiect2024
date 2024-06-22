@@ -29,3 +29,19 @@ function createReview(name, date, text, rating) {
                 </p>
             </div>`;
 }
+
+function postReview(bookId, description, rating)
+{
+    fetch(`/review`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + getToken(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bookId: bookId,
+            description: description,
+            rating: rating,
+        })
+    })
+}

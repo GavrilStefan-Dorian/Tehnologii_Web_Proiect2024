@@ -131,7 +131,7 @@
 
     console.log(book);
 
-    if(!user || user.reviewedBook)
+    if(!user || user.id)
     {
         starList.style.display = "none";
         document.getElementById("starsText").style.display = "none";
@@ -161,6 +161,7 @@
         starList.style.display = "none";
         document.getElementById("starsText").style.display = "none";
         document.getElementById("details__more").style.display = "none";
+        postReview(book.book_id, text, userRating);
     }
     
     // document.addEventListener('DOMContentLoaded', function() {
