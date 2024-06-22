@@ -10,6 +10,7 @@ const generateRSSFeed = require('./rssFeed');
 
 const homeRoute = require('./Routes/home');
 const path = require("path");
+const booksRoute = require("./Routes/books");
 
 function authenticateToken(req, res, next) {
     const token = req.headers.authorization;
@@ -156,13 +157,7 @@ const routes = [
         });
     }),
 
-    new Route('/books', 'GET', (req, res) => {
-        authenticateToken(req, res, () => {
-            requireLogin(req, res, () => {
-                sendUrl('/books.html', res);
-            });
-        });
-    }),
+    booksRoute,
 
     new Route('/group-page', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
