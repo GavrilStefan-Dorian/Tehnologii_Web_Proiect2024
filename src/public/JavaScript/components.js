@@ -62,7 +62,7 @@ function createSidebar(selected) {
 
         if(role === 'admin') {
             html += `
-                <div class="sidebar__items__container" id="adminButton" href="/rssFeed">
+                <div class="sidebar__items__container" id="adminButton">
                     <img class="sidebar__items__container__item" src="../Resources/Svg/admin.svg">
                 </div>
             `
@@ -109,12 +109,10 @@ function createSidebar(selected) {
         logoutButton.addEventListener("click", logout);
     }
 
-    // const adminButton = document.getElementById("adminButton");
-    // if(adminButton && logged) {
-    //     adminButton.addEventListener("click", function(event) {
-    //         event.preventDefault();
-
-    //         const url = '/admin';
+    const adminButton = document.getElementById("adminButton");
+    if(adminButton && logged) {
+        adminButton.addEventListener("click", admin);
+    }
 
     //         fetch(url, {
     //             method: 'GET',
@@ -184,6 +182,10 @@ function toggleNavbar() {
 function logout() {
     document.cookie = 'jwt=; Max-Age=0; path=/' 
     window.location.replace('/login');
+}
+
+function admin() {
+    window.location.replace('/admin');
 }
 
 // for some reason didnt run? for gettoken
