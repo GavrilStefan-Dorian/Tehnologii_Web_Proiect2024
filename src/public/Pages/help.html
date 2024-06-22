@@ -9,25 +9,30 @@
 </head>
 <body>
   <script src="../JavaScript/components.js"></script>
+  <script src="../JavaScript/req_wrapper_jwt.js"></script> 
   <script>
     createSidebar(4);
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      handleNavigation();
+    });
   </script>
   <div class="sidebar-padded">
   <div class="help-container">
     <div class="help-container__content">
       <div class="help-container__header">
         <h2 class="help-container__title">Frequently Asked Questions</h2>
-        <p class="help-container__subtitle">Quick answers to questions you may have. Can't find what you're looking for? Reach out to us at <a href="contact.html" class="help-link">Contact</a></p>
+        <p class="help-container__subtitle">Quick answers to questions you may have. Can't find what you're looking for? Reach out to us at <a href="/contact" class="help-link">Contact</a></p>
       </div>
       <div class="help-section">
         <h3 class="help-section__title">Account</h3>
         <div class="help-item">
           <div class="help-item__question">How do I create an account?</div>
-          <div class="help-item__answer">To create an account, click on the <a href="register.html" class="help-link">Sign Up</a> button over at <a href="login.html" class="help-link">Member Login</a> and follow the instructions.</div>
+          <div class="help-item__answer">To create an account, click on the <a href="/register" class="help-link">Sign Up</a> button over at <a href="/login" class="help-link">Member Login</a> and follow the instructions.</div>
         </div>
         <div class="help-item">
           <div class="help-item__question">How do I reset my password?</div>
-          <div class="help-item__answer">You can reset your password by clicking on the <a href="forgot-pass.html" class="help-link">Forgot Password</a> link on the login page.</div>
+          <div class="help-item__answer">You can reset your password by clicking on the <a href="/forgot-pass" class="help-link">Forgot Password</a> link on the login page.</div>
         </div>
         <div class="help-item">
           <div class="help-item__question">Can I change my username?</div>
@@ -35,7 +40,7 @@
         </div>
         <div class="help-item">
           <div class="help-item__question">How do I delete my account?</div>
-          <div class="help-item__answer">To delete your account, please <a href="contact.html" class="help-link">contact</a> customer support.</div>
+          <div class="help-item__answer">To delete your account, please <a href="/contact" class="help-link">contact</a> customer support.</div>
         </div>
       </div>
       <div class="help-section">
@@ -50,7 +55,7 @@
         </div>
         <div class="help-item">
           <div class="help-item__question">How do I report inappropriate content?</div>
-          <div class="help-item__answer">If you encounter any inappropriate content, please use the <a href="contact.html" class="help-link">Contact Us</a> form to notify our moderators.</div>
+          <div class="help-item__answer">If you encounter any inappropriate content, please use the <a href="/contact" class="help-link">Contact Us</a> form to notify our moderators.</div>
         </div>
         <div class="help-item">
           <div class="help-item__question">Can I view other users' book reviews?</div>

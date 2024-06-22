@@ -1,7 +1,8 @@
 class Route {
-    constructor(url, action) {
+    constructor(url, method, handler) {
         this.url = url;
-        this.action = action;
+        this.method = method;
+        this.handler = handler;
     }
 }
 

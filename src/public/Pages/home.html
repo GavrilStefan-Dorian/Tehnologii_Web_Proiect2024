@@ -7,7 +7,10 @@
   <link rel="stylesheet" href="../Styling/home.css">
   <link rel="stylesheet" href="../Styling/sidebar.css">
   <script src="../JavaScript/components.js"></script>
-  <script src="../Components/home.js"></script>
+  <script src="../JavaScript/home.js"></script>
+  <script src="../JavaScript/req_wrapper_jwt.js"></script> 
+  
+
 </head>
 <body>
   <div class="sidebar-padded">
@@ -19,21 +22,35 @@
   <script>
     createSidebar(0);
 
-    const books = [
-      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png"),
-      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png"),
-      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png"),
-      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png"),
-    ];
-
-    const bookLists = [
-      createBookList("New and Popular", books),
-      createBookList("All-Time Sellers", books),
-      createBookList("New York Times Specials", books)
-    ]
+    // This will be replaced with lists of books
+    [|books|]
 
     const bookList = document.getElementsByClassName("list")[0];
     bookLists.forEach(x => bookList.innerHTML += x);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      handleNavigation();
+    });
+
+    function advanceList(title)
+    {
+      const el = document.getElementById(`${title}_items`);
+      el.scrollBy({
+        left: 192 * 4,
+        behavior: 'smooth'
+      });
+    }
+
+    function deadvanceList(title)
+    {
+      const el = document.getElementById(`${title}_items`);
+      el.scrollBy({
+        left: -192 * 4,
+        behavior: 'smooth'
+      });
+    }
+
+
   </script>
 </body>
 </html>

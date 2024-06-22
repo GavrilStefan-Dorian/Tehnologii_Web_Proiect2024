@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,41 @@
   <link rel="stylesheet" href="../Styling/register.css">
   <link rel="stylesheet" href="../Styling/sidebar.css">
 </head>
+
 <body>
   <script src="../JavaScript/components.js"></script>
+  <script src="../JavaScript/req_wrapper_jwt.js"></script>
   <script>
     createSidebar(0);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      handleNavigation();
+
+      document.querySelector('.register-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        console.log("Form Data:", formData);
+
+        try {
+          const response = await fetch('/register', {
+            method: 'POST',
+            body: formData
+          });
+
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          const responseData = await response.json();
+          window.location.href = '/login';
+
+        } catch (error) {
+          console.error("Fetch error:", error);
+          alert("An error occurred while logging in.");
+        }
+      });
+    });
   </script>
   <div class="register-container">
     <div class="register-container__form-container">
@@ -19,25 +51,26 @@
       </div>
       <form class="register-form">
         <div class="register-form__input-container">
-          <input type="text" placeholder="Username" class="register-form__input">
+          <input type="text" name="username" placeholder="Username" class="register-form__input" required>
         </div>
         <div class="register-form__input-container">
-          <input type="email" placeholder="Email" class="register-form__input">
+          <input type="email" name="email" placeholder="Email" class="register-form__input">
         </div>
         <div class="register-form__input-container">
-          <input type="password" placeholder="Password" class="register-form__input">
+          <input type="password" name="password" placeholder="Password" class="register-form__input">
         </div>
         <div class="register-form__input-container">
-          <input type="password" placeholder="Confirm Password" class="register-form__input">
+          <input type="password" name="confirm_password" placeholder="Confirm Password" class="register-form__input">
         </div>
         <div class="register-form__button-container">
           <button type="submit" class="register-form__button">Register</button>
         </div>
         <div class="register-form__footer">
-          <a href="login.html" class="register-form__footer-link">Already have an account? Login</a>
+          <a href="/login" class="register-form__footer-link">Already have an account? Login</a>
         </div>
       </form>
     </div>
   </div>
 </body>
+
 </html>

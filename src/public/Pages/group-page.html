@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="../Styling/group-page.css">
   <link rel="stylesheet" href="../Styling/sidebar.css">
   <script src="../JavaScript/components.js"></script>
-  <script src="../Components/books.js"></script>
+  <script src="../JavaScript/books.js"></script>
+  <script src="../JavaScript/req_wrapper_jwt.js"></script> 
   <link rel="stylesheet" href="../Styling/books.css">
 </head>
 <body>
@@ -18,7 +19,7 @@
       <p class="group-info__description" id="group-description">Group description</p>
     </div>
   </div>
-
+  
   <div class="content">
     <div class="group-sections">
       <div class="group-section">
@@ -54,26 +55,26 @@
       <p class="member__name">User 3</p>
     </div>
   </div>
-
+  
   <script>
     createSidebar(3);
-  </script>
+    </script>
 
-  <script src="../JavaScript/script.js"></script>
-  <script>
-function loadGroupData() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const groupName = urlParams.get('group');
-  const imageSrc = urlParams.get('img');
-  const desc = urlParams.get('desc');
-  if (groupName) {
-    document.querySelector('.group-info-wrapper__overlay').style.backgroundImage = `url(${imageSrc})`;
-    document.getElementById('group-name').textContent = decodeURIComponent(groupName);
-    document.getElementById('group-description').textContent = decodeURIComponent(desc);
-
-    // Simulated book data for demonstration
-    const toReadBooks = [
-      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
+<script src="../JavaScript/script.js"></script>
+<script>
+  function loadGroupData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const groupName = urlParams.get('group');
+    const imageSrc = urlParams.get('img');
+    const desc = urlParams.get('desc');
+    if (groupName) {
+      document.querySelector('.group-info-wrapper__overlay').style.backgroundImage = `url(${imageSrc})`;
+      document.getElementById('group-name').textContent = decodeURIComponent(groupName);
+      document.getElementById('group-description').textContent = decodeURIComponent(desc);
+      
+      // Simulated book data for demonstration
+      const toReadBooks = [
+        createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
       createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
     ];
     const readingBooks = [
@@ -82,19 +83,19 @@ function loadGroupData() {
     const finishedBooks = [
       createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
     ];
-
+    
     // Populate 'To Read' section
     const toReadSection = document.getElementById("to-read-section");
     toReadBooks.forEach(book => {
       toReadSection.innerHTML += book;
     });
-
+    
     // Populate 'Reading' section
     const readingSection = document.getElementById("reading-section");
     readingBooks.forEach(book => {
       readingSection.innerHTML += book;
     });
-
+    
     // Populate 'Finished' section
     const finishedSection = document.getElementById("finished-section");
     finishedBooks.forEach(book => {
@@ -105,6 +106,9 @@ function loadGroupData() {
 
 loadGroupData();
 
+document.addEventListener('DOMContentLoaded', function() {
+  handleNavigation();
+});
   </script>
 </body>
 </html>

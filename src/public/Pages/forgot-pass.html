@@ -9,8 +9,13 @@
 </head>
 <body>
   <script src="../JavaScript/components.js"></script>
+  <script src="../JavaScript/req_wrapper_jwt.js"></script> 
   <script>
     createSidebar(0);
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      handleNavigation();
+    });
   </script>
   <div class="forgot-pass-container">
     <div class="forgot-pass-form-container">
@@ -25,7 +30,7 @@
           <button type="submit" class="button-container__button">Reset Password</button>
         </div>
         <div class="forgot-pass-form-footer">
-          <a href="login.html" class="forgot-pass-form-footer__link">Remembered your password? Login</a>
+          <a href="/login" class="forgot-pass-form-footer__link">Remembered your password? Login</a>
         </div>
       </form>
     </div>
