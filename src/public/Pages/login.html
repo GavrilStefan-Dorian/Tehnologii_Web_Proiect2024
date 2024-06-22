@@ -14,7 +14,7 @@
         createSidebar(0);
         
         document.addEventListener('DOMContentLoaded', function() {
-            handleNavigation();
+            // handleNavigation();
             
             document.querySelector('.login-form').addEventListener('submit', async function(event) {
                 event.preventDefault();
@@ -33,9 +33,9 @@
                     }
                     
                     const responseData = await response.json();
-                    localStorage.setItem('jwtToken', responseData.token);
-                    localStorage.setItem('role', responseData.role);
-                    document.cookie=responseData.token;
+                    // localStorage.setItem('jwtToken', responseData.token);
+                    // localStorage.setItem('role', responseData.role);
+                    // document.cookie=responseData.token;
                     window.location.href='/';
                     
                 } catch (error) {

@@ -6,8 +6,13 @@ const {insertUser} = require("./scripts/users");
 
 const server = http.createServer((req, res) => {
     console.log(`Received ${req.method} request for ${req.url}`);
+    
+    let trimmedUrl = new URL(req.url, `http://${req.headers.host}`).pathname;
+    console.log(trimmedUrl);
 
-    let route = routes.find(r => (r.url === req.url || (typeof r.url === 'function' && r.url(req))) && r.method === req.method);
+
+    // console.log(req.headers);
+    let route = routes.find(r => (r.url === trimmedUrl || (typeof r.url === 'function' && r.url(req))) && r.method === req.method);
 
     if(!route)
         route = getResourceRoute(req.url);
