@@ -12,6 +12,7 @@ const homeRoute = require('./Routes/home');
 const path = require("path");
 const booksRoute = require("./Routes/books");
 const bookRoute = require("./Routes/book");
+const searchRoute = require("./Routes/search");
 
 function authenticateToken(req, res, next) {
     const token = req.headers.authorization;
@@ -162,13 +163,7 @@ const routes = [
         });
     }),
 
-    new Route('/search', 'GET', (req, res) => {
-        authenticateToken(req, res, () => {
-            requireLogin(req, res, () => {
-                sendUrl('/search.html', res);
-            });
-        });
-    }),
+    searchRoute,
 
     new Route('/view-groups', 'GET', (req, res) => {
         authenticateToken(req, res, () => {

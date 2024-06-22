@@ -32,8 +32,18 @@ async function getReviews(bookId)
     return books;
 }
 
+async function getCategories()
+{
+    const categories = await sql`SELECT * FROM genres ORDER BY name;`;
+    if(!categories)
+        return null;
+
+    return categories;
+}
+
 module.exports = {
     getBook,
     getBooks,
-    getReviews
+    getReviews,
+    getCategories
 }
