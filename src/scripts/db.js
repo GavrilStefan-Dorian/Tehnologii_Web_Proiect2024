@@ -1,6 +1,7 @@
 const postgres = require('postgres');
 const fs = require('fs');
-const csv = require('csv-parser')
+const csv = require('csv-parser');
+const { basename } = require('path');
 require('dotenv').config();
 
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
@@ -116,6 +117,24 @@ async function getLatestReviews(limit = 10) {
     }));
 }
 
+async function getLatestBooks(limit = 10) {
+    const books = await sql`
+        SELECT b.book_id AS book_id, b.title AS book_title, b.creation_date, b.coverimg, b.author, b.description
+        FROM books b
+        ORDER BY b.creation_date DESC
+        LIMIT ${limit};
+    `;
+
+    return books.map(book => ({
+        book_id: book.book_id,
+        title: book.book_title,
+        creation_date: book.creation_date,
+        coverimg: book.coverimg,
+        author: book.author,
+        description: book.description
+    }));
+}
+
 module.exports = {
     processCSV,
     extractBookReviewsCSV,
@@ -123,5 +142,6 @@ module.exports = {
     getTopBooks,
     getPopularBooks,
     getLatestReviews,
+    getLatestBooks,
     sql
 }
