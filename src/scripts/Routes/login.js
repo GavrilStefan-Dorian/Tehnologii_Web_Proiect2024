@@ -3,6 +3,7 @@ const {sendError, authenticateToken, getUser, readFileContents, sendHTML} = requ
 const {getUserByEmail, insertUser} = require("../users");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const {jwtSecret} = require("../config");
 
 const loginRoute = new Route('/login', 'GET', (req, res) =>
 {

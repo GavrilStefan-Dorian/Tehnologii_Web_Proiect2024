@@ -271,6 +271,9 @@
     const reviewList = document.getElementsByClassName("details__reviews")[0];
     htmlReviews.forEach(x => reviewList.innerHTML += x);
 
+    if(htmlReviews.length === 0)
+        reviewList.innerHTML += "<p style='text-align: center'>No reviews to be shown yet...</p>";
+
     function onSendReview()
     {
         let input = document.getElementById("review__input");
@@ -278,6 +281,9 @@
 
         if(!text)
             return;
+
+        if(htmlReviews.length === 0)
+            reviewList.innerHTML = "";
 
         reviewList.innerHTML = createReview(user.username, Date.now(), text, userRating, user.updated === false, true, edit) + reviewList.innerHTML;
         user.updated = false;
