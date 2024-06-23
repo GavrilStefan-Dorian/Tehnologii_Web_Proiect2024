@@ -83,8 +83,8 @@
 </div>
 
 <script>
-    
-    createSidebar(1);
+    [|user|]
+    createSidebar(1, user);
 
     let starList = document.getElementById("stars");
 
@@ -137,11 +137,8 @@
         }
     }
 
-    [|user|]
     [|book|]
     [|reviews|]
-
-    console.log(book);
 
     const dropdown = document.getElementById("dropdown");
     function onDropdownHover()

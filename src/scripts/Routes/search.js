@@ -1,4 +1,4 @@
-const {sendFile, readFileContents, sendHTML} = require("../utils");
+const {sendFile, readFileContents, sendHTML, getUser} = require("../utils");
 const Route = require("../route");
 const {getBooks, getCategories} = require("../DAOs/booksDAO");
 
@@ -11,6 +11,8 @@ const searchRoute = new Route('/search', 'GET', async (req, res) => {
             res.end('Internal server error');
             return;
         }
+
+        contents = getUser(req, contents);
 
         const categories = await getCategories();
 

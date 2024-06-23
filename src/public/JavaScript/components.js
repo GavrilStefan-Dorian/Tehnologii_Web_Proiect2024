@@ -3,7 +3,7 @@ var navbar = null;
 let logged = false;
 let token;
 
-function createSidebar(selected) {
+async function createSidebar(selected, user) {
     token = document.cookie.split(';').find(c => c.trim().startsWith('jwt='));
     
     if(token !== null && token !== undefined) {
@@ -24,7 +24,7 @@ function createSidebar(selected) {
     let html = `
 <div class="sidebar">
     <div class="sidebar__items">
-         <img class="sidebar__items__profile" src="../Resources/Images/Profile.png">
+         ${user ? '<img class="sidebar__items__profile" src="../Resources/Images/Profile.png">' : ""}
          <div class="sidebar__scrollable">
 
     `;

@@ -1,4 +1,4 @@
-const {sendFile, readFileContents, sendHTML, isResource} = require("../utils");
+const {sendFile, readFileContents, sendHTML, isResource, getUser} = require("../utils");
 const Route = require("../route");
 const {getBooks, getCategories, getGenreBooks, getGenre, getCategoryBooks} = require("../DAOs/booksDAO");
 
@@ -22,6 +22,8 @@ const viewBooksRoute = new Route((req) => {
             res.end('Internal server error');
             return;
         }
+
+        contents = getUser(req, contents);
 
         let books = null;
         let title = "";

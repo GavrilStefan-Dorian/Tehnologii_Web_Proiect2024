@@ -1,4 +1,4 @@
-const {sendFile, readFileContents, sendHTML, getUserBookData, authenticateToken, requireLogin} = require("../utils");
+const {sendFile, readFileContents, sendHTML, getUserBookData, authenticateToken, requireLogin, getUser} = require("../utils");
 const Route = require("../route");
 const {getBooks, getBookStatuses, getBooksWithStatuses} = require("../DAOs/booksDAO");
 
@@ -24,6 +24,8 @@ const booksRoute = new Route('/books', 'GET', async (req, res) => {
 
         authenticateToken(req, res, () => {
             requireLogin(req, res, async () => {
+                contents = getUser(req, contents);
+
                 const books = await getBooksWithStatuses(req.user.userId);
 
                 let booksBuilder = "const bookLists = [";
