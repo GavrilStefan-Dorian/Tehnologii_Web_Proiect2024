@@ -1,6 +1,6 @@
-const {sendFile, readFileContents, sendHTML, getUserBookData} = require("../utils");
+const {sendFile, readFileContents, sendHTML, getUserBookData, authenticateToken, requireLogin} = require("../utils");
 const Route = require("../route");
-const {getBooks} = require("../DAOs/booksDAO");
+const {getBooks, getBookStatuses, getBooksWithStatuses} = require("../DAOs/booksDAO");
 
 function buildList(name, books)
 {
@@ -22,15 +22,21 @@ const booksRoute = new Route('/books', 'GET', async (req, res) => {
             return;
         }
 
-        let booksBuilder = "const bookLists = [";
-        booksBuilder += buildList("To Read", await getBooks(["2767052-the-hunger-games", "2.Harry_Potter_and_the_Order_of_the_Phoenix", "2657.To_Kill_a_Mockingbird", "1885.Pride_and_Prejudice", "41865.Twilight", "19063.The_Book_Thief", "170448.Animal_Farm", "10614.Misery", "11127.The_Chronicles_of_Narnia", "30.J_R_R_Tolkien_4_Book_Boxed_Set", "18405.Gone_with_the_Wind", "11870085-the-fault-in-our-stars"]));
-        booksBuilder += buildList("Reading", await getBooks(["2767052-the-hunger-games", "2.Harry_Potter_and_the_Order_of_the_Phoenix", "2657.To_Kill_a_Mockingbird", "1885.Pride_and_Prejudice", "41865.Twilight", "19063.The_Book_Thief", "170448.Animal_Farm", "10614.Misery", "11127.The_Chronicles_of_Narnia", "30.J_R_R_Tolkien_4_Book_Boxed_Set", "18405.Gone_with_the_Wind", "11870085-the-fault-in-our-stars"]));
-        booksBuilder += buildList("Finished", await getBooks(["2767052-the-hunger-games", "2.Harry_Potter_and_the_Order_of_the_Phoenix", "2657.To_Kill_a_Mockingbird", "1885.Pride_and_Prejudice", "41865.Twilight", "19063.The_Book_Thief", "170448.Animal_Farm", "10614.Misery", "11127.The_Chronicles_of_Narnia", "30.J_R_R_Tolkien_4_Book_Boxed_Set", "18405.Gone_with_the_Wind", "11870085-the-fault-in-our-stars"]));
-        booksBuilder += "];";
+        authenticateToken(req, res, () => {
+            requireLogin(req, res, async () => {
+                const books = await getBooksWithStatuses(req.user.userId);
 
-        contents = contents.replace("[|books|]", booksBuilder);
+                let booksBuilder = "const bookLists = [";
+                booksBuilder += buildList("To Read", books.filter(x => x.status === "to_read"));
+                booksBuilder += buildList("Reading", books.filter(x => x.status === "reading"));
+                booksBuilder += buildList("Finished", books.filter(x => x.status === "read"));
+                booksBuilder += "];";
 
-        sendHTML(contents, res);
+                contents = contents.replace("[|books|]", booksBuilder);
+
+                sendHTML(contents, res);
+            })
+        });
     }
     catch (ex)
     {

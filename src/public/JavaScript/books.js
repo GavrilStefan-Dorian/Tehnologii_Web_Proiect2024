@@ -36,10 +36,10 @@ function createBook(id, title, author, image, rating, ratings) {
                         </a>
                     </div>
                     <div class="books__list__item__buttons">
-                        <img class="books__list__item__buttons__button" src="../Resources/Svg/bookmark.svg">
+                        <!--<img class="books__list__item__buttons__button" src="../Resources/Svg/bookmark.svg">
                         <img class="books__list__item__buttons__button" src="../Resources/Svg/heart.svg">
                         <img class="books__list__item__buttons__button" src="../Resources/Svg/options.svg">
-                    </div>
+                    !--></div>
                 </div>
     `;
 }

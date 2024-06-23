@@ -11,7 +11,7 @@ const generateRSSFeed = require('./rssFeed');
 const homeRoute = require('./Routes/home');
 const path = require("path");
 const booksRoute = require("./Routes/books");
-const {bookRoute, postReviewRoute} = require("./Routes/book");
+const {bookRoute, postReviewRoute, likeRoute, bookmarkRoute, statusRoute} = require("./Routes/book");
 const searchRoute = require("./Routes/search");
 const viewBooksRoute = require("./Routes/view_books");
 
@@ -158,6 +158,9 @@ const routes = [
     }),
     // Add other routes
     postReviewRoute,
+    likeRoute,
+    bookmarkRoute,
+    statusRoute
 ];
 
 // function sendUrl(url, res) {

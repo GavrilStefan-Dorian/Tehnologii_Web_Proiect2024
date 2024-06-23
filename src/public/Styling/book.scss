@@ -82,8 +82,43 @@
   padding-top: $xs * 2;
 }
 
+.book__info__header__buttons__more {
+  width: $s * 3;
+  position: relative;
+  display: inline;
+}
+
+.book__info__header__buttons__more__items {
+  display: none;
+  flex-direction: column;
+  border-radius: $xs;
+  right: 0;
+  position: absolute;
+  background-color: $neutral-white;
+  min-width: $xl * 3;
+  box-shadow: $surface-bottom-md;
+  z-index: 1;
+  transform: translateY(-$xs/2);
+}
+
+.book__info__header__buttons__more__items__item {
+  padding: $xs;
+}
+
+.book__info__header__buttons__more__items__item:hover {
+  background-color: $neutral-200;
+}
+
 .book__info__header__buttons__button {
   width: $s * 3;
+}
+
+.book__info__header__buttons__button--heart {
+  filter: $svg-error-500
+}
+
+.book__info__header__buttons__button--bookmark {
+  filter: $svg-warning-500
 }
 
 .book__info__download {
