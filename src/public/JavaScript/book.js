@@ -90,3 +90,28 @@ function postStatus(bookId, status)
         })
     })
 }
+
+function download(bookId, name, format)
+{
+    fetch(`/download`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bookId: bookId,
+            format: format
+        })
+    })
+        .then(response => response.blob())
+        .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = `${name}.${format}`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        });
+}
