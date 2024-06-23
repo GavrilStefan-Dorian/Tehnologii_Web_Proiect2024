@@ -1,6 +1,6 @@
 const Route = require('./route');
 const { sendFile, sendError, authenticateToken, requireLogin, validateEmail} = require('./utils');
-const { getUserByEmail, insertUser } = require('./users');
+const { getUserByEmail, insertUser, getUserById } = require('./users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtSecret = require('./config').jwtSecret;
@@ -208,7 +208,45 @@ const routes = [
     likeRoute,
     bookmarkRoute,
     statusRoute,
-    downloadRoute
+    downloadRoute,
+
+    new Route('/user', 'GET', (req, res) => {
+        const urlParts = req.url.split('?');
+        const queryString = urlParts.length > 1 ? urlParts[1] : '';
+        const queryParams = new URLSearchParams(queryString);
+    
+        const userId = queryParams.get('id');
+    
+        if (!userId) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Missing user ID' }));
+            return;
+        }
+    
+        try {
+            getUserById(userId, (error, user) => {
+                if (error) {
+                    console.error('Error fetching user:', error);
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Internal server error' }));
+                    return;
+                }
+    
+                if (!user) {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'User not found' }));
+                    return;
+                }
+    
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(user));
+            });
+        } catch (error) {
+            console.error('Request error:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Internal server error' }));
+        }
+    }),
 ];
 
 // function sendUrl(url, res) {
