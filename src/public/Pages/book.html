@@ -31,9 +31,16 @@
                     <p id="numRatings" class="book__info__header__info__ratings">123,493 ratings</p>
                 </div>
                 <div class="book__info__header__buttons">
-                    <img class="book__info__header__buttons__button" src="../Resources/Svg/bookmark.svg" alt>
-                    <img class="book__info__header__buttons__button" src="../Resources/Svg/heart.svg" alt>
-                    <img class="book__info__header__buttons__button" src="../Resources/Svg/options.svg" alt>
+                    <img onclick="bookmark()" id="bookmark" class="book__info__header__buttons__button" src="../Resources/Svg/bookmark.svg" alt>
+                    <img onclick="like()" id="heart" class="book__info__header__buttons__button" src="../Resources/Svg/heart.svg" alt>
+                    <div onmouseenter="onDropdownHover()" onmouseleave="onDropdownLeave()" class="book__info__header__buttons__more">
+                        <img class="book__info__header__buttons__button" src="../Resources/Svg/options.svg" alt>
+                        <div id="dropdown" class="book__info__header__buttons__more__items" style="display: none">
+                            <p onclick='setStatus("to_read")' class="book__info__header__buttons__more__items__item">Mark as To Read</p>
+                            <p onclick='setStatus("reading")' class="book__info__header__buttons__more__items__item">Mark as Reading</p>
+                            <p onclick='setStatus("read")' class="book__info__header__buttons__more__items__item">Mark as Finished</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <p id="description" class="book__info__summary">This breakthrough book from James Clear is the most comprehensive guide on how to change your habits and get 1% better every day.</p>
@@ -130,6 +137,80 @@
     [|reviews|]
 
     console.log(book);
+
+    const dropdown = document.getElementById("dropdown");
+    function onDropdownHover()
+    {
+        dropdown.style.display = "flex";
+
+        for(let i = 0; i < dropdown.children.length; i++)
+        {
+            dropdown.children[i].style.display = "block";
+        }
+
+        switch(book.status)
+        {
+            case "to_read":
+                dropdown.children[0].style.display = "none";
+                break;
+
+            case "reading":
+                dropdown.children[1].style.display = "none";
+                break;
+
+            case "read":
+                dropdown.children[2].style.display = "none";
+                break;
+        }
+    }
+
+    function onDropdownLeave()
+    {
+        dropdown.style.display = "none";
+    }
+
+    function setStatus(status)
+    {
+        onDropdownLeave();
+        book.status = status;
+        postStatus(book.book_id, status);
+    }
+
+    const likeIcon = document.getElementById("heart");
+    updateLikeIcon();
+
+    function like()
+    {
+        book.liked = !book.liked;
+        updateLikeIcon();
+        postLike(book.book_id, book.liked);
+    }
+
+    function updateLikeIcon()
+    {
+        likeIcon.src = `../Resources/Svg/${book.liked ? "heart-filled" : "heart"}.svg`;
+        if(book.liked)
+            likeIcon.classList.add("book__info__header__buttons__button--heart");
+        else likeIcon.classList.remove("book__info__header__buttons__button--heart");
+    }
+
+    const bookmarkIcon = document.getElementById("bookmark");
+    updateBookmarkIcon();
+
+    function bookmark()
+    {
+        book.bookmarked = !book.bookmarked;
+        updateBookmarkIcon();
+        postBookmark(book.book_id, book.liked);
+    }
+
+    function updateBookmarkIcon()
+    {
+        bookmarkIcon.src = `../Resources/Svg/${book.bookmarked ? "bookmark-filled" : "bookmark"}.svg`;
+        if(book.bookmarked)
+            bookmarkIcon.classList.add("book__info__header__buttons__button--bookmark");
+        else bookmarkIcon.classList.remove("book__info__header__buttons__button--bookmark");
+    }
 
     if(!user || user.id)
     {

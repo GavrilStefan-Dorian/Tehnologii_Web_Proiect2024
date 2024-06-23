@@ -131,6 +131,11 @@ async function getBookStatuses(user_id)
     return sql`SELECT * FROM book_reading_status WHERE user_id = ${user_id};`;
 }
 
+async function getBooksWithStatuses(user_id)
+{
+    return sql`SELECT * FROM book_reading_status JOIN books ON books.book_id = book_reading_status.book_id WHERE book_reading_status.user_id = ${user_id};`;
+}
+
 module.exports = {
     getBook,
     getBooks,
@@ -142,5 +147,6 @@ module.exports = {
     getLikedBooks,
     getBookmarkedBooks,
     getBookStatuses,
-    getUserReviews
+    getUserReviews,
+    getBooksWithStatuses
 }

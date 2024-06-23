@@ -45,3 +45,48 @@ function postReview(bookId, description, rating)
         })
     })
 }
+
+function postLike(bookId, status)
+{
+    fetch(`/like`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bookId: bookId,
+            status: status
+        })
+    })
+}
+
+function postBookmark(bookId, status)
+{
+    fetch(`/bookmark`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bookId: bookId,
+            status: status
+        })
+    })
+}
+
+function postStatus(bookId, status)
+{
+    fetch(`/status`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bookId: bookId,
+            status: status
+        })
+    })
+}

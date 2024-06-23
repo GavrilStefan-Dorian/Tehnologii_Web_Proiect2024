@@ -83,7 +83,6 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  text-decoration: none;
 }
 
 .list__categories__category__title {
