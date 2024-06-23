@@ -23,10 +23,10 @@
     rssContent += `
       <item>
         <title>${escapeXml(review.book.title)}</title>
-        <link>http://localhost:3000/</link>
+        <link>http://localhost:3000/book/${review.book.book_id}</link>
         <description>${escapeXml(review.user.username)} reviewed ${escapeXml(review.book.title)} with ${review.rating} stars: ${escapeXml(review.description)}</description>
         <pubDate>${new Date(review.creation_date).toUTCString()}</pubDate>
-        <guid>http://localhost:3000/</guid>
+        <guid>http://localhost:3000/book/${review.book.book_id}</guid>
       </item>
     `;
     });
@@ -36,10 +36,10 @@
     rssContent += `
       <item>
         <title>${escapeXml(book.title)}</title>
-        <link>http://localhost:3000/</link>
+        <link>http://localhost:3000/book/${book.book_id}</link>
         <description>Check out the latest release: ${escapeXml(book.title)} by ${escapeXml(book.author)}. ${escapeXml(book.description)}</description>
         <pubDate>${new Date(book.creation_date).toUTCString()}</pubDate>
-        <guid>http://localhost:3000/</guid>
+        <guid>http://localhost:3000/book/${book.book_id}</guid>
         <enclosure url="${book.coverimg}" length="0" type="image/jpg"/>
       </item>
     `;

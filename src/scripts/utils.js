@@ -14,6 +14,11 @@ function readFileContents(url)
     return fs.readFileSync(url, 'utf8');
 }
 
+function sendError(res, statusCode, message) {
+    res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: message }));
+}
+
 function sendFile(url, res) {
     const fileName = path.basename(url.split('?')[0]);
 
@@ -198,6 +203,7 @@ function requireLogin(req, res, next) {
 }
 
 module.exports = {
+    sendError,
     sendFile,
     readFileContents,
     sendHTML,

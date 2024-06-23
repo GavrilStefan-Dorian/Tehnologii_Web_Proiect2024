@@ -1,5 +1,5 @@
 const Route = require('./route');
-const { sendFile, authenticateToken, requireLogin} = require('./utils');
+const { sendFile, sendError, authenticateToken, requireLogin} = require('./utils');
 const { getUserByEmail, insertUser } = require('./users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -14,6 +14,9 @@ const booksRoute = require("./Routes/books");
 const {bookRoute, postReviewRoute} = require("./Routes/book");
 const searchRoute = require("./Routes/search");
 const viewBooksRoute = require("./Routes/view_books");
+
+
+const { resetGetRoute, resetPostRoute, contactPostRoute, forgotPostRoute} = require('./Routes/send_email');
 
 function restrictToAdmin(req, res, next) {
     if (req.user.role !== 'admin') {
@@ -78,32 +81,28 @@ const routes = [
             });
         }),
 
-    new Route('/register', 'POST', (req, res) => {
-        const form = new formidable.IncomingForm();
-        form.parse(req, async (err, fields, files) => {
-            if (err) {
-                res.writeHead(400, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: 'Error parsing form data' }));
-                return;
+    new Route('/register', 'POST', async (req, res) => {
+        const { username, email, password } = req.body;
+        const role = 'client';
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        insertUser(username, email, hashedPassword, role, result => {
+            if (result.success) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ message: 'User registered successfully' }));
+            } else {
+                sendError(res, 400, `Error registering user: ${result.error}`);
             }
-
-            const email = fields.email;
-            const password = fields.password;
-            const username = fields.username;
-            const role = 'client';
-
-            const hashedPassword = await bcrypt.hash(password[0], 10);
-
-            insertUser(username, email, hashedPassword, role, result => {
-                if (result.success) {
-                    res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ message: 'User registered successfully' }));
-                } else {
-                    sendError(res, 400, `Error registering user: ${result.error}`);
-                }
-            });
         });
     }),
+
+    resetGetRoute,
+    
+    resetPostRoute,
+
+    forgotPostRoute,
+
+    contactPostRoute,
 
     new Route('/forgot-pass', 'GET', (req, res) => {
         sendFile('./Pages/forgot-pass.html', res);
@@ -166,9 +165,5 @@ const routes = [
 //     res.end(JSON.stringify({ url: url }));
 // }
 
-function sendError(res, statusCode, message) {
-    res.writeHead(statusCode, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: message }));
-}
 
 module.exports = routes;

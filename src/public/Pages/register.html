@@ -21,13 +21,18 @@
       document.querySelector('.register-form').addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        const formData = new FormData(event.target);
-        console.log("Form Data:", formData);
+        const form = event.target;
+        const formData = {
+          username: form.username.value,
+          email: form.email.value,
+          password: form.password.value,
+          confirm_password: form.confirm_password.value
+        }
 
         try {
           const response = await fetch('/register', {
             method: 'POST',
-            body: formData
+            body: JSON.stringify(formData)
           });
 
           if (!response.ok) {

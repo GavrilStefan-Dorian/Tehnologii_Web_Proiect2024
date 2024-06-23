@@ -1,9 +1,15 @@
+# Node.js
+/node_modules/
+
 # Default ignored files
 /shelf/
 /workspace.xml
+
 # Editor-based HTTP Client requests
 /httpRequests/
-# Supabase
-src\scripts\config_supabase.js
+
 # JWT Secret
-src\scripts\config.js
+src/scripts/config.js
+
+# Environment variables
+.env

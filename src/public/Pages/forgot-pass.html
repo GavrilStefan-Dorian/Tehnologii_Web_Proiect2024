@@ -13,18 +13,35 @@
   <script>
     createSidebar(0);
     
-    // document.addEventListener('DOMContentLoaded', function() {
-    //   handleNavigation();
-    // });
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('forgot-pass-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = {
+        email: form.email.value 
+      };
+
+      const response = await fetch('/forgot-pass', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    });
+    });
   </script>
   <div class="forgot-pass-container">
     <div class="forgot-pass-form-container">
       <div class="forgot-pass-form-header">
         <h2 class="forgot-pass-form-header__title">Forgot Password</h2>
       </div>
-      <form class="forgot-pass-form">
+      <form id="forgot-pass-form">
         <div class="input-container">
-          <input type="email" placeholder="Email" class="input-container__input">
+          <input type="email" placeholder="E-mail" name="email" class="input-container__input" required>
         </div>
         <div class="button-container">
           <button type="submit" class="button-container__button">Reset Password</button>

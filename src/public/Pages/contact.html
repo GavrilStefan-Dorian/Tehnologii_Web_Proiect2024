@@ -9,13 +9,65 @@
 </head>
 <body>
   <script src="../JavaScript/components.js"></script>
-  <!-- <script src="../JavaScript/req_wrapper_jwt.js"></script>  -->
   <script>
     createSidebar(0);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch('/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    });
+    });
+  </script>
+  <div class="content-wrapper">
+    <div class="contact-form-wrapper">
+      <div class="contact-form-wrapper__content">
+        <h1 class="contact-form-wrapper__title">Let's talk!</h1>
+        <p class="contact-form-wrapper__description">We're all ears and wish to help you with any inquiry! Please fire away using this form.</p>
+        <form id="contact-form" class="contact-form-wrapper__form">
+          <input type="text" placeholder="Name" name="name" class="contact-form-wrapper__input" required>
+          <input type="email" placeholder="E-mail" name="email" class="contact-form-wrapper__input" required>
+          <textarea placeholder="What can we help you with?" name="message" class="contact-form-wrapper__textarea" required></textarea>
+          <button type="submit" class="contact-form-wrapper__submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <link rel="stylesheet" href="../Styling/contact.css">
+  <link rel="stylesheet" href="../Styling/sidebar.css">
+</head>
+<body>
+  <script src="../JavaScript/components.js"></script> -->
+  <!-- <script src="../JavaScript/req_wrapper_jwt.js"></script>  -->
+  <!-- <script> -->
+    <!-- // createSidebar(0);
     // document.addEventListener('DOMContentLoaded', function() {
     //   handleNavigation();
-    // });
-    </script>
+    // }); -->
+    <!-- </script>
   <div class="content-wrapper">
     <div class="contact-form-wrapper">
       <div class="contact-form-wrapper__content">
@@ -28,7 +80,7 @@
           <button type="submit" class="contact-form-wrapper__submit">Submit</button>
         </form>
       </div>
-    </div>
-  </div>
+    </div> -->
+  <!-- </div>
 </body>
-</html>
+</html> -->
