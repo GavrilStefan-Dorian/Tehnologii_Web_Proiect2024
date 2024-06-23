@@ -14,6 +14,8 @@ async function createSidebar(selected, user) {
         '<a class="sidebar__items__container__link" href="/home"><img class="sidebar__items__container__item" src="../Resources/Svg/home.svg"></a>',
         '<a class="sidebar__items__container__link" href="/books"><img class="sidebar__items__container__item" src="../Resources/Svg/book.svg"></a>',
         '<a class="sidebar__items__container__link" href="/search"><img class="sidebar__items__container__item" src="../Resources/Svg/search.svg"></a>',
+        '<a class="sidebar__items__container__link" href="/liked"><img class="sidebar__items__container__item" src="../Resources/Svg/heart.svg"></a>',
+        '<a class="sidebar__items__container__link" href="/bookmarked"><img class="sidebar__items__container__item" src="../Resources/Svg/bookmark.svg"></a>',
         '<a class="sidebar__items__container__link" href="/view-groups"><img class="sidebar__items__container__item" src="../Resources/Svg/groups.svg"></a>',
         '<a class="sidebar__items__container__link" href="/help"><img class="sidebar__items__container__item" src="../Resources/Svg/question.svg"></a>',
         '<a class="sidebar__items__container__link" href="/about"><img class="sidebar__items__container__item" src="../Resources/Svg/info.svg"></a>',

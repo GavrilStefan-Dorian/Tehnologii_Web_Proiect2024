@@ -224,7 +224,7 @@
     {
         book.bookmarked = !book.bookmarked;
         updateBookmarkIcon();
-        postBookmark(book.book_id, book.liked);
+        postBookmark(book.book_id, book.bookmarked);
     }
 
     function updateBookmarkIcon()
