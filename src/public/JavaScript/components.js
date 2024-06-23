@@ -24,7 +24,7 @@ async function createSidebar(selected, user) {
     let html = `
 <div class="sidebar">
     <div class="sidebar__items">
-         ${user ? '<img class="sidebar__items__profile" src="../Resources/Images/Profile.png">' : ""}
+         ${user ? `    <div class="navbar__profile">\n        <p class="navbar__profile__text">${user.username[0].toUpperCase()}</p>\n    </div>` : ""}
          <div class="sidebar__scrollable">
 
     `;
@@ -89,7 +89,9 @@ async function createSidebar(selected, user) {
     html += `
 </div>
 <div class="navbar">
-    <img class="navbar__profile" src="../Resources/Images/Profile.png">
+    ${user ? `<div class="navbar__profile">
+        <p class="navbar__profile__text">${user.username[0].toUpperCase()}</p>
+    </div>` : ""}
     <img class="navbar__menu" src="../Resources/Svg/menu.svg">
 </div>
 `;
