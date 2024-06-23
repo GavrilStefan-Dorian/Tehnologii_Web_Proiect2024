@@ -30,7 +30,7 @@
                     </div>
                     <p id="numRatings" class="book__info__header__info__ratings">123,493 ratings</p>
                 </div>
-                <div class="book__info__header__buttons">
+                <div id="buttons" class="book__info__header__buttons">
                     <img onclick="bookmark()" id="bookmark" class="book__info__header__buttons__button" src="../Resources/Svg/bookmark.svg" alt>
                     <img onclick="like()" id="heart" class="book__info__header__buttons__button" src="../Resources/Svg/heart.svg" alt>
                     <div onmouseenter="onDropdownHover()" onmouseleave="onDropdownLeave()" class="book__info__header__buttons__more">
@@ -90,6 +90,9 @@
 
     let clicked = false;
     let userRating = 0;
+
+    if(!user)
+        document.getElementById("buttons").style.display = "none";
 
     function onStarsClicked(stars)
     {
