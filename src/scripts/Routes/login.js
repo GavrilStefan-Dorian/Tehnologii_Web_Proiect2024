@@ -1,11 +1,11 @@
 const Route = require("../route");
-const {sendFile, sendError, authenticateToken, getUser, readFileContents, sendHTML} = require("../utils");
+const {sendError, authenticateToken, getUser, readFileContents, sendHTML} = require("../utils");
 const {getUserByEmail, insertUser} = require("../users");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {jwtSecret} = require("../config");
 
-let loginRoute = new Route('/login', 'GET', (req, res) => {
+const loginRoute = new Route('/login', 'GET', (req, res) =>
+{
     authenticateToken(req, res, () => {
         let contents = readFileContents('./public/Pages/login.html', res);
         if (contents === null) {
@@ -17,10 +17,10 @@ let loginRoute = new Route('/login', 'GET', (req, res) => {
         contents = getUser(req, contents);
 
         sendHTML(contents, res);
-    })
+    });
 });
 
-let registerRoute = new Route('/register', 'GET', (req, res) => {
+const registerRoute = new Route('/register', 'GET', (req, res) => {
     authenticateToken(req, res, () => {
         let contents = readFileContents('./public/Pages/register.html', res);
         if (contents === null) {
@@ -35,7 +35,7 @@ let registerRoute = new Route('/register', 'GET', (req, res) => {
     })
 });
 
-let postLoginRoute = new Route('/login', 'POST', (req, res) => {
+const postLoginRoute = new Route('/login', 'POST', (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -78,7 +78,7 @@ let postLoginRoute = new Route('/login', 'POST', (req, res) => {
     });
 });
 
-let postRegisterRoute = new Route('/register', 'POST', async (req, res) => {
+const postRegisterRoute = new Route('/register', 'POST', async (req, res) => {
         const { username, email, password } = req.body;
         const role = 'client';
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -93,7 +93,7 @@ let postRegisterRoute = new Route('/register', 'POST', async (req, res) => {
         });
     });
 
-let forgotPassRoute = new Route('/forgot-pass', 'GET', (req, res) => {
+const forgotPassRoute = new Route('/forgot-pass', 'GET', (req, res) => {
     authenticateToken(req, res, () => {
         let contents = readFileContents('./public/Pages/forgot-pass.html', res);
         if (contents === null) {

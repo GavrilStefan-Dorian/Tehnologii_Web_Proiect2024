@@ -45,4 +45,6 @@ const homeRoute = new Route('/home', 'GET', async (req, res) => {
     }
 });
 
-module.exports = homeRoute;
+module.exports = {
+    homeRoute
+};

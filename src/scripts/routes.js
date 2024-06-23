@@ -8,7 +8,7 @@ const formidable = require('formidable');
 const generateRSSFeed = require('./rssFeed');
 
 
-const homeRoute = require('./Routes/home');
+const {homeRoute} = require('./Routes/home');
 const path = require("path");
 const booksRoute = require("./Routes/books");
 const {bookRoute, postReviewRoute, likeRoute, bookmarkRoute, statusRoute, downloadRoute} = require("./Routes/book");
