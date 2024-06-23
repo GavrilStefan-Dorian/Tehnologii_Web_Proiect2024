@@ -7,6 +7,9 @@ $button-hover-color: #409e15;
 $text-color: #333;
 $shadow-color: rgba(0, 0, 0, 0.1);
 
+$error-bg-color: #ffdddd;
+$error-border-color: #ff4c4c;
+
 @import "common";
 
 html {
@@ -95,4 +98,14 @@ html {
       }
     }
   }
+}
+
+.error-message {
+  color: $text-color;
+  background-color: $error-bg-color;
+  border: 1px solid $error-border-color;
+  border-radius: 10px;
+  font-size: 0.875em;
+  margin-top: 0.5em;
+  padding: 10px;
 }

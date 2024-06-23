@@ -1,5 +1,5 @@
 const Route = require('./route');
-const { sendFile, sendError, authenticateToken, requireLogin} = require('./utils');
+const { sendFile, sendError, authenticateToken, requireLogin, validateEmail} = require('./utils');
 const { getUserByEmail, insertUser } = require('./users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -39,61 +39,108 @@ const routes = [
     }),
 
     new Route('/login', 'POST', (req, res) => {
-        const { email, password } = req.body;
+        const urlParts = req.url.split('?');
+        const queryString = urlParts.length > 1 ? urlParts[1] : '';
+        const queryParams = new URLSearchParams(queryString);
+    
+        const email = queryParams.get('email');
+        const password = queryParams.get('password');
+    
+        if (!email || !password) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Missing email or password' }));
+            return;
+        }
 
-            if (!email || !password) {
-                res.writeHead(400, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: 'Missing email or password' }));
-                return;
-            }
-
-            getUserByEmail(email, async (error, user) => {
-                if (error) {
+            try {
+                getUserByEmail(email, async (error, user) => {
+                  if (error) {
                     console.error('Error fetching user:', error);
                     res.writeHead(500, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ error: 'Internal server error' }));
-                } else if (!user) {
+                    return;
+                  }
+            
+                  if (!user) {
                     res.writeHead(401, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ error: 'Invalid credentials' }));
-                } else {
-                    bcrypt.compare(password, user.password, (err, result) => {
-                        if (err) {
-                            console.error('Error comparing passwords:', err);
-                            res.writeHead(500, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ error: 'Internal server error' }));
-                        } else if (!result) {
-                            console.log('Passwords do not match');
-                            res.writeHead(401, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ error: 'Invalid credentials' }));
-                        } else {
-                            const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, jwtSecret, { expiresIn: '1h' });
-
-                            res.setHeader('Set-Cookie', [
-                                `jwt=${token}; Max-Age=${60 * 60}; SameSite=Lax; Path=/`,
-                                `role=${user.role}; Max-Age=${60 * 60}; SameSite=Lax; Path=/`
-                              ]);
-
-                            res.writeHead(200, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ message: 'Login successful', token: token , role: user.role}));
-                        }
-                    });                    
-                }
-            });
+                    return;
+                  }
+            
+                  bcrypt.compare(password, user.password, (err, result) => {
+                    if (err || !result) {
+                        res.writeHead(401, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ error: 'Invalid credentials' }));
+                        return;
+                    }
+            
+                    const token = jwt.sign(
+                      { userId: user.user_id, username: user.username, role: user.role },
+                      jwtSecret,
+                      { expiresIn: '1h' }
+                    );
+            
+                    res.setHeader('Set-Cookie', [
+                      `jwt=${token}; Max-Age=${60 * 60}; SameSite=Lax; Path=/`,
+                      `role=${user.role}; Max-Age=${60 * 60}; SameSite=Lax; Path=/`
+                    ]);
+            
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'Login successful', token: token, role: user.role }));                  });
+                });
+              } catch (error) {
+                console.error('Login error:', error);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Internal server error' }));              }
         }),
 
-    new Route('/register', 'POST', async (req, res) => {
-        const { username, email, password } = req.body;
-        const role = 'client';
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        insertUser(username, email, hashedPassword, role, result => {
-            if (result.success) {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'User registered successfully' }));
-            } else {
-                sendError(res, 400, `Error registering user: ${result.error}`);
+        new Route('/register', 'POST', async (req, res) => {
+            const urlParts = req.url.split('?');
+            const queryString = urlParts.length > 1 ? urlParts[1] : '';
+            const queryParams = new URLSearchParams(queryString);
+        
+            const username = queryParams.get('username');
+            const email = queryParams.get('email');
+            const password = queryParams.get('password');
+        
+            if (!username || !email || !password) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Username, email, and password are required.' }));
+                return;
             }
-        });
+        if (!validateEmail(email)) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Invalid email format.' }));
+            return;
+        }
+
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordPattern.test(password)) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+                error: 'Password must contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.'
+            }));
+            return;
+        }
+
+        const role = 'client';
+        try {
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            insertUser(username, email, hashedPassword, role, result => {
+                if (result.success) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'User registered successfully' }));
+                } else {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: `Error registering user: ${result.error}` }));
+                }
+            });
+        } catch (error) {
+            console.error('Registration error:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: `Internal server error: ${error.message}` }));
+        }
     }),
 
     resetGetRoute,

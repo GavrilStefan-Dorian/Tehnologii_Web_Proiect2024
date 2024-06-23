@@ -89,4 +89,14 @@ html {
   color: #57b846;
 }
 
+.error-message {
+  color: #333;
+  background-color: #ffdddd;
+  border: 1px solid #ff4c4c;
+  border-radius: 10px;
+  font-size: 0.875em;
+  margin-top: 0.5em;
+  padding: 10px;
+}
+
 /*# sourceMappingURL=register.css.map */
