@@ -10,9 +10,6 @@ function createSidebar(selected) {
         token = token.split('=')[1];
     }
 
-    console.log(token);
-
-
     const selectableItems = [
         '<a class="sidebar__items__container__link" href="/home"><img class="sidebar__items__container__item" src="../Resources/Svg/home.svg"></a>',
         '<a class="sidebar__items__container__link" href="/books"><img class="sidebar__items__container__item" src="../Resources/Svg/book.svg"></a>',
@@ -21,9 +18,6 @@ function createSidebar(selected) {
         '<a class="sidebar__items__container__link" href="/help"><img class="sidebar__items__container__item" src="../Resources/Svg/question.svg"></a>',
         '<a class="sidebar__items__container__link" href="/about"><img class="sidebar__items__container__item" src="../Resources/Svg/info.svg"></a>',
         '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>',
-        '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>',
-        '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>',
-        '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>'
 
     ];
 
@@ -53,8 +47,6 @@ function createSidebar(selected) {
     if(token !== null && token !== undefined) {
         logged = true;
         role = document.cookie.split(';').find(c => c.trim().startsWith('role=')).split('=')[1];
-        console.log(role === 'admin');
-        console.log(role);
 
         html += `
         <div class="sidebar__items sidebar__items--bottom">

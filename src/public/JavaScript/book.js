@@ -35,7 +35,7 @@ function postReview(bookId, description, rating)
     fetch(`/review`, {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer ' + getToken(),
+            'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({

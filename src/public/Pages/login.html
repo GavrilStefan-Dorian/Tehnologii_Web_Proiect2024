@@ -9,7 +9,7 @@
 </head>
 <body>
     <script src="../JavaScript/components.js"></script>
-    <script src="../JavaScript/req_wrapper_jwt.js"></script> 
+    <!-- <script src="../JavaScript/req_wrapper_jwt.js"></script>  -->
     <script>
         createSidebar(0);
         
@@ -20,12 +20,18 @@
                 event.preventDefault();
                 
                 const formData = new FormData(event.target);
+                const formDataObject = Object.fromEntries(formData.entries());
+                const jsonData = JSON.stringify(formDataObject);
+
                 console.log("Form Data:", formData);
 
                 try {
                     const response = await fetch('/login', {
                         method: 'POST',
-                        body: formData
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: jsonData
                     });
 
                     if (!response.ok) {

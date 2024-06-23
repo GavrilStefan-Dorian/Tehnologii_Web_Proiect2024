@@ -30,7 +30,9 @@ const server = http.createServer((req, res) => {
                 {
                     const parsedBody = JSON.parse(body);
                     req.body = parsedBody;
+                    // console.log(parsedBody);
                 }
+
                 route.handler(req, res);
             } catch (error) {
                 console.error('Error parsing JSON:', error);
@@ -53,6 +55,7 @@ const server = http.createServer((req, res) => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, async () => {
    //await processCSV("./resources/books.csv");
+
     console.log("Calculating top books...");
     await getTopBooks();
     console.log("Calculating popular books...");

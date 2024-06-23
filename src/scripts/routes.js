@@ -36,18 +36,7 @@ const routes = [
     }),
 
     new Route('/login', 'POST', (req, res) => {
-        const form = new formidable.IncomingForm();
-        form.parse(req, (err, fields, files) => {
-            if (err) {
-                res.writeHead(400, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: 'Error parsing form data' }));
-                return;
-            }
-
-            const email = fields.email;
-            const password = fields.password;
-
-            console.log("EMAIL:", email);
+        const { email, password } = req.body;
 
             if (!email || !password) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -64,7 +53,7 @@ const routes = [
                     res.writeHead(401, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ error: 'Invalid credentials' }));
                 } else {
-                    bcrypt.compare(password[0], user.password, (err, result) => {
+                    bcrypt.compare(password, user.password, (err, result) => {
                         if (err) {
                             console.error('Error comparing passwords:', err);
                             res.writeHead(500, { 'Content-Type': 'application/json' });
@@ -87,9 +76,7 @@ const routes = [
                     });                    
                 }
             });
-        });
-    }),
-
+        }),
 
     new Route('/register', 'POST', (req, res) => {
         const form = new formidable.IncomingForm();
