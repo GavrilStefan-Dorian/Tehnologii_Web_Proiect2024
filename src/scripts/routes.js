@@ -8,6 +8,16 @@ const formidable = require('formidable');
 const generateRSSFeed = require('./rssFeed');
 
 
+// const { groupsRoute,
+//     createGroupRoute,
+//     getGroupRoute,
+//     updateGroupRoute,
+//     deleteGroupRoute,} = require('./Routes/groups')
+
+const { viewGroupsRoute } = require('./Routes/groups');
+
+
+
 const homeRoute = require('./Routes/home');
 const path = require("path");
 const booksRoute = require("./Routes/books");
@@ -183,13 +193,7 @@ const routes = [
 
     viewBooksRoute,
 
-    new Route('/view-groups', 'GET', (req, res) => {
-        authenticateToken(req, res, () => {
-            requireLogin(req, res, () => {
-                sendFile('./Pages/view-groups.html', res);
-            });
-        });
-    }),
+    viewGroupsRoute,
 
     new Route('/admin', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
@@ -247,6 +251,15 @@ const routes = [
             res.end(JSON.stringify({ error: 'Internal server error' }));
         }
     }),
+
+    // groupsRoute,
+    // createGroupRoute,
+    // getGroupRoute,
+    // updateGroupRoute,
+    // deleteGroupRoute,
+
+    // groupsByUserRoute,
+    // popularGroupsRoute,
 ];
 
 // function sendUrl(url, res) {
