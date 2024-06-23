@@ -27,7 +27,7 @@ function createBook(id, title, author, image, rating, ratings) {
                             <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">
                             <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">
                             <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">
-                            <p class="books__list__item__info__rating_text">${ratings}</p>
+                            <p class="books__list__item__info__rating_text">${parseFloat(rating).toFixed(2)}</p>
                         </div>
                         <p class="books__list__item__info__ratings">${ratings} ratings</p>
 

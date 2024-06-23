@@ -243,8 +243,8 @@
 
     document.getElementById("title").innerText = book.title;
     document.getElementById("author").innerText = book.author;
-    document.getElementById("rating").innerText = book.rating;
-    document.getElementById("numRatings").innerText = book.numratings + " ratings";
+    document.getElementById("rating").innerText = parseFloat(book.boo_rating).toFixed(2);
+    document.getElementById("numRatings").innerText = book.boo_numratings + " ratings";
     document.getElementById("description").innerText = book.description;
     document.getElementById("cover").src = book.coverimg;
 
