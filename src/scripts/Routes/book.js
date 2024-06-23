@@ -57,7 +57,7 @@ const postReviewRoute = new Route('/review', 'POST', async (req, res) => {
     {
         authenticateToken(req, res, () => {
             requireLogin(req, res, async () => {
-                await sql`INSERT INTO reviews(user_id, book_id, rating, description, creation_date) VALUES (${req.user.userId}, ${req.body.bookId}, ${req.body.rating}, ${req.body.description}, ${Date.now()});`;
+                await sql`INSERT INTO reviews(user_id, book_id, rating, description, creation_date) VALUES (${req.user.userId}, ${req.body.bookId}, ${req.body.rating}, ${req.body.description}, ${Date.now()}) ON CONFLICT (user_id, book_id) DO UPDATE SET description = ${req.body.description}, rating = ${req.body.rating}, creation_date = ${Date.now()}, updated = ${true};`;
                 console.log("Inserted review on " + req.body.bookId);
                 res.writeHead(200, {'Content-Type': 'text/plain'});
                 res.end('Ok');

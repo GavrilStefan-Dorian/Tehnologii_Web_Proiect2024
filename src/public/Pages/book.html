@@ -86,9 +86,7 @@
 
     function onStarsClicked(stars)
     {
-        if(clicked)
-            return;
-
+        onStarsHovered(stars, true);
         clicked = true;
         userRating = stars;
         document.getElementById("details__more").style.display = "";
@@ -110,9 +108,9 @@
             starList.children[i].classList.add("details__review__stars__star");
         }
     }
-    function onStarsHovered(starCount)
+    function onStarsHovered(starCount, force = false)
     {
-        if(clicked)
+        if(clicked && !force)
             return;
 
         for(let i = 0; i < starList.childElementCount; i++)
@@ -225,8 +223,26 @@
     document.getElementById("description").innerText = book.description;
     document.getElementById("cover").src = book.coverimg;
 
+    function edit()
+    {
+        const review = document.getElementById("editable");
+        review.remove();
+        starList.style.display = "block";
+        document.getElementById("starsText").style.display = "block";
+        document.getElementById("details__more").style.display = "block";
+        onStarsClicked(user.rating);
+        userRating = user.rating;
+
+        let input = document.getElementById("review__input");
+        input.innerText = user.description;
+    }
+
     const htmlReviews = [];
-    reviews.forEach(x => htmlReviews.push(createReview(x.username, x.creation_date, x.description, x.rating)));
+    reviews.forEach(x => {
+        if(x.user_id === user.user_id)
+            htmlReviews.unshift(createReview(x.username, x.creation_date, x.description, x.rating, x.updated, true, edit));
+        else htmlReviews.push(createReview(x.username, x.creation_date, x.description, x.rating, x.updated))
+    });
     const reviewList = document.getElementsByClassName("details__reviews")[0];
     htmlReviews.forEach(x => reviewList.innerHTML += x);
 
@@ -238,7 +254,11 @@
         if(!text)
             return;
 
-        reviewList.innerHTML = createReview(user.username, Date.now(), text, userRating) + reviewList.innerHTML;
+        reviewList.innerHTML = createReview(user.username, Date.now(), text, userRating, user.updated === false, true, edit) + reviewList.innerHTML;
+        user.updated = false;
+        user.id = -1;
+        user.description = text;
+        user.rating = userRating;
         starList.style.display = "none";
         document.getElementById("starsText").style.display = "none";
         document.getElementById("details__more").style.display = "none";
