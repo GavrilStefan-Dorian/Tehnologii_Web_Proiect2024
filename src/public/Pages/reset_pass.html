@@ -27,6 +27,7 @@
 
       document.getElementById('reset-pass-form').addEventListener('submit', async function(e) {
         e.preventDefault();
+
         const form = e.target;
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
@@ -40,7 +41,10 @@
         });
 
         const result = await response.json();
-        alert(result.message);
+        const submitButton = document.getElementById('reset-pass-form__submit-button');
+        submitButton.style.opacity = 0.75;
+        submitButton.textContent = 'Password was reset!';
+        submitButton.disabled = true;
       });
     });
   </script>
@@ -56,7 +60,7 @@
         <input type="password" placeholder="Password" id="newPassword" name="newPassword" class="input-container__input" required autocomplete="current-password">
       </div>
       <div class="button-container">
-        <button type="submit" class="button-container__button">Reset</button>
+        <button type="submit" id="reset-pass-form__submit-button" class="button-container__button">Reset</button>
       </div>
       <div class="reset-pass-form-footer">
         <a href="/login" class="reset-pass-form-footer__link">Remembered your password? Login</a>
