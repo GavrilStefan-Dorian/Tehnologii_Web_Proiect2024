@@ -131,8 +131,14 @@ body {
   filter: invert(67%) sepia(79%) saturate(1071%) hue-rotate(350deg) brightness(103%) contrast(96%);
 }
 
-.book__info__download {
+.book__info__download__div {
   margin-top: 16px;
+  width: 128px;
+  height: 36px;
+  position: relative;
+}
+
+.book__info__download {
   background-color: #52C41A;
   border-radius: 9999px;
   width: 128px;
@@ -143,11 +149,38 @@ body {
   box-shadow: 0px 4px 6px -1px rgba(31, 31, 31, 0.1);
 }
 
+.book__info__download__items {
+  display: none;
+  flex-direction: column;
+  border-radius: 8px;
+  right: 0;
+  position: absolute;
+  background-color: #52C41A;
+  min-width: 128px;
+  box-shadow: 0px 4px 6px -1px rgba(31, 31, 31, 0.1);
+  z-index: 1;
+  transform: translateY(-4px);
+}
+
+.book__info__download__items__item {
+  padding: 8px;
+  color: #FFFFFF;
+}
+
+.book__info__download__items__item:hover {
+  background-color: #73D13D;
+}
+
 .book__info__download__text {
   color: #FFFFFF;
   font-size: 16px;
   font-weight: 500;
   text-align: center;
+}
+
+.book__info__download__arrow {
+  filter: invert(100%) sepia(0%) saturate(1%) hue-rotate(156deg) brightness(102%) contrast(101%);
+  width: 24px;
 }
 
 .details {

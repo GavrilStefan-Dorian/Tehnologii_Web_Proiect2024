@@ -1,7 +1,7 @@
 const {sendFile, readFileContents, sendHTML, authenticateToken, requireLogin} = require("../utils");
 const Route = require("../route");
 const {getBooks, getBook, getReviews, getUserReview, getUserReviews} = require("../DAOs/booksDAO");
-const {sql} = require("../db");
+const {sql, extractBookReviewsCSV, extractBookReviewsXML, extractBookReviewsDBK} = require("../db");
 
 const bookRoute = new Route((req) => {
     const params = req.url.split('/');
@@ -145,10 +145,52 @@ const statusRoute = new Route('/status', 'POST', async (req, res) => {
     }
 });
 
+const downloadRoute = new Route('/download', 'POST', async (req, res) => {
+    try
+    {
+        switch(req.body.format)
+        {
+            case "csv":
+            {
+                const result = await extractBookReviewsCSV(req.body.bookId);
+
+                res.writeHead(200, {'Content-Type': 'text/plain'});
+                res.end(result[0].get_book_reviews_csv);
+                break;
+            }
+
+            case "xml":
+            {
+                const result = await extractBookReviewsXML(req.body.bookId);
+
+                res.writeHead(200, {'Content-Type': 'text/plain'});
+                res.end(result[0].get_book_reviews_xml);
+                break;
+            }
+
+            case "dbk":
+            {
+                const result = await extractBookReviewsDBK(req.body.bookId);
+
+                res.writeHead(200, {'Content-Type': 'text/plain'});
+                res.end(result[0].get_book_reviews_dbk);
+                break;
+            }
+        }
+    }
+    catch (ex)
+    {
+        console.log(ex);
+        res.writeHead(500, {'Content-Type': 'text/plain'});
+        res.end('Internal server error');
+    }
+});
+
 module.exports = {
     bookRoute,
     postReviewRoute,
     likeRoute,
     bookmarkRoute,
-    statusRoute
+    statusRoute,
+    downloadRoute
 };

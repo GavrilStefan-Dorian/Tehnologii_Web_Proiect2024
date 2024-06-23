@@ -44,10 +44,17 @@
                 </div>
             </div>
             <p id="description" class="book__info__summary">This breakthrough book from James Clear is the most comprehensive guide on how to change your habits and get 1% better every day.</p>
-
-            <div class="book__info__download">
-                <p class="book__info__download__text">Download</p>
-            </div>
+                <div onmouseenter="onDownloadDropdownHover()" onmouseleave="onDownloadDropdownLeave()" class="book__info__download__div">
+                    <div class="book__info__download">
+                        <p class="book__info__download__text">Download</p>
+                        <img class="book__info__download__arrow" src="../Resources/Svg/caret-down-filled.svg" alt>
+                    </div>
+                    <div id="downloadDropdown" class="book__info__download__items" style="display: none">
+                        <p onclick='downloadBook("csv")' class="book__info__download__items__item">CSV</p>
+                        <p onclick='downloadBook("xml")' class="book__info__download__items__item">XML</p>
+                        <p onclick='downloadBook("dbk")' class="book__info__download__items__item">Docbook</p>
+                    </div>
+                </div>
         </div>
     </div>
     <div class="details">
@@ -167,6 +174,24 @@
         dropdown.style.display = "none";
     }
 
+    const downloadDropdown = document.getElementById("downloadDropdown");
+    function onDownloadDropdownHover()
+    {
+        downloadDropdown.style.display = "flex";
+    }
+
+    function onDownloadDropdownLeave()
+    {
+        downloadDropdown.style.display = "none";
+    }
+
+    function downloadBook(format)
+    {
+        onDownloadDropdownLeave();
+
+        download(book.book_id, book.title, format);
+    }
+
     function setStatus(status)
     {
         onDropdownLeave();
@@ -239,7 +264,7 @@
 
     const htmlReviews = [];
     reviews.forEach(x => {
-        if(x.user_id === user.user_id)
+        if(user && x.user_id === user.user_id)
             htmlReviews.unshift(createReview(x.username, x.creation_date, x.description, x.rating, x.updated, true, edit));
         else htmlReviews.push(createReview(x.username, x.creation_date, x.description, x.rating, x.updated))
     });

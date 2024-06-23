@@ -71,12 +71,17 @@ async function processCSV(path)
 
 async function extractBookReviewsCSV(bookID)
 {
-    return await sql`SELECT get_book_reviews_csv(${bookID})`;
+    return sql`SELECT get_book_reviews_csv(${bookID})`;
 }
 
 async function extractBookReviewsXML(bookID)
 {
     return await sql`SELECT get_book_reviews_xml(${bookID})`;
+}
+
+async function extractBookReviewsDBK(bookID)
+{
+    return await sql`SELECT get_book_reviews_dbk(${bookID})`;
 }
 
 let topBooks = null;
@@ -176,5 +181,6 @@ module.exports = {
     getLatestReviews,
     getLatestBooks,
     getRecentBooks,
+    extractBookReviewsDBK,
     sql
 }
