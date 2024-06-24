@@ -3,7 +3,7 @@ var navbar = null;
 let logged = false;
 let token;
 
-function createSidebar(selected) {
+async function createSidebar(selected, user) {
     token = document.cookie.split(';').find(c => c.trim().startsWith('jwt='));
     
     if(token !== null && token !== undefined) {
@@ -14,6 +14,8 @@ function createSidebar(selected) {
         '<a class="sidebar__items__container__link" href="/home"><img class="sidebar__items__container__item" src="../Resources/Svg/home.svg"></a>',
         '<a class="sidebar__items__container__link" href="/books"><img class="sidebar__items__container__item" src="../Resources/Svg/book.svg"></a>',
         '<a class="sidebar__items__container__link" href="/search"><img class="sidebar__items__container__item" src="../Resources/Svg/search.svg"></a>',
+        '<a class="sidebar__items__container__link" href="/liked"><img class="sidebar__items__container__item" src="../Resources/Svg/heart.svg"></a>',
+        '<a class="sidebar__items__container__link" href="/bookmarked"><img class="sidebar__items__container__item" src="../Resources/Svg/bookmark.svg"></a>',
         '<a class="sidebar__items__container__link" href="/view-groups"><img class="sidebar__items__container__item" src="../Resources/Svg/groups.svg"></a>',
         '<a class="sidebar__items__container__link" href="/help"><img class="sidebar__items__container__item" src="../Resources/Svg/question.svg"></a>',
         '<a class="sidebar__items__container__link" href="/about"><img class="sidebar__items__container__item" src="../Resources/Svg/info.svg"></a>',
@@ -24,7 +26,7 @@ function createSidebar(selected) {
     let html = `
 <div class="sidebar">
     <div class="sidebar__items">
-         <img class="sidebar__items__profile" src="../Resources/Images/Profile.png">
+         ${user ? `    <div class="navbar__profile">\n        <p class="navbar__profile__text">${user.username[0].toUpperCase()}</p>\n    </div>` : ""}
          <div class="sidebar__scrollable">
 
     `;
@@ -89,7 +91,9 @@ function createSidebar(selected) {
     html += `
 </div>
 <div class="navbar">
-    <img class="navbar__profile" src="../Resources/Images/Profile.png">
+    ${user ? `<div class="navbar__profile">
+        <p class="navbar__profile__text">${user.username[0].toUpperCase()}</p>
+    </div>` : ""}
     <img class="navbar__menu" src="../Resources/Svg/menu.svg">
 </div>
 `;

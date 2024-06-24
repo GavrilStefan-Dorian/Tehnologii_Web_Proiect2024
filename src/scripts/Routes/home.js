@@ -1,4 +1,4 @@
-const {sendFile, readFileContents, sendHTML} = require("../utils");
+const {sendFile, readFileContents, sendHTML, authenticateToken, getUser} = require("../utils");
 const Route = require("../route");
 const {getBooks, getLikedBooks, getBookmarkedBooks, getBookStatuses} = require("../DAOs/booksDAO");
 const {getPopularBooks, getTopBooks, getRecentBooks} = require("../db");
@@ -16,22 +16,26 @@ function buildList(id, name, books)
 const homeRoute = new Route('/home', 'GET', async (req, res) => {
     try
     {
-        let contents = readFileContents('./public/Pages/home.html', res);
-        if (contents === null) {
-            res.writeHead(500, {'Content-Type': 'text/plain'});
-            res.end('Internal server error');
-            return;
-        }
+        authenticateToken(req, res, async () => {
+            let contents = readFileContents('./public/Pages/home.html', res);
+            if (contents === null) {
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end('Internal server error');
+                return;
+            }
 
-        let booksBuilder = "const bookLists = [";
-        booksBuilder += buildList(1, "New and Popular", (await getPopularBooks()).slice(0, 20));
-        booksBuilder += buildList(2, "All-Time Sellers", (await getTopBooks()).slice(0, 20));
-        booksBuilder += buildList(3, "Recent releases", (await getRecentBooks()).slice(0, 20));
-        booksBuilder += "];";
+            contents = getUser(req, contents);
 
-        contents = contents.replace("[|books|]", booksBuilder);
+            let booksBuilder = "const bookLists = [";
+            booksBuilder += buildList(1, "New and Popular", (await getPopularBooks()).slice(0, 20));
+            booksBuilder += buildList(2, "All-Time Sellers", (await getTopBooks()).slice(0, 20));
+            booksBuilder += buildList(3, "Recent releases", (await getRecentBooks()).slice(0, 20));
+            booksBuilder += "];";
 
-        sendHTML(contents, res);
+            contents = contents.replace("[|books|]", booksBuilder);
+
+            sendHTML(contents, res);
+        })
     }
     catch (ex)
     {
@@ -41,4 +45,6 @@ const homeRoute = new Route('/home', 'GET', async (req, res) => {
     }
 });
 
-module.exports = homeRoute;
+module.exports = {
+    homeRoute
+};

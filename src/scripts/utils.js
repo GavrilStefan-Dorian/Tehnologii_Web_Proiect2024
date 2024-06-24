@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const Route = require("./route");
-const {getLikedBooks, getBookmarkedBooks, getBookStatuses} = require("./DAOs/booksDAO");
+const {getLikedBooks, getBookmarkedBooks, getBookStatuses, getUserReviews} = require("./DAOs/booksDAO");
 const jwt = require("jsonwebtoken");
 const {jwtSecret} = require("./config");
 
@@ -202,9 +202,29 @@ function authenticateToken(req, res, next) {
 
 function requireLogin(req, res, next) {
     if (!req.user) {
-        return sendFile('./Pages/login.html', res);
+        let contents = readFileContents('./public/Pages/login.html', res);
+        if (contents === null) {
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end('Internal server error');
+            return;
+        }
+
+        contents = getUser(req, contents);
+
+        sendHTML(contents, res);
+        return;
     }
     next();
+}
+
+function getUser(req, contents) {
+    if(req.user)
+    {
+        contents = contents.replace("[|user|]", `const user=${JSON.stringify(req.user)}`);
+    }
+    else contents = contents.replace("[|user|]", `const user=null`);
+
+    return contents;
 }
 
 module.exports = {
@@ -217,5 +237,6 @@ module.exports = {
     getUserBookData,
     authenticateToken,
     requireLogin,
+    getUser,
     validateEmail
 }

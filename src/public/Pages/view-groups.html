@@ -23,7 +23,8 @@
   </div>
 
   <script>
-    createSidebar(3);
+    [|user|]
+    createSidebar(5, user);
 
     [|groups|]
     [|populars|]
@@ -33,37 +34,6 @@
 
     groupLists.forEach(x => groupList.innerHTML += x);
     popularLists.forEach(x => groupList.innerHTML += x);
-
-    function getToken() {
-            return localStorage.getItem('jwtToken');
-        }
-
-    function fetchData(url) {
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + getToken(),
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            }).then(data => {
-                console.log('Data fetched successfully:', data);
-            }).catch(error => {
-                console.error('Error fetching data:', error);
-            });
-        }
-        
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('groups__list__item__info__view__text')) {
-                const url = event.target.parentElement.getAttribute('href');
-                fetchData(url);
-            }
-        })
-
     </script>
 </body>
 </html> 

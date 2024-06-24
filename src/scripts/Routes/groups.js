@@ -1,7 +1,7 @@
 
-const { sendHTML, readFileContents, authenticateToken, requireLogin } = require("../utils");
 const Route = require("../route");
-const { getUserGroups, getPopularGroups, getGroupMembersCount, getUserGroupsData } = require("../DAOs/groupsDAO");
+const { getGroup, getPopularGroupsWithoutUser, getUserGroupsData, joinGroup, leaveGroup, getGroupMembersAndBooks, getGroupMembers } = require("../DAOs/groupsDAO");
+const {authenticateToken, requireLogin, readFileContents, getUser, sendHTML} = require("../utils");
 
 function buildGroupList(type, groups) {
     let html = `createGroupList("${type}", [`;
@@ -12,6 +12,24 @@ function buildGroupList(type, groups) {
     return html;
 }
 
+function buildMembersSection(users) {
+    let html = ``;
+    users.forEach(user => {
+        html += `createMember("${user.username}"),`
+    });
+
+    return html;
+}
+
+function buildBooksList(books) {
+    let html = ``;
+    books.forEach(x => {
+        html += `createBook("${x.book_id}", "${x.title}", "${x.author}", "${x.coverimg}", "${x.boo_rating}", "${x.boo_numratings}"),`;
+    })
+
+    return html;
+}
+
 const viewGroupsRoute = new Route('/view-groups', 'GET', async (req, res) => {
     try {
         let contents = readFileContents('./public/Pages/view-groups.html', res);
@@ -19,11 +37,11 @@ const viewGroupsRoute = new Route('/view-groups', 'GET', async (req, res) => {
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end('Internal server error');
             return;
-        };
+        }
         authenticateToken(req, res, async () => {
             requireLogin(req, res, async () => {
                 const userGroups = await getUserGroupsData(req.user.userId);
-                const popularGroups = await getPopularGroups();
+                const popularGroups = await getPopularGroupsWithoutUser(req.user.userId);
 
                 let groupsBuilder = "const groupLists = [";
                 let popularsBuilder = "const popularLists = [";
@@ -34,19 +52,12 @@ const viewGroupsRoute = new Route('/view-groups', 'GET', async (req, res) => {
                 groupsBuilder += "];";
                 popularsBuilder += "];";
 
-                // let groupLists = '';
-                // groupLists += buildGroupList("Your Groups", userGroups);
-                // // groupLists += buildGroupList("Popular Groups", popularGroups);
-                //
-
-
+                contents = getUser(req, contents);
                 contents = contents.replace("[|groups|]", groupsBuilder);
                 contents = contents.replace("[|populars|]", popularsBuilder);
-
-                // contents = contents.replace("<!-- Placeholder for dynamically generated JavaScript -->", `<script>${groupLists}</script>`);
                 sendHTML(contents, res);
-            });
-        });
+            })
+        })
     } catch (ex) {
         console.log(ex);
         res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -54,7 +65,139 @@ const viewGroupsRoute = new Route('/view-groups', 'GET', async (req, res) => {
     }
 });
 
-module.exports = { viewGroupsRoute };
+// /group-page before,
+let groupPageRoute = new Route((req) => {
+    const params = req.url.split('/');
+    if(params[1] !== "groups")
+        return false;
+    if(params.length !== 3)
+        return false;
+    req.groupId = params[2];
+    return true;
+}, 'GET', async (req, res) => {
+        authenticateToken(req, res, () => {
+            requireLogin(req, res, async () => {
+                let contents = readFileContents('./public/Pages/group-page.html', res);
+                if (contents === null) {
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                    return;
+                }
+
+                const group = await getGroup(req.groupId);
+
+                let groupBuilder = `const group = ["${group.group_id}", "${group.name}", "${group.description}", "${group.creation_date}", "${group.img}"];`;
+                contents = contents.replace("[|group|]", groupBuilder);
+
+
+                const toReadBooks = await getGroupMembersAndBooks(req.groupId, 'to_read');
+                const readingBooks = await getGroupMembersAndBooks(req.groupId, 'reading');
+                const finishedBooks = await getGroupMembersAndBooks(req.groupId, 'read');
+
+                let toReadBuilder = "const toReadBooks = [";
+                toReadBuilder += buildBooksList(toReadBooks);
+                toReadBuilder += "];";
+                
+                let readingBuilder = "const readingBooks = [";
+                readingBuilder += buildBooksList(readingBooks);
+                readingBuilder += "];";
+                
+                let finishedBuilder = "const finishedBooks = [";
+                finishedBuilder += buildBooksList(finishedBooks);
+                finishedBuilder += "];";
+
+                contents = contents.replace("[|toReadBooks|]", toReadBuilder);
+                contents = contents.replace("[|readingBooks|]", readingBuilder);
+                contents = contents.replace("[|finishedBooks|]", finishedBuilder);
+
+
+                const users = await getGroupMembers(req.groupId);
+
+                let membersBuilder = "const members = [";
+                membersBuilder += buildMembersSection(users);
+                membersBuilder += "];";
+
+                contents = getUser(req, contents);
+                contents = contents.replace("[|members|]", membersBuilder);
+
+                sendHTML(contents, res);
+            });
+        });
+    });
+
+ 
+
+    // '/groups/:groupId/members'
+const joinGroupRoute = new Route((req) => {
+    const params = req.url.split('/');
+    if(params[1] !== "groups")
+        return false;
+    if(params.length !== 4)
+        return false;
+    req.groupId= params[2];
+    return true;
+}, 'POST', async (req, res) => {
+    authenticateToken(req, res, () => {
+        requireLogin(req, res, async () => {
+            const userId = req.user.userId;
+            const groupId = req.groupId;
+
+            try {
+                const result = await joinGroup(userId, groupId);
+                if (result.error) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: result.error }));
+                } else {
+                    res.writeHead(201, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'Joined group successfully' }));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Internal server error' }));
+            }
+        });
+    });
+});
+
+const leaveGroupRoute = new Route((req) => {
+    const params = req.url.split('/');
+    if(params[1] !== "groups")
+        return false;
+    if(params.length !== 4)
+        return false;
+    req.groupId= params[2];
+    return true;
+}, 'DELETE', async (req, res) => {
+    authenticateToken(req, res, () => {
+        requireLogin(req, res, async () => {
+            const userId = req.user.userId;
+            const groupId = req.groupId;
+
+            try {
+                const result = await leaveGroup(userId, groupId);
+                if (result.error) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: result.error }));
+                } else {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'Left group successfully' }));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Internal server error' }));
+            }
+        });
+    });
+});
+
+module.exports = {
+    viewGroupsRoute,
+    groupPageRoute,
+    joinGroupRoute,
+    leaveGroupRoute
+}
 
 
 // might need these

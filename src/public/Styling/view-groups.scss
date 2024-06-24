@@ -116,12 +116,36 @@
   text-align: center;
 }
 
+
+.groups__list__item__info__leave {
+  background-color: #e23333;
+  border-radius: 9999px;
+  width: $xl;
+  height: $m;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  bottom: $xs;
+
+  left: $xl + $xs;
+
+  text-decoration: none;
+}
+
+.groups__list__item__info__leave__text {
+  color: $neutral-white;
+  font-size: $xs * 2;
+  font-weight: 500;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .groups__list__item {
     width: 100%;
   }
 }
-
 
 
 

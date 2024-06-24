@@ -3,7 +3,9 @@ function createReview(name, date, text, rating, updated, editable, edit) {
     let parsedDate  = new Date(date);
     return `<div ${editable ? "id='editable'" : ""} class="details__reviews__item">
                 <div class="details__reviews__item__header">
-                    <img class="details__reviews__item__header__image" src="../Resources/Images/Profile.png">
+                    <div class="navbar__profile">
+                        <p class="navbar__profile__text">${name[0].toUpperCase()}</p>
+                    </div>
                     <div class="details__reviews__item__header__info">
                         <div class="details__reviews__item__header__info__top">
                             <p class="details__reviews__item__header__info__top__name">${name}</p>

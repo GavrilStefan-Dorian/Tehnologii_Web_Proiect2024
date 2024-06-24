@@ -30,7 +30,7 @@
                     </div>
                     <p id="numRatings" class="book__info__header__info__ratings">123,493 ratings</p>
                 </div>
-                <div class="book__info__header__buttons">
+                <div id="buttons" class="book__info__header__buttons">
                     <img onclick="bookmark()" id="bookmark" class="book__info__header__buttons__button" src="../Resources/Svg/bookmark.svg" alt>
                     <img onclick="like()" id="heart" class="book__info__header__buttons__button" src="../Resources/Svg/heart.svg" alt>
                     <div onmouseenter="onDropdownHover()" onmouseleave="onDropdownLeave()" class="book__info__header__buttons__more">
@@ -83,13 +83,16 @@
 </div>
 
 <script>
-    
-    createSidebar(1);
+    [|user|]
+    createSidebar(1, user);
 
     let starList = document.getElementById("stars");
 
     let clicked = false;
     let userRating = 0;
+
+    if(!user)
+        document.getElementById("buttons").style.display = "none";
 
     function onStarsClicked(stars)
     {
@@ -137,11 +140,8 @@
         }
     }
 
-    [|user|]
     [|book|]
     [|reviews|]
-
-    console.log(book);
 
     const dropdown = document.getElementById("dropdown");
     function onDropdownHover()
@@ -224,7 +224,7 @@
     {
         book.bookmarked = !book.bookmarked;
         updateBookmarkIcon();
-        postBookmark(book.book_id, book.liked);
+        postBookmark(book.book_id, book.bookmarked);
     }
 
     function updateBookmarkIcon()
@@ -243,8 +243,8 @@
 
     document.getElementById("title").innerText = book.title;
     document.getElementById("author").innerText = book.author;
-    document.getElementById("rating").innerText = book.rating;
-    document.getElementById("numRatings").innerText = book.numratings + " ratings";
+    document.getElementById("rating").innerText = parseFloat(book.boo_rating).toFixed(2);
+    document.getElementById("numRatings").innerText = book.boo_numratings + " ratings";
     document.getElementById("description").innerText = book.description;
     document.getElementById("cover").src = book.coverimg;
 
@@ -271,6 +271,9 @@
     const reviewList = document.getElementsByClassName("details__reviews")[0];
     htmlReviews.forEach(x => reviewList.innerHTML += x);
 
+    if(htmlReviews.length === 0)
+        reviewList.innerHTML += "<p style='text-align: center'>No reviews to be shown yet...</p>";
+
     function onSendReview()
     {
         let input = document.getElementById("review__input");
@@ -278,6 +281,9 @@
 
         if(!text)
             return;
+
+        if(htmlReviews.length === 0)
+            reviewList.innerHTML = "";
 
         reviewList.innerHTML = createReview(user.username, Date.now(), text, userRating, user.updated === false, true, edit) + reviewList.innerHTML;
         user.updated = false;

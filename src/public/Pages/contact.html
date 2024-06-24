@@ -10,7 +10,8 @@
 <body>
   <script src="../JavaScript/components.js"></script>
   <script>
-    createSidebar(0);
+    [|user|]
+    createSidebar(0, user);
 
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('contact-form').addEventListener('submit', async function(e) {

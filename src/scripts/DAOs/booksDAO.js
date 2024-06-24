@@ -4,7 +4,8 @@ async function getBook(id, user = null)
 {
     let books = [];
     if(!user)
-        books = await sql`SELECT * FROM books WHERE book_id = ${id}`;
+        books = await sql`SELECT books.book_id, books.title, books.author, books.description, books.coverimg, books.liked, books.bookmarked, books.status,   COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) AS boo_numratings FROM (SELECT * FROM books WHERE book_id = ${id}) books LEFT JOIN reviews ON books.book_id = reviews.book_id
+                            GROUP BY books.book_id, books.title, books.author, books.description, books.coverimg, books.liked, books.bookmarked, books.status;`;
     else books = await sql`SELECT books.*, CASE 
         WHEN liked_books.book_id IS NOT NULL THEN TRUE
         ELSE FALSE
@@ -14,7 +15,9 @@ async function getBook(id, user = null)
     END AS bookmarked, CASE 
         WHEN book_reading_status.book_id IS NOT NULL THEN book_reading_status.status
         ELSE NULL
-    END AS status FROM (SELECT * FROM books Where book_id = ${id}) books
+    END AS status FROM (
+    SELECT books.book_id, books.title, books.author, books.description, books.coverimg,   COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) AS boo_numratings FROM (SELECT * FROM books Where book_id = ${id}) books
+    LEFT JOIN reviews ON books.book_id = reviews.book_id GROUP BY books.book_id, books.title, books.author, books.description, books.coverimg) books
     LEFT JOIN (SELECT * FROM liked_books WHERE user_id = ${user}) liked_books ON liked_books.book_id = books.book_id
     LEFT JOIN (SELECT * FROM bookmarked_books WHERE user_id = ${user}) bookmarked_books ON bookmarked_books.book_id = books.book_id
     LEFT JOIN (SELECT * FROM book_reading_status WHERE user_id = ${user}) book_reading_status ON book_reading_status.book_id = books.book_id;`;
@@ -126,6 +129,18 @@ async function getBookmarkedBooks(user_id)
     return sql`SELECT * FROM bookmarked_books WHERE user_id = ${user_id};`;
 }
 
+async function getLikedBooksFull(user_id)
+{
+    return sql`SELECT books.book_id, books.title, books.author, books.description, books.coverimg, COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) AS boo_numratings FROM (SELECT * FROM liked_books WHERE user_id = ${user_id}) liked_books JOIN books ON books.book_id = liked_books.book_id
+             LEFT JOIN reviews ON books.book_id = reviews.book_id GROUP BY books.book_id, books.title, books.author, books.description, books.coverimg;`;
+}
+
+async function getBookmarkedBooksFull(user_id)
+{
+    return sql`SELECT books.book_id, books.title, books.author, books.description, books.coverimg, COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) AS boo_numratings FROM (SELECT * FROM bookmarked_books WHERE user_id = ${user_id}) bookmarked_books JOIN books ON books.book_id = bookmarked_books.book_id
+             LEFT JOIN reviews ON books.book_id = reviews.book_id GROUP BY books.book_id, books.title, books.author, books.description, books.coverimg;`;
+}
+
 async function getBookStatuses(user_id)
 {
     return sql`SELECT * FROM book_reading_status WHERE user_id = ${user_id};`;
@@ -133,7 +148,8 @@ async function getBookStatuses(user_id)
 
 async function getBooksWithStatuses(user_id)
 {
-    return sql`SELECT * FROM book_reading_status JOIN books ON books.book_id = book_reading_status.book_id WHERE book_reading_status.user_id = ${user_id};`;
+    return sql`SELECT books.book_id, books.title, books.author, books.description, books.coverimg, books.status,   COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) AS boo_numratings FROM (SELECT books.book_id, books.title, books.author, books.description, books.coverimg, status FROM book_reading_status JOIN books ON books.book_id = book_reading_status.book_id WHERE book_reading_status.user_id = ${user_id}) books
+                LEFT JOIN reviews ON books.book_id = reviews.book_id GROUP BY books.book_id, books.title, books.author, books.description, books.coverimg, books.status;`;
 }
 
 module.exports = {
@@ -148,5 +164,7 @@ module.exports = {
     getBookmarkedBooks,
     getBookStatuses,
     getUserReviews,
-    getBooksWithStatuses
+    getBooksWithStatuses,
+    getLikedBooksFull,
+    getBookmarkedBooksFull
 }
