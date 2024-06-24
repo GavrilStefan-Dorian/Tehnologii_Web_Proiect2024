@@ -13,6 +13,20 @@
 <body>
   <div class="sidebar-padded">
     <p id="title" class="books__title__text"></p>
+    <div onmouseenter="onDropdownHover()" onmouseleave="onDropdownLeave()" id="sorter" class="books__sort">
+      <div class="books__sort__button">
+        <p id="sortName" class="books__sort__button__text">No sorting</p>
+      </div>
+      <div id="dropdown" class="books__sort__items" style="display: none">
+        <p onclick='sort(0)' class="books__sort__items__item">No sorting</p>
+        <p onclick='sort(1)' class="books__sort__items__item">Alphabetically Ascending</p>
+        <p onclick='sort(2)' class="books__sort__items__item">Alphabetically Descending</p>
+        <p onclick='sort(3)' class="books__sort__items__item">Rating Ascending</p>
+        <p onclick='sort(4)' class="books__sort__items__item">Rating Descending</p>
+        <p onclick='sort(5)' class="books__sort__items__item">Rating Count Ascending</p>
+        <p onclick='sort(6)' class="books__sort__items__item">Rating Count Descending</p>
+      </div>
+    </div>
     <div class="list">
 
     </div>
@@ -26,12 +40,90 @@
     [|title|]
     [|books|]
 
+    let url = window.location.href;
+    const sortName = document.getElementById("sortName");
+    document.getElementById("sorter").style.display = url.includes("genre") ? "block" : "none";
+
+    const dropdown = document.getElementById("dropdown");
+    function onDropdownHover()
+    {
+      dropdown.style.display = "flex";
+    }
+
+    function onDropdownLeave()
+    {
+      dropdown.style.display = "none";
+    }
+
     document.getElementById("title").innerText = title;
 
     const bookList = document.getElementsByClassName("list")[0];
-    let html = "";
-    books.forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg));
-    bookList.innerHTML = html;
+
+    function sort(type)
+    {
+      onDropdownLeave();
+      switch (type)
+      {
+        case 0:
+        {
+          let html = "";
+          books.forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg, x.boo_rating, x.boo_numratings));
+          bookList.innerHTML = html;
+          sortName.innerText = "No sorting";
+          break;
+        }
+        case 1:
+        {
+          let html = "";
+          books.sort((a, b) => a.title.localeCompare(b.title)).forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg, x.boo_rating, x.boo_numratings));
+          bookList.innerHTML = html;
+          sortName.innerText = "Alphabetically Ascending";
+          break;
+        }
+        case 2:
+        {
+          let html = "";
+          books.sort((a, b) => b.title.localeCompare(a.title)).forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg, x.boo_rating, x.boo_numratings));
+          bookList.innerHTML = html;
+          sortName.innerText = "Alphabetically Descending";
+          break;
+        }
+        case 3:
+        {
+          let html = "";
+          books.sort((a, b) => parseFloat(a.boo_rating) - parseFloat(b.boo_rating)).forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg, x.boo_rating, x.boo_numratings));
+          bookList.innerHTML = html;
+          sortName.innerText = "Rating Ascending";
+          break;
+        }
+        case 4:
+        {
+          let html = "";
+          books.sort((a, b) => parseFloat(b.boo_rating) - parseFloat(a.boo_rating)).forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg, x.boo_rating, x.boo_numratings));
+          bookList.innerHTML = html;
+          sortName.innerText = "Rating Descending";
+          break;
+        }
+        case 5:
+        {
+          let html = "";
+          books.sort((a, b) => parseFloat(a.boo_numratings) - parseFloat(b.boo_numratings)).forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg, x.boo_rating, x.boo_numratings));
+          bookList.innerHTML = html;
+          sortName.innerText = "Rating Count Ascending";
+          break;
+        }
+        case 6:
+        {
+          let html = "";
+          books.sort((a, b) => parseFloat(b.boo_numratings) - parseFloat(a.boo_numratings)).forEach(x => html += createBook(x.book_id, x.title, x.author, x.coverimg, x.boo_rating, x.boo_numratings));
+          bookList.innerHTML = html;
+          sortName.innerText = "Rating Count Descending";
+          break;
+        }
+      }
+    }
+
+    sort(0);
 
     // document.addEventListener('DOMContentLoaded', function() {
     //   handleNavigation();

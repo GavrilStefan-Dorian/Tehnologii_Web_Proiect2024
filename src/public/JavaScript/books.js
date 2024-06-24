@@ -15,6 +15,7 @@ function createBookList(title, books) {
 }
 
 function createBook(id, title, author, image, rating, ratings) {
+    let totalBookStarsCount = Math.round(parseFloat(rating));
     return `
                  <div class="books__list__item">
                     <img class="books__list__item__image" src=${image}>
@@ -22,11 +23,11 @@ function createBook(id, title, author, image, rating, ratings) {
                         <p class="books__list__item__info__title">${title}</p>
                         <p class="books__list__item__info__author">${author}</p>
                         <div class="books__list__item__info__rating">
-                            <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">
-                            <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">
-                            <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">
-                            <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">
-                            <img class="books__list__item__info__rating__star" src="../Resources/Svg/star.svg">
+                            <img class="books__list__item__info__rating__${totalBookStarsCount >= 1 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+                            <img class="books__list__item__info__rating__${totalBookStarsCount >= 2 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+                            <img class="books__list__item__info__rating__${totalBookStarsCount >= 3 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+                            <img class="books__list__item__info__rating__${totalBookStarsCount >= 4 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+                            <img class="books__list__item__info__rating__${totalBookStarsCount >= 5 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
                             <p class="books__list__item__info__rating_text">${parseFloat(rating).toFixed(2)}</p>
                         </div>
                         <p class="books__list__item__info__ratings">${ratings} ratings</p>

@@ -7,7 +7,7 @@ function buildList(id, name, books)
 {
     let html = `createBookList("${id}", "${name}", [`;
     books.forEach(x => {
-        html += `createBook("${x.book_id}", "${x.title.replaceAll("\"", "\\\"")}", "${x.author.replaceAll("\"", "\\\"")}", "${x.coverimg}"),`;
+        html += `createBook("${x.book_id}", "${x.title.replaceAll("\"", "\\\"")}", "${x.author.replaceAll("\"", "\\\"")}", "${x.coverimg}", "${x.boo_rating}", "${x.boo_numratings}"),`;
     })
     html += ']),';
     return html;

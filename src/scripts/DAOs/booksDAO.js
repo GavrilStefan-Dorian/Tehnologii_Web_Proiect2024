@@ -73,7 +73,11 @@ async function getCategories()
 
 async function getGenreBooks(id)
 {
-    const books = await sql`SELECT * FROM genres g NATURAL JOIN bookgenres bg NATURAL JOIN books b WHERE g.genre_id = ${id}`;
+    const books = await sql`SELECT g.*, b.*, COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) as boo_numratings FROM genres g NATURAL JOIN bookgenres bg NATURAL JOIN books b LEFT JOIN (
+    SELECT book_id, rating
+    FROM reviews
+) AS reviews ON b.book_id = reviews.book_id WHERE g.genre_id = ${id}
+    GROUP BY g.genre_id, b.book_id`;
     if(!books)
         return null;
 

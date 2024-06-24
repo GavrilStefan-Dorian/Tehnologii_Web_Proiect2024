@@ -121,6 +121,11 @@
   width: $s;
 }
 
+.books__list__item__info__rating__empty {
+  filter: $svg-neutral-400;
+  width: $s;
+}
+
 .books__list__item__info__rating_text {
   color: $neutral-800;
   font-size: $s;
