@@ -58,22 +58,30 @@ const viewGroupsRoute = new Route('/view-groups', 'GET', async (req, res) => {
         }
         authenticateToken(req, res, async () => {
             requireLogin(req, res, async () => {
-                const userGroups = await getUserGroupsData(req.user.userId);
-                const popularGroups = await getPopularGroupsWithoutUser(req.user.userId);
+                try {
+                    const userGroups = await getUserGroupsData(req.user.userId);
+                    const popularGroups = await getPopularGroupsWithoutUser(req.user.userId);
 
-                let groupsBuilder = "const groupLists = [";
-                let popularsBuilder = "const popularLists = [";
+                    let groupsBuilder = "const groupLists = [";
+                    let popularsBuilder = "const popularLists = [";
 
-                groupsBuilder += buildGroupList("Your Groups", userGroups);
-                popularsBuilder += buildGroupList("Popular Groups", popularGroups);
+                    groupsBuilder += buildGroupList("Your Groups", userGroups);
+                    popularsBuilder += buildGroupList("Popular Groups", popularGroups);
 
-                groupsBuilder += "];";
-                popularsBuilder += "];";
+                    groupsBuilder += "];";
+                    popularsBuilder += "];";
 
-                contents = getUser(req, contents);
-                contents = contents.replace("[|groups|]", groupsBuilder);
-                contents = contents.replace("[|populars|]", popularsBuilder);
-                sendHTML(contents, res);
+                    contents = getUser(req, contents);
+                    contents = contents.replace("[|groups|]", groupsBuilder);
+                    contents = contents.replace("[|populars|]", popularsBuilder);
+                    sendHTML(contents, res);
+                }
+                catch (ex)
+                {
+                    console.log(ex);
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                }
             })
         })
     } catch (ex) {
@@ -95,99 +103,107 @@ let groupPageRoute = new Route((req) => {
 }, 'GET', async (req, res) => {
     authenticateToken(req, res, () => {
         requireLogin(req, res, async () => {
-            let contents = readFileContents('./public/Pages/group-page.html', res);
-            if (contents === null) {
+            try {
+                let contents = readFileContents('./public/Pages/group-page.html', res);
+                if (contents === null) {
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                    return;
+                }
+
+                const group = await getGroup(req.groupId);
+
+                let groupBuilder = `const group = ["${group.group_id}", "${group.name}", "${group.description}", "${group.creation_date}", "${group.img}"];`;
+                contents = contents.replace("[|group|]", groupBuilder);
+
+
+                const toReadBooks = await getGroupMembersAndBooks(req.groupId, 'to_read');
+                const readingBooks = await getGroupMembersAndBooks(req.groupId, 'reading');
+                const finishedBooks = await getGroupMembersAndBooks(req.groupId, 'read');
+
+                let seenBookIds = {};
+
+                const uniqueToReadBooks = toReadBooks.filter(book => {
+                    if (seenBookIds[book.book_id]) {
+                        return false;
+                    } else {
+                        seenBookIds[book.book_id] = true;
+                        return true;
+                    }
+                });
+
+                seenBookIds = {};
+                const uniqueReadingBooks = readingBooks.filter(book => {
+                    if (seenBookIds[book.book_id]) {
+                        return false;
+                    } else {
+                        seenBookIds[book.book_id] = true;
+                        return true;
+                    }
+                });
+
+                seenBookIds = {};
+                const uniqueFinishedBooks = finishedBooks.filter(book => {
+                    if (seenBookIds[book.book_id]) {
+                        return false;
+                    } else {
+                        seenBookIds[book.book_id] = true;
+                        return true;
+                    }
+                });
+
+                let toReadBuilder = "const toReadBooks = [";
+                toReadBuilder += buildBooksList(uniqueToReadBooks);
+                toReadBuilder += "];";
+
+                let readingBuilder = "const readingBooks = [";
+                readingBuilder += buildBooksList(uniqueReadingBooks);
+                readingBuilder += "];";
+
+                let finishedBuilder = "const finishedBooks = [";
+                finishedBuilder += buildBooksList(uniqueFinishedBooks);
+                finishedBuilder += "];";
+
+                contents = contents.replace("[|toReadBooks|]", toReadBuilder);
+                contents = contents.replace("[|readingBooks|]", readingBuilder);
+                contents = contents.replace("[|finishedBooks|]", finishedBuilder);
+
+
+                const users = await getGroupMembers(req.groupId);
+
+                let membersBuilder = "const members = [";
+                membersBuilder += buildMembersSection(users);
+                membersBuilder += "];";
+
+                contents = getUser(req, contents);
+                contents = contents.replace("[|members|]", membersBuilder);
+
+
+                let toReadUserBuilder = "const toReadUsers = [";
+                toReadUserBuilder += buildUserStatusSection(toReadBooks);
+                toReadUserBuilder += "];";
+
+                let readingUserBuilder = "const readingUsers = [";
+                readingUserBuilder += buildUserStatusSection(readingBooks);
+                readingUserBuilder += "];";
+
+                let finishedUserBuilder = "const finishedUsers = [";
+                finishedUserBuilder += buildUserStatusSection(finishedBooks);
+                finishedUserBuilder += "];";
+
+                contents = contents.replace("[|toReadUsers|]", toReadUserBuilder);
+                contents = contents.replace("[|readingUsers|]", readingUserBuilder);
+                contents = contents.replace("[|finishedUsers|]", finishedUserBuilder);
+
+
+                sendHTML(contents, res);
+            }
+            catch (ex)
+            {
+                console.log(ex);
                 res.writeHead(500, {'Content-Type': 'text/plain'});
                 res.end('Internal server error');
-                return;
             }
-
-            const group = await getGroup(req.groupId);
-
-            let groupBuilder = `const group = ["${group.group_id}", "${group.name}", "${group.description}", "${group.creation_date}", "${group.img}"];`;
-            contents = contents.replace("[|group|]", groupBuilder);
-
-
-            const toReadBooks = await getGroupMembersAndBooks(req.groupId, 'to_read');
-            const readingBooks = await getGroupMembersAndBooks(req.groupId, 'reading');
-            const finishedBooks = await getGroupMembersAndBooks(req.groupId, 'read');
-
-            let seenBookIds = {};
-
-            const uniqueToReadBooks = toReadBooks.filter(book => {
-                if (seenBookIds[book.book_id]) {
-                    return false;
-                } else {
-                    seenBookIds[book.book_id] = true;
-                    return true;
-                }
-            });
-
-            seenBookIds = {};
-            const uniqueReadingBooks = readingBooks.filter(book => {
-                if (seenBookIds[book.book_id]) {
-                    return false;
-                } else {
-                    seenBookIds[book.book_id] = true;
-                    return true;
-                }
-            });
-
-            seenBookIds = {};
-            const uniqueFinishedBooks = finishedBooks.filter(book => {
-                if (seenBookIds[book.book_id]) {
-                    return false;
-                } else {
-                    seenBookIds[book.book_id] = true;
-                    return true;
-                }
-            });
-
-            let toReadBuilder = "const toReadBooks = [";
-            toReadBuilder += buildBooksList(uniqueToReadBooks);
-            toReadBuilder += "];";
-
-            let readingBuilder = "const readingBooks = [";
-            readingBuilder += buildBooksList(uniqueReadingBooks);
-            readingBuilder += "];";
-
-            let finishedBuilder = "const finishedBooks = [";
-            finishedBuilder += buildBooksList(uniqueFinishedBooks);
-            finishedBuilder += "];";
-
-            contents = contents.replace("[|toReadBooks|]", toReadBuilder);
-            contents = contents.replace("[|readingBooks|]", readingBuilder);
-            contents = contents.replace("[|finishedBooks|]", finishedBuilder);
-
-
-            const users = await getGroupMembers(req.groupId);
-
-            let membersBuilder = "const members = [";
-            membersBuilder += buildMembersSection(users);
-            membersBuilder += "];";
-
-            contents = getUser(req, contents);
-            contents = contents.replace("[|members|]", membersBuilder);
-
-
-            let toReadUserBuilder = "const toReadUsers = [";
-            toReadUserBuilder += buildUserStatusSection(toReadBooks);
-            toReadUserBuilder += "];";
-
-            let readingUserBuilder = "const readingUsers = [";
-            readingUserBuilder += buildUserStatusSection(readingBooks);
-            readingUserBuilder += "];";
-
-            let finishedUserBuilder = "const finishedUsers = [";
-            finishedUserBuilder += buildUserStatusSection(finishedBooks);
-            finishedUserBuilder += "];";
-
-            contents = contents.replace("[|toReadUsers|]", toReadUserBuilder);
-            contents = contents.replace("[|readingUsers|]", readingUserBuilder);
-            contents = contents.replace("[|finishedUsers|]", finishedUserBuilder);
-
-
-            sendHTML(contents, res);
         });
     });
 });

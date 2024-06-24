@@ -4,16 +4,24 @@ const {sendFile, authenticateToken, readFileContents, getUser, sendHTML, sendErr
 let helpRoute = new Route('/help', 'GET', (req, res) => {
     try {
         authenticateToken(req, res, () => {
-            let contents = readFileContents('./public/Pages/help.html', res);
-            if (contents === null) {
+            try {
+                let contents = readFileContents('./public/Pages/help.html', res);
+                if (contents === null) {
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                    return;
+                }
+
+                contents = getUser(req, contents);
+
+                sendHTML(contents, res);
+            }
+            catch (ex)
+            {
+                console.log(ex);
                 res.writeHead(500, {'Content-Type': 'text/plain'});
                 res.end('Internal server error');
-                return;
             }
-
-            contents = getUser(req, contents);
-
-            sendHTML(contents, res);
         })
     }
     catch (ex) {
@@ -26,16 +34,24 @@ let helpRoute = new Route('/help', 'GET', (req, res) => {
 let contactRoute = new Route('/contact', 'GET', (req, res) => {
     try {
         authenticateToken(req, res, () => {
-            let contents = readFileContents('./public/Pages/contact.html', res);
-            if (contents === null) {
+            try {
+                let contents = readFileContents('./public/Pages/contact.html', res);
+                if (contents === null) {
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                    return;
+                }
+
+                contents = getUser(req, contents);
+
+                sendHTML(contents, res);
+            }
+            catch (ex)
+            {
+                console.log(ex);
                 res.writeHead(500, {'Content-Type': 'text/plain'});
                 res.end('Internal server error');
-                return;
             }
-
-            contents = getUser(req, contents);
-
-            sendHTML(contents, res);
         })
     }
     catch (ex) {
@@ -48,16 +64,24 @@ let contactRoute = new Route('/contact', 'GET', (req, res) => {
 let aboutRoute = new Route('/about', 'GET', (req, res) => {
     try {
         authenticateToken(req, res, () => {
-            let contents = readFileContents('./public/Pages/about.html', res);
-            if (contents === null) {
+            try {
+                let contents = readFileContents('./public/Pages/about.html', res);
+                if (contents === null) {
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                    return;
+                }
+
+                contents = getUser(req, contents);
+
+                sendHTML(contents, res);
+            }
+            catch (ex)
+            {
+                console.log(ex);
                 res.writeHead(500, {'Content-Type': 'text/plain'});
                 res.end('Internal server error');
-                return;
             }
-
-            contents = getUser(req, contents);
-
-            sendHTML(contents, res);
         })
     }
     catch (ex) {
@@ -72,16 +96,24 @@ let adminRoute = new Route('/admin', 'GET', (req, res) => {
         authenticateToken(req, res, () => {
             restrictToAdmin(req, res, () => {
                 authenticateToken(req, res, () => {
-                    let contents = readFileContents('./public/Pages/admin.html', res);
-                    if (contents === null) {
+                    try {
+                        let contents = readFileContents('./public/Pages/admin.html', res);
+                        if (contents === null) {
+                            res.writeHead(500, {'Content-Type': 'text/plain'});
+                            res.end('Internal server error');
+                            return;
+                        }
+
+                        contents = getUser(req, contents);
+
+                        sendHTML(contents, res);
+                    }
+                    catch (ex)
+                    {
+                        console.log(ex);
                         res.writeHead(500, {'Content-Type': 'text/plain'});
                         res.end('Internal server error');
-                        return;
                     }
-
-                    contents = getUser(req, contents);
-
-                    sendHTML(contents, res);
                 })
             });
         });

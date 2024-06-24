@@ -8,31 +8,47 @@ const {jwtSecret} = require("../config");
 const loginRoute = new Route('/login', 'GET', (req, res) =>
 {
     authenticateToken(req, res, () => {
-        let contents = readFileContents('./public/Pages/login.html', res);
-        if (contents === null) {
+        try {
+            let contents = readFileContents('./public/Pages/login.html', res);
+            if (contents === null) {
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end('Internal server error');
+                return;
+            }
+
+            contents = getUser(req, contents);
+
+            sendHTML(contents, res);
+        }
+        catch (ex)
+        {
+            console.log(ex);
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end('Internal server error');
-            return;
         }
-
-        contents = getUser(req, contents);
-
-        sendHTML(contents, res);
     });
 });
 
 const registerRoute = new Route('/register', 'GET', (req, res) => {
     authenticateToken(req, res, () => {
-        let contents = readFileContents('./public/Pages/register.html', res);
-        if (contents === null) {
+        try {
+            let contents = readFileContents('./public/Pages/register.html', res);
+            if (contents === null) {
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end('Internal server error');
+                return;
+            }
+
+            contents = getUser(req, contents);
+
+            sendHTML(contents, res);
+        }
+        catch (ex)
+        {
+            console.log(ex);
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end('Internal server error');
-            return;
         }
-
-        contents = getUser(req, contents);
-
-        sendHTML(contents, res);
     })
 });
 
@@ -149,16 +165,24 @@ const postRegisterRoute = new Route('/register', 'POST', async (req, res) => {
 
 const forgotPassRoute = new Route('/forgot-pass', 'GET', (req, res) => {
     authenticateToken(req, res, () => {
-        let contents = readFileContents('./public/Pages/forgot-pass.html', res);
-        if (contents === null) {
+        try {
+            let contents = readFileContents('./public/Pages/forgot-pass.html', res);
+            if (contents === null) {
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end('Internal server error');
+                return;
+            }
+
+            contents = getUser(req, contents);
+
+            sendHTML(contents, res);
+        }
+        catch (ex)
+        {
+            console.log(ex);
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end('Internal server error');
-            return;
         }
-
-        contents = getUser(req, contents);
-
-        sendHTML(contents, res);
     })
 });
 
