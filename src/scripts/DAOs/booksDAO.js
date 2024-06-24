@@ -4,8 +4,8 @@ async function getBook(id, user = null)
 {
     let books = [];
     if(!user)
-        books = await sql`SELECT books.book_id, books.title, books.author, books.description, books.coverimg, books.liked, books.bookmarked, books.status,   COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) AS boo_numratings FROM (SELECT * FROM books WHERE book_id = ${id}) books LEFT JOIN reviews ON books.book_id = reviews.book_id
-                            GROUP BY books.book_id, books.title, books.author, books.description, books.coverimg, books.liked, books.bookmarked, books.status;`;
+        books = await sql`SELECT books.book_id, books.title, books.author, books.description, books.coverimg, COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) AS boo_numratings FROM (SELECT * FROM books WHERE book_id = ${id}) books LEFT JOIN reviews ON books.book_id = reviews.book_id
+                            GROUP BY books.book_id, books.title, books.author, books.description, books.coverimg;`;
     else books = await sql`SELECT books.*, CASE 
         WHEN liked_books.book_id IS NOT NULL THEN TRUE
         ELSE FALSE
