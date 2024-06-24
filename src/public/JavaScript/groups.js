@@ -20,13 +20,28 @@ function createMember(username, userId) {
 
 function createUserStatus(book_id, username, status, userId) {
     let section;
-    document.getElementById(`books__list__item${book_id}&${status}`).outerHTML +=  `
-    <div class="member">
-    <div class="member__avatar" style="background-color: ${getColorFromUserId(userId)};>\n
-        <p class="member__avatar__text">${username[0].toUpperCase()}</p>\n
-    </div>
-`;
+    if (username.startsWith("+")) {
+        section = `
+            <div class="member">
+                    <p class="member__avatar__text member__avatar__summary">${username}</p>
+            </div>
+        `;
+    } else {
+        section = `
+            <div class="member">
+                <div class="member__avatar" style="background-color: ${getColorFromUserId(userId)};">
+                    <p class="member__avatar__text">${username[0].toUpperCase()}</p>
+                </div>
+            </div>
+        `;
+    }
+
+    const container = document.getElementById(`books__list__item${book_id}&${status}`);
+    if (container) {
+        container.outerHTML += section;
+    }
 }
+
 
 
 function createGroupList(name, groups) {
