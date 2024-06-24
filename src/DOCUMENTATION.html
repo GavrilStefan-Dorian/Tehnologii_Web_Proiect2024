@@ -1,134 +1,840 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Documentație Scholarly HTML pentru Boo Book Reviewer</title>
-  <meta charset="UTF-8">
-</head>
-<body>
-    <article resource="#" typeof="schema:ScholarlyArticle">
-        <header>
-            <h1 property="schema:name"></h1>Documentație Scholarly HTML pentru Boo (Book Reviewer)</h1>
-        </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Scholarly HTML Documentation for Boo Book Reviewer</title>
+    <link rel="stylesheet" href="DOCUMENTATION.css" />
+  </head>
 
-        <div role="contentinfo">
-            <section typeof="sa:AuthorsList">
-              <h2>Autori</h2>
-              <ul>
-                <li typeof="sa:ContributorRole" property="schema:author">
-                  <span typeof="schema:Person">
-                    <meta property="schema:givenName" content="Stefan-Dorian">
-                    <meta property="schema:familyName" content="Gavril">
-                    <span property="schema:name">Gavril Stefan-Dorian</span>                    
-                  </span>
-                </li>
-                <li>
-                  <span typeof="schema:Person">
-                    <meta property="schema:givenName" content="Andrei">
-                    <meta property="schema:familyName" content="Stoleru">
-                    <span property="schema:name">Stoleru Andrei</span>                    
-                  </span>
-                </li>
-              </ul>
-            </section>
-          </div>
+  <body prefix="schema: http://schema.org">
+    <header>
+      <div class="banner">
+        <img
+          src="scholarly-html.svg"
+          width="227"
+          height="50"
+          alt="Scholarly HTML logo"
+        />
+        <div class="status">Community Draft</div>
+      </div>
+      <h1>Scholarly HTML Documentation for Boo (Book Reviewer)</h1>
+    </header>
+    <div role="contentinfo">
+      <dl>
+        <dt>Authors</dt>
+        <dd>
+          <ul>
+            <li>
+              Stoleru Andrei
+            </li>
+            <li>
+              Gavril Stefan-Dorian
+          </li>
+          </dd>
+        <dt>License</dt>
+        <dd>
+          <p>
+            Built under MIT License Copyright &copy; 2024. All copyrights
+            reserved.
+          </p>
+          <p>
+            Permission is hereby granted, free of charge, to any person
+            obtaining a copy of this software and associated documentation files
+            (the "Software"), to deal in the Software without restriction,
+            including without limitation the rights to use, copy, modify, merge,
+            publish, distribute, sublicense, and/or sell copies of the Software,
+            and to permit persons to whom the Software is furnished to do so,
+            subject to the following conditions:
+          </p>
+          <ul>
+            <li>
+              <p>
+                The above copyright notice and this permission notice shall be
+                included in all copies or substantial portions of the Software.
+              </p>
+            </li>
+            <li>
+              <p>
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+                EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+                OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+                NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+                HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+                WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+                FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+                OTHER DEALINGS IN THE SOFTWARE.
+              </p>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
+      <h2>Abstract</h2>
+      <p>
+        This document provides an overview of Boo, a web platform designed to facilitate the tracking and sharing of readers' progress, reviews, and likes among individuals or groups of readers. Inspired by Goodreads, Boo offers a wide range of functionalities for managing books, expressing thoughts, and maintaining connections with other readers. Users can interact within a community by joining specific groups.
+      </p>
+    </section>
+    <section id="introduction" role="doc-introduction">
+      <h2>Introduction</h2>
+      <p>
+        Boo distinguishes itself by enabling meticulous management of literary journeys, allowing users to organize books by various criteria such as genre, authors, publishers, publication year, edition, and links to related works. Through its REST/GraphQL API, Boo ensures seamless integration and robust data management capabilities, catering to individual readers as well as educational groups seeking to enhance their reading experiences.
+      </p>
+      <p>
+        Key features include the ability to generate diverse statistics exportable in open formats such as CSV and DocBook, supporting academic research and personal reading analytics. Additionally, Boo offers real-time updates through an RSS news feed, keeping users informed about book reviews, new releases.
+      </p>
+      <p>
+        In essence, Boo embodies a contemporary approach to literary engagement, fostering a vibrant online community where the joy of reading is celebrated through shared insights, thoughtful critiques, and a mutual appreciation for literature. This review explores Boo's comprehensive functionalities, user accessibility, and its pivotal role in shaping modern reading experiences in the digital era.
+      </p>
+    </section>
+    <section id="structure">
+      <h2>Structure</h2>
+      <p>
+        Boo's web platform features 15 thoughtfully designed pages aimed at enhancing the reading journey for all users. With a clear and user-friendly architecture, Boo ensures seamless navigation through a cohesive header that adapts with either a sidebar or navbar depending on the device. This approach prioritizes accessibility and usability, underscoring Boo's commitment to enriching the reading experience through interactive tools and community engagement.</p>
+      <section class="component-1">
+        <h3>The sidebar & navbar</h3>
+        <p>
+          This sidebar facilitates
+          access to app's pages, and the user may horizontally scroll through for all the buttons.
+        </p>
+        <figure type="sa:image">
+          <img src="images/header.png" alt="header-img" />
+          <figcaption>Sidebar of the app & Main Page</figcaption>
+        </figure>
+        <figure type="sa:image">
+          <img src="images/header_mobile.png" alt="header-img" />
+          <figcaption>Mobile navbar & Main Page</figcaption>
+        </figure>
+        <p>
+          For the profile icon and logout button to appear, the user must be logged into their
+          account.
 
-        <section>
-            <h2>1. Introducere</h2>
-            <h3>1.1 Scop</h3>
-            <p>Acest document oferă o imagine de ansamblu asupra Site-ului Web Boo, o platformă web concepută să faciliteze urmărirea și partajarea progresului lecturii, opiniilor și adnotărilor cititorilor sau a grupurilor de cititori. Inspirată de Goodreads, aplicația oferă o gamă variată de funcționalități pentru gestionarea cărților, exprimarea gândurilor și menținerea legăturii cu alți cititori. Utilizatorii pot interactiona in comunitate alaturandu-se anumitor grupuri.</p>
-        </section>
-
-        <section>
-            <h2>2. Descriere Site</h2>
-            <h3>2.1 Funcționalități</h3>
-            <p><strong>2.1.1 Inregistrarea/Autentificarea</strong></p>
+          For the admin button to appear, user must be a registered administrator of the application, and must have their role cookie set to 'admin'.
+        </p>
+        <p>
+          To check if the user is logged in, we verify a cookie with the user's JSON Web Token.
+        </p>
+        <p>
+          For the logout functionality, the Logout will destroy the user's JWT and unset it from the Browser Cookies.
+        </p>
+      </section>
+      <section id="component-2">
+        <h3>The <code>Home</code> page</h3>
+        <p>
+          As previously shown, the home page of the application presents various books based on disting rankings. Choosing to visit the page of any book will redirect the user to that according URL. The user may browse through the lists of books through horizontal scrolling. They may also view all the books for a particular list.
+        </p>
+      </section>
+      <section id="component-3">
+        <h3>The <code>Login</code> page</h3>
+        <p>
+          For features such as reviews, liking and bookmarking a book, joining groups, users must log in to their account in our
+          database. This is the page users are redirected to if not logged in when attempting to access restricted pages. 
+          The login requires an email and password. The page also has redirects for the Sign up and Forgot Password pages, in case the user may need them.
+        </p>
+        <figure type="sa:image">
+          <img src="images/login.png" alt="login-img" />
+          <figcaption>Login Form</figcaption>
+        </figure>
+        <p>
+          For this page, the login endpoint is used. The Login endpoint allows
+          users to log in and obtain a JWT. POST requests are used for submitting user data. GET requests are used for receiving the HTML page.
+        </p>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
             <ul>
-            <li>Mentinerea datelor individuale pe baza unui profil creat prin Nume, E-mail si Parola</li>
-            </ul>
-            <p><strong>2.1.2 Managementul Cărților</strong></p>
-            <ul>
-            <li>Crearea și menținerea unei biblioteci personale.</li>
-            <li>Organizarea cărților utilizând categorii, autori, edituri, ani, ediții și legături cu alte cărți înrudite.</li>
-            <li>Urmărirea progresului lecturii, inclusiv paginile citite, starea curentă (în curs de citire, de citit, finalizată) și data finalizării.</li>
-            </ul>
+              <li>
+                Accepts POST and GET requests. Other methods result in a 405 Method
+                Not Allowed response.
 
-            <p><strong>2.1.3 Partajarea Opiniilor</strong></p>
-            <ul>
-            <li>Scrierea și publicarea recenziilor de cărți, exprimând gânduri personale, perspective și recomandări.</li>
-            <li>Acordarea de note cărților pe o scară cu stele pentru a indica aprecierea generală.</li>
-            <li>Partajarea adnotărilor/evidențierilor pe parcursul lecturii.</li>
+              </li>
             </ul>
+          </li>
+          <li>
+            <strong>User Authentication:</strong>
+            <ul>
+              <li>
+                Extracts email and password from request parameters.
+              </li>
+              <li>
+                Checks the existance of provided email and password against records in the
+                database.
+              </li>
+              <li>
+                On a valid input, responds with the user's session JWT and role. It sets them as cookies.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>JWT Creation:</strong>
+            <ul>
+              <li>
+                Generates a JWT token containing user information and role
+                (admin or user) that expires in 1 hour.
+              </li>
+              <li>
+                The token is signed using the secret key defined in the
+                jwt config.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Response Handling:</strong>
+            <ul>
+              <li>
+                Returns a JSON with a confirmation message alongside the user's role if authentication
+                is successful.
+              </li>
+              <li>
+                Returns a 400 Missing args error if not all required inputs are provided.
+              </li>
+              <li>
+                Returns a 401 Unauthorized error if the provided credentials are
+                invalid.
+              </li>
+              <li>
+                Returns a 500 Internal Server Error if there is an issue with
+                the database connection or processing the request.
+              </li>
+              <li>
+                Returns a 405 Method Not Allowed error for requests using
+                unsupported HTTP methods.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <section id="component-4">
+        <h3>The <code>Register</code> page</h3>
+        <p>
+          The Register page allows new users to create their account for accessing the app's restricted features.
+          The user must input valid emails and their password must meet certain strength criteria.
+        </p>
+        <figure type="sa:image">
+          <img src="images/signup.png" alt="signup-img" />
+          <figcaption>Signup Form</figcaption>
+        </figure>
+        <p>
+          The Register endpoint:
+        </p>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
+            <ul>
+              <li>
+                Accepts requests of type POST for submission and GET for the HTML page. Any other method results in a 405
+                Method Not Allowed response.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>User Registration:</strong>
+            <ul>
+              <li>
+                Retrieves user data from the form and includes them as parameters for the request.
+              </li>
+              <li>
+                Checks for existance of all fields and checks the
+                validity of the email format.
+              </li>
+              <li>
+                Verifies that the password and password confirmation match and
+                meet the required strength criteria (at least 8 characters,
+                containing uppercase, lowercase, a specila character such as !, and digits). 
+                The strength criteria is tested using REGEX.
+              </li>
+              <li>
+                User role in the database defaults to client.
+              </li>
+              <li>
+                Checks if an account with the provided email already exists in
+                the database.
+              </li>
+              <li>
+                On valid input, hashes the password by employing Node's bcrypt library.
+              </li>
+            </ul>
+          </li>
+          <li>
+          </li>
+          <li>
+            <strong>Response Handling:</strong>
+            <ul>
+              <li>
+                A JSON response with the confirmation message and HTTP code.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <section id="component-5">
+        <h3>The <code>Forgot Password</code> page</h3>
+        <p>
+          Submitting a request for resetting the user's password will send an email with a link for the reset.
+        </p>
+        <figure type="sa:image">
+          <img src="images/forgot.png" alt="forgotpassword-img" />
+          <figcaption>Forgot Password form</figcaption>
+        </figure>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
+            <ul>
+              <li>
+                Accepts POST requests for submission, GET for the page. Any other method results in a 405
+                Method Not Allowed response.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Reset Password Logic:</strong>
+            <ul>
+              <li>
+                Queries the database to check if the provided email exists.
+              </li>
+              <li>
+                If the email exists, generates a random reset token, hashes it,
+                and updates the user's record in the database with the hashed
+                token and its 1 hour expiration time.
 
-            <p><strong>2.1.4 Interacțiunea în Comunitate</strong></p>
-            <ul>
-            <li>Alăturarea la grupuri de lectură pentru a intra în legătură cu persoane cu aceleași interese.</li>
-            <li>Discutarea cărților în cadrul grupurilor, partajând opinii și recomandări.</li>
-            <li>Menținerea la curent cu activitățile grupului și adăugările de cărți noi printr-un feed dinamic.</li>
-            <li>Urmărirea progresului lecturii întregului grup</li>
+                Hashing is done using the crypto library, through randomBytes() and HEX stringify.
+              </li>
+              <li>
+                Sends a password reset email to the user containing a link with
+                the reset token embedded in the URL.
+              </li>
             </ul>
+          </li>
+          <li>
+            <strong>Email Sending:</strong>
+            <ul>
+              <li>
+                Using nodemailer, create an email with the subject of password reset and containing the URL 
+                for the reset page.
+              </li>
+              <li>Sends the email to the user's email address.</li>
+              <li>
+                Erros are handled by responding with a 500 Internal
+                Server Error.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <section id="component-6">
+        <h3>The <code>Reset Password</code> page</h3>
+        <figure type="sa:image">
+          <img src="images/reset.png" alt="reset-img" />
+          <figcaption>Reset password form</figcaption>
+        </figure>
+      </section>
+      <p>
+        The page is using two endpoints, one for the reset password and one for
+        token validation.
+      </p>
+      <ol>
+        <li>
+          <strong>Token Validation:</strong>
+          <ul>
+            <li>Checks if the reset token is valid and not expired.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Password Validation:</strong>
+          <ul>
+            <li>
+              Tests password against strength criteria.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Password Update:</strong>
+          <ul>
+            <li>
+              Updates database registry with newly chosen password, hashed. Destroys the reset token.
+            </li>
+          </ul>
+        </li>
+      </ol>
 
-            <p><strong>2.1.5 Analize Statistice</strong></p>
+      <p>
+        The Token Validation endpoint validates the password reset token. When a
+        GET request is made, it checks if the token is valid and not expired,
+        responding accordingly.
+      </p>
+      <section id="component-7">
+        <h3>The <code>About</code> page</h3>
+        <figure type="sa:image">
+          <img src="images/about.png" alt="about-img" />
+          <figcaption>About page</figcaption>
+        </figure>
+      </section>
+      <section id="component-8">
+        <h3>The <code>Help</code> page</h3>
+        <p>
+          A common aggregation point for useful information and directions to helpful pages.
+        </p>
+        <figure type="sa:image">
+          <img src="images/help.png" alt="help-img" />
+          <figcaption>Help page</figcaption>
+        </figure>
+      </section>
+      <section id="component-9">
+        <h3>The <code>Contact</code> page</h3>
+        <p>
+          The recommended method for getting in touch with us for offering support with particular issues or questions.
+        </p>
+        <figure type="sa:image">
+          <img src="images/contact.png" alt="contact-img" />
+          <figcaption>Contact form</figcaption>
+        </figure>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
             <ul>
-            <li>Generarea de statistici personalizate și la nivelul grupului privind lectura.</li>
-            <li>Urmărirea tendințelor de lectură în timp, inclusiv cele mai citite cărți, genuri și autori.</li>
-            <li>Exportul statisticilor în formate deschise (CSV, DocBook) pentru o analiză ulterioară.</li>
+              <li>
+                Only accepts POST requests for submission, and GET requests for the HTML page. Any other method results in a 405
+                Method Not Allowed response.
+              </li>
             </ul>
+          </li>
+          <li>
+            <strong>Input Validation:</strong>
+            <ul>
+              <li>
+                Ensures valid input and that it is present.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Database Insertion:</strong>
+            <ul>
+              <li>
+                Inserts the validated contact information into the contact
+                table.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Response Handling:</strong>
+            <ul>
+              <li>
+                Notifies the user of their successful( or not ) password change.
+                Returns JSON with confirmation message and HTTP status.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <section id="component-10">
+        <h3>The <code>Books</code> page</h3>
+        <p>
+          Presents all of a user's books if logged in. Allows for easy organization of their books based on current progress. 
+          Offers redirects to respective book pages.
+        </p>
+        <figure type="sa:image">
+          <img src="images/books.png" alt="books-img" />
+          <figcaption>Books Page</figcaption>
+        </figure>
+      </section>
+      <section id="component-11">
+        <h3>The <code>Book</code> page</h3>
+        <p>
+          Accessible to users even when not logged in, for viewing the specifics of a book.
+          Relevant information such as Title, Description, the Authors, ratings and reviews based on our own database registries.
+        </p>
+        <p>
+          Exports are available in three open formats CSV, XML and DocBook.
+        </p>
+        <p>
+          Logged in users benefit from additional options for bookmarking, liking and specifying progress of said book.
+          Aswell, they may leave a review and rating.
+        </p>
+        <figure type="sa:image">
+          <img src="images/book.png" alt="book-img" />
+          <figcaption>Book page</figcaption>
+        </figure>
+        <p>
+          The Create Visit endpoint facilitates the addition of new visit
+          records to the database. It handles POST requests to create new visit
+          entries for inmates, capturing various details such as visitor
+          information, visit nature, date, and duration.
+        </p>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
+            <ul>
+              <li>
+                Accepts only GET requests. Other methods result in a 405 Method
+                Not Allowed response.
+              </li>
+              <li>Validates the user's JWT token to ensure authentication.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>User Login Validation:</strong>
+            <ul>
+              <li>
+                Validates the presence of JWT as a cookie for determining which features to restrict from the user.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Restricted Features:</strong>
+            <ul>
+              <li>
+                For actions such as liking a book, rating a book and more, inserts the new registry in the appropriate table.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <section id="component-12">
+        <h3>The <code>Search</code> page</h3>
+        <p>
+          Offers functionality for discovering books of a desired genre, redirecting to a page with the full respective list.
+        </p>
+        <figure type="sa:image">
+          <img src="images/search.png" alt="search-img" />
+          <figcaption>Search Page</figcaption>
+        </figure>
+      </section>
+      <section id="component-13">
+        <h3>The <code>View Books</code> page</h3>
+        <p>
+          After having searched by genre on the previous page, this presents the list of books.
+        </p>
+        <p>
+          For better organization or personal preference and ease of access, the books may be sorted through various criteria.
+        </p>
+        <figure type="sa:image">
+          <img src="images/view-books.png" alt="view-books-img" />
+          <figcaption>View books</figcaption>
+        </figure>
+        
+        <p>
+          Uses the View Books endpoint by submitting Genre Id.
+        </p>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
+            <ul>
+              <li>
+                Accepts only GET requests. Other methods result in a 405 Method
+                Not Allowed response.
+              </li>
+            </ul>
+          </li>
+            <strong>Database Query:</strong>
+            <ul>
+              <li>
+                Queries the PostgreSQL using node's postgres for the books filtered by genre.
+              </li>
+            </ul>
+          </li>
+        </ol>
+        
+      </section>
+      <section id="component-14">
+        <h3>The <code>Liked & Bookmarked</code> pages</h3>
+        <p>
+          Accessible only to connected users, these pages allow for simple stashing/shelfing 
+          of multiple books.
+        </p>
+        <p>
+          For personal favorites, the liked page can store all such books for finding them more easily.
+        </p>
+        <p>
+          For various reasons, such as wanting to return to a book and take another look at it's information,
+           the bookmarked page offers simple storing.
+        </p>
 
-            <p><strong>2.1.6 Flux RSS</strong></p>
+        <figure type="sa:image">
+          <img src="images/liked.png" alt="liked-img" />
+          <figcaption>Liked page</figcaption>
+        </figure>
+        <figure type="sa:image">
+          <img src="images/bookmark.png" alt="bookmarked-img" />
+          <figcaption>Bookmarked page</figcaption>
+        </figure>
+       
+      </section>
+      <section id="component-15">
+        <h3>The <code>Groups</code> page</h3>
+        <p>
+          Users that desire to take part in the communities that Boo offers may do so by joining groups, a feature restricted to connected users.
+        </p>
+        <p>
+          For joining a new group, the user can check out the currently most popular options.
+        </p>
+        <figure type="sa:image">
+          <img src="images/groups.png" alt="groups-img" />
+          <figcaption>Groups Page</figcaption>
+        </figure>
+        <p>
+          Employs the View Groups endpoint for listing.
+          Joining and leaving are performed through requests to the Groups endpoint, by Group Id and members path.  
+        </p>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
             <ul>
-            <li>Abonarea la un flux RSS pentru a primi notificări despre recenzii noi, adăugări de cărți și actualizări ale grupurilor.</li>
-            <li>Menținerea informată cu privire la cele mai recente activități de lectură și discuții din cadrul comunității.</li>
+              <li>
+                View Groups accepts only GET requests for the HTML page. Other methods result in a 405 Method
+                Not Allowed response.
+              </li>
+              <li> Groups accepts GET for the HTML, DELETE for leaving a group and POST for joining. Other methods result in a 405 Method
+                Not Allowed response.</li>
             </ul>
-            <h3>2.2 Utilizatori </h3>
+          </li>
+          <li>
+            <strong>User Validation:</strong>
             <ul>
-            <li>Elevi si Studenti: pentru a socializa si impartasi experiente de lectura</li>
-            <li>Profesori: pentru a organiza grupa de elevi/studenti</li>
-            <li>Iubitori de lectura</li>
-            <li>Administratori</li>
+              <li>
+                Authenticates the user by their JWT for actions such as leaving and joining.
+              </li>
+              <li>
+                For joining, checks if the user is already a member.
+              </li>
+              <li>
+                For leaving, checks if the user is not a member.
+              </li>
             </ul>
-        </section>
+          </li>
+          <li>
+            <strong>Response Handling:</strong>
+            <ul>
+              <li>
+                Returns the groups details in JSON format if the group and user are valid.
+              </li>
+              <li>
+                Returns a 400 for errors on joining or leaving.
+              </li>
+              <li>
+                Returns a 500 for Interval Server Error.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <section id="component-16">
+        <h3>The <code>Group</code> page</h3>
+        <p>
+          After choosing to view a group, the user is met with this page, which offers core information.
+        </p>
+        <p>
+          Members of a group can keep track of everyone's progress through User book status Icons.
+        </p>
+        <p>
+          Additionaly, the users can view who else is part of that group.
+        </p>
+        <figure type="sa:image">
+          <img src="images/group.png" alt="group-img" />
+          <figcaption>Group page</figcaption>
+        </figure>
+      </section>
+      <section id="component-17">
+        <h3>The <code>Admin</code> page</h3>
+        <p>
+          Exclusive for admins. They can manage the registries for the app's data, by removing a User through their email, adding books with core information, removing books, adding groups with core informaiton and removing groups.
+        </p>
+        <figure type="sa:image">
+          <img src="images/admin.png" alt="admin-img" />
+          <figcaption>Administrator Page</figcaption>
+        </figure>
+        <p>
+          The Admin endpoint is used for getting access to the page.
+        </p>
+        <p>
+          Book, Ban and Group endpoints are used for operations.
+        </p>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
+            <ul>
+              <li>
+                Accepts only GET requests for the html. Other methods result in a 405 Method
+                Not Allowed response.
+              </li>
+              <li>
+            </ul>
+          </li>
+          <li>
+          <li>
+            <strong>Database Operations:</strong>
+            <ul>
+              <li>
+                Inserts new book into the database, through Book endpoint POST request.
+              </li>
+              <li>
+                Inserts new group into the database, through Group endpoint POST request.
+              </li>
+              <li>
+                Deletes a book from the database, through Book endpoint DELETE request.
+              </li>
+              <li>
+                Inserts new book into the database, through Group endpoint DELETE request.
+              </li>
+              <li>
+                Bans a user by changing their status to banned, through Ban endpoint POST request.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Response Handling:</strong>
+            <ul>
+              <li>
+                Returns a success message with status code 200 on successful insert.
+              </li>
+              <li>
+                Returns an error message with status code 500 for internal
+                server errors.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <section id="component-17">
+        <h3>The <code>RSS Feed</code> page</h3>
+        <p>
+          Announcements for recent reviews and newly released books are available through an RSS feed for easy gathering.
+        </p>
+        <figure type="sa:image">
+          <img src="images/rss.png" alt="rss-img" />
+          <figcaption>RSS Feed contents, through a browser extension</figcaption>
+        </figure>
+        <p>
+          The page relies on the RSS Feed endpoint which receives GET requests.
+        </p>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
+            <ul>
+              <li>
+                Accepts only GET requests. Other methods result in a 405 Method
+                Not Allowed response.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Database Operations:</strong>
+            <ul>
+              <li>
+                Queries the database for recent review and book additions.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Response Handling:</strong>
+            <ul>
+              <li>
+                Returns announcements in RSS+XML format if found, along with
+                status code 200.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+    
+      <section id="component-18">
+        <h3>The <code>Download data</code> endpoint</h3>
+        <p>
+          Downloading the relevant data of a book is dependant on this endpoint.
+        </p>
+        <p>
+          The Export endpoint facilitates exporting various data sets from the
+          system in different formats (JSON, CSV, HTML). It handles GET requests
+          and ensures that only authenticated admin users with valid JWT tokens
+          can access the export functionality.
+        </p>
+        <ol>
+          <li>
+            <strong>Request Handling:</strong>
+            <ul>
+              <li>
+                Accepts only POST requests. Other methods result in a 405 Method
+                Not Allowed response.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Data Exports:</strong>
+            <ul>
+              <li>
+                Checkes request body for the export format.
+              </li>
+              <li>
+                Retrieves data from the database based on the export format.
+              </li>
+            </ul>
+          </li>
+            <strong>Response Handling:</strong>
+            <ul>
+              <li>
+                Responds with a plaintext of the exported file
+              </li>
+              <li>
+                Responds with HTTP error code 500 for Internal Server Error;
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+    </section>
+    <section id="semantics">
+      <h2>Actors / Users</h2>
+      <p>
+        The primary actors engaged with the web application include but are not limited to:
+        <ul>
+          <li>Students: to socialize and share reading experiences</li>
+          <li>Teachers: to organize groups of students</li>
+          <li>Book lovers</li>
+          <li>Administrators</li>
+      </ul>
+      </p>
+      
+    </section>
+    <section id="scholarly-article">
+      <h2>Technologies</h2>
+      <p>
+        The website employs different technologies such as HTML5 (alongside BEM), SCSS, JavaScript and Node JS for various libraries and the server REST API.
+      </p>
+    
+          <p>
+              Our personal REST API offers CRUD operations for interacting with app data, 
+              responses belonging to the types JSON for server-client communication, plaintext for downloads or RSS+XML for announcements feed.
+          </p>
+      
+    </section>
+    <section>
+      <h2>Design considerations</h2>
+      <ul>
+        <li><strong>Responsiveness:</strong> Ensure optimal viewing and interaction across different devices, including desktops, laptops, tablets, and smartphones.</li>
+        <li><strong>Ease of Use:</strong> Prioritize ease of use and intuitive navigation, minimizing cognitive load and maximizing user engagement.</li>
+        <li><strong>Visual Appeal:</strong> Use a clean, modern, and visually appealing design that resonates with the target audience.</li>
+    </ul>
+    </section>
+    <section typeof="sa:Conclusion" id="conclusion" role="doc-conclusion">
+      <h2>Conclusion</h2>
+      <p>
+In conclusion, our platform aims to foster a vibrant community of readers, educators, and book enthusiasts. By prioritizing responsiveness, ease of use, and visual appeal, we strive to provide an optimal user experience across all devices. Our commitment to these principles ensures that our platform remains accessible, engaging, and visually appealing to our diverse audience. We look forward to supporting your reading journey, facilitating educational initiatives, and connecting like-minded individuals through the power of literature.
+</p>
 
-        <section>
-            <h2>3. Pagini</h2>
-            <ul>    
-            <li><strong>3.1 Home/index:</strong> Servește drept hub central, prezentând o imagine de ansamblu personalizată asupra progresului lecturii, recenziilor recente și activităților grupului.</li>
-            <li><strong>3.2 Login</strong> Autentificarea</li>
-            <li><strong>3.3 Register</strong> Inregistrarea cu Nume, E-mail, Parola</li>
-            <li><strong>3.4 Forgot Password</strong> Recuperarea pe baza de E-mail</li>
-            <li><strong>3.2 Search</strong> Cautarea de carti/grupuri</li>
-            <li><strong>3.5 Books:</strong> Afișează o listă cuprinzătoare a cărților din biblioteca utilizatorului, permițând filtrarea, căutarea și organizarea.</li>
-            <li><strong>3.6 Book Page:</strong> Dedică o pagină pentru fiecare carte, prezentând detalii, recenzii, adnotări.</li>
-            <li><strong>3.7 View Groups:</strong> Oferă o listă a grupurilor la care s-a alăturat utilizatorul, permițând navigarea către paginile individuale ale grupurilor.</li>
-            <li><strong>3.8 Group Page:</strong> Oferă un spațiu dedicat fiecărui grup, prezentând discuții, recomandări de cărți și interacțiuni ale membrilor.</li>
-            <li><strong>3.10 Admin:</strong> Oferă acces administrativ pentru gestionarea utilizatorilor, grupurilor și setărilor aplicației (pentru utilizatorii autorizați).</li>
-            <li><strong>3.11 Help</strong> Recomandari si solutii pentru probleme uzuale</li>
-            <li><strong>3.12 Contact</strong> Pentru comunicarea cu echipa de dezvoltare</li>
-            <li><strong>3.13 About Us</strong> Descrierea site-ului si a scopului sau</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>5. Navigare</h2>
-            <p>Un sistem de navigare consecvent și intuitiv asigură accesul facil la toate paginile și funcționalitățile. O bară principală de navigare din partea stângă oferă linkuri către secțiunile principale (Home, Books, Groups, Search, Inbox, About Us, Contact)</p>
-        </section>
-
-        <section>
-            <h2>6. Butoane și Funcționalități</h2>
-            <p>Aplicația utilizează un set de butoane și pictograme bine definite pentru a facilita interacțiunile utilizatorilor.</p>
-            <ul>
-            <li>Butoane principale: Utilizate pentru acțiuni critice, adesea colorate cu verde pentru a fi evidențiate (de exemplu, "Adaugă carte").</li>
-            <li>Iconițe: Utilizate pentru a reprezenta acțiuni comune într-un mod concis și ușor de înțeles universal (de exemplu, lupă pentru căutare, trei-puncte(dot-dot-dot) pentru acțiuni adiționale (exportare, etc)).</li>
-            </ul>
-        </section>
-        <section>
-            <h2>7. Considerații de Design</h2>
-            <ul>
-            <li><strong>7.1 Responsivitate:</strong> Asigură o vizualizare și interacțiune optimă pe diferite dispozitive, inclusiv desktopuri, laptopuri, tablete și smartphone-uri.</li>
-            <li><strong>7.2 Ușurință în Utilizare:</strong> Prioritizează ușurința în utilizare și navigarea intuitivă, minimizând sarcina cognitivă și maximizând implicarea utilizatorului.</li>
-            <li><strong>7.3 Atractivitate Vizuală:</strong> Folosește un design curat, modern și atractiv vizual care rezonează cu publicul țintă.</li>
-            </ul>
-        </section>
-    </article>
-</body>
+    </section>
+    <section id="acks">
+      <h2>References</h2>
+      <ul>
+        <li>
+          <a href="https://tehnologii-web.vercel.app/">Laboratory Page</a>
+        </li>
+        <li>
+          <a href="https://edu.info.uaic.ro/web-technologies/">Course Page</a>
+        </li>
+      </ul>
+    </section>
+  </body>
 </html>
-<!-- /*Aplicația Web de Management al Lecturii oferă o platformă cuprinzătoare și prietenoasă utilizatorului pentru ca indivizii și comunitățile de lectură să își gestioneze experiențele de lectură, să își împărtășească opiniile și să interacționeze cu alți pasionați de lectură. Funcționalitățile sale diverse, interfața intuitivă și considerațiile de accesibilitate o fac o unealtă valoroasă pentru a cultiva dragostea de citit și pentru a promova implicarea literară.*/ -->
