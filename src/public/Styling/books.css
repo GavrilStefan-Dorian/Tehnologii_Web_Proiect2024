@@ -127,6 +127,11 @@ body {
   width: 12px;
 }
 
+.books__list__item__info__rating__empty {
+  filter: invert(94%) sepia(13%) saturate(16%) hue-rotate(352deg) brightness(81%) contrast(86%);
+  width: 12px;
+}
+
 .books__list__item__info__rating_text {
   color: #262626;
   font-size: 12px;

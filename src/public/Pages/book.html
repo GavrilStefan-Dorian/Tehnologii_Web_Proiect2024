@@ -20,7 +20,7 @@
                     <div class="book__info__header__info">
                         <p id="title" class="book__info__header__info__title">Atomic Habits</p>
                         <p id="author" class="book__info__header__info__author">by James Clear</p>
-                        <div class="book__info__header__info__rating">
+                        <div id="bookStars" class="book__info__header__info__rating">
                             <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg" alt>
                             <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg" alt>
                             <img class="book__info__header__info__rating__star" src="../Resources/Svg/star.svg" alt>
@@ -142,6 +142,26 @@
 
     [|book|]
     [|reviews|]
+
+    const bookStars = document.getElementById("bookStars");
+        for(let i = 0; i < 5; i++)
+        {
+            bookStars.children[i].classList.remove("details__review__stars__star");
+            bookStars.children[i].classList.remove("details__review__stars__star--gold");
+        }
+
+        let totalBookStarsCount = Math.round(parseFloat(book.boo_rating));
+
+        for(let i = 0; i < totalBookStarsCount; i++)
+        {
+            bookStars.children[i].classList.add("details__review__stars__star--gold");
+        }
+
+        for(let i = totalBookStarsCount; i < 5; i++)
+        {
+            bookStars.children[i].classList.add("details__review__stars__star");
+        }
+
 
     const dropdown = document.getElementById("dropdown");
     function onDropdownHover()
