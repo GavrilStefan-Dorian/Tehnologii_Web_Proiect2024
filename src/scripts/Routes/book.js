@@ -36,7 +36,8 @@ const bookRoute = new Route((req) => {
                     };
 
                 const book = await getBook(req.book, user_id);
-                const reviews = await getReviews(req.book);
+                let reviews = await getReviews(req.book);
+                reviews = reviews.slice(0, 50);
 
                 contents = contents.replace("[|user|]", `const user=${JSON.stringify(user)};`);
                 contents = contents.replace("[|book|]", `const book=${JSON.stringify(book)};`);

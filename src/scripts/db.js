@@ -96,7 +96,7 @@ async function getTopBooks()
                     FROM reviews
                 ) AS reviews ON books.book_id = reviews.book_id
                 GROUP BY books.book_id
-                ORDER BY boo_rating DESC, books.title;`;
+                ORDER BY (AVG(reviews.rating) * COUNT(reviews.rating)) DESC, books.title;`;
     }
 
     return topBooks;
@@ -122,15 +122,14 @@ ORDER BY (AVG(reviews.rating) - POWER(AVG(reviews.rating) - (AVG(reviews.rating)
 
 async function getRecentBooks()
 {
-    return sql`SELECT books.*, COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) as boo_numratings
+    return sql`SELECT books.*, AVG(reviews.rating) AS boo_rating, COUNT(reviews.rating) as boo_numratings
                 FROM books
-                LEFT JOIN (
+                JOIN (
                     SELECT book_id, rating
                     FROM reviews
-                    GROUP BY reviews.book_id, reviews.rating
                 ) AS reviews ON books.book_id = reviews.book_id
                 GROUP BY books.book_id
-                ORDER BY books.publishdate DESC`;
+                ORDER BY books.publishdate DESC;`;
 }
 
 
