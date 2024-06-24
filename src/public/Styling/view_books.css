@@ -19,7 +19,7 @@ body {
   flex-direction: row;
   gap: 24px;
   justify-content: start;
-  margin: 64px;
+  padding: 64px;
   flex-wrap: wrap;
   scrollbar-width: none;
   -ms-overflow-style: none;

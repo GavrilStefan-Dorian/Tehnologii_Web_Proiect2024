@@ -28,62 +28,76 @@ transporter.verify((error, success) => {
 });
 
 const forgotPostRoute = new Route('/forgot-pass', 'POST', async (req, res) => {
-  const { email } = req.body;
+    try {
+      const { email } = req.body;
 
-//   const user = await getUserByEmail(email);
-//   if (!user) {
-//     sendError(res, 404, 'User with this email does not exist');
-//     return;
-//   }
+    //   const user = await getUserByEmail(email);
+    //   if (!user) {
+    //     sendError(res, 404, 'User with this email does not exist');
+    //     return;
+    //   }
 
-  getUserByEmail(email, async (error, user) => {
-    if (error) {
-        console.error('Error fetching user:', error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Internal server error' }));
-    } else if (!user) {
-        res.writeHead(401, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Invalid credentials' }));
-    } else {
-        try {
-            // reset token
-            const token = (await crypto.randomBytes(32)).toString('hex');
+      getUserByEmail(email, async (error, user) => {
+        if (error) {
+            console.error('Error fetching user:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Internal server error' }));
+        } else if (!user) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Invalid credentials' }));
+        } else {
+            try {
+                // reset token
+                const token = (await crypto.randomBytes(32)).toString('hex');
 
-            await storeResetToken(user.user_id, token);
+                await storeResetToken(user.user_id, token);
 
-            const resetUrl = `http://localhost:3000/reset-password?token=${token}`;
+                const resetUrl = `http://localhost:3000/reset-password?token=${token}`;
 
-            await transporter.sendMail({
-            from: 'BooServices@gmail.com',
-            to: email,
-            subject: 'Password Reset Request',
-            html: `Click <a href="${resetUrl}">here</a> to reset your password.`,
-            });
+                await transporter.sendMail({
+                from: 'BooServices@gmail.com',
+                to: email,
+                subject: 'Password Reset Request',
+                html: `Click <a href="${resetUrl}">here</a> to reset your password.`,
+                });
 
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Password reset email sent. Check your inbox.' }));
-        } catch (error) {
-            console.error('Error sending password reset email:', error);
-            sendError(res, 500, 'Internal server error');
-        }
-       }
-    })
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ message: 'Password reset email sent. Check your inbox.' }));
+            } catch (error) {
+                console.error('Error sending password reset email:', error);
+                sendError(res, 500, 'Internal server error');
+            }
+           }
+        })
+    }
+    catch (ex) {
+        console.log(ex);
+        res.writeHead(500, {'Content-Type': 'text/plain'});
+        res.end('Internal server error');
+    }
 });
 
 const resetGetRoute = new Route('/reset-password', 'GET', async (req, res) => {
-    const token  = req.url.split('?')[1].split('&').find(p => p.trim().startsWith('token=')).split('=')[1];
-
     try {
-        const user = await verifyTokenAndGetUserFromTable(token);
-        if (!user) {
-            sendError(res, 400, 'Invalid or expired token');
-            return;
-        }
+        const token  = req.url.split('?')[1].split('&').find(p => p.trim().startsWith('token=')).split('=')[1];
 
-        sendFile('./Pages/reset_pass.html', res);
-    } catch (error) {
-        console.error('Error verifying reset token:', error);
-        sendError(res, 500, 'Internal server error');
+        try {
+            const user = await verifyTokenAndGetUserFromTable(token);
+            if (!user) {
+                sendError(res, 400, 'Invalid or expired token');
+                return;
+            }
+
+            sendFile('./Pages/reset_pass.html', res);
+        } catch (error) {
+            console.error('Error verifying reset token:', error);
+            sendError(res, 500, 'Internal server error');
+        }
+    }
+    catch (ex) {
+        console.log(ex);
+        res.writeHead(500, {'Content-Type': 'text/plain'});
+        res.end('Internal server error');
     }
 });
 

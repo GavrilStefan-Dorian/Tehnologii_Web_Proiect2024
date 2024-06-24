@@ -20,7 +20,6 @@ async function createSidebar(selected, user) {
         '<a class="sidebar__items__container__link" href="/help"><img class="sidebar__items__container__item" src="../Resources/Svg/question.svg"></a>',
         '<a class="sidebar__items__container__link" href="/about"><img class="sidebar__items__container__item" src="../Resources/Svg/info.svg"></a>',
         '<a class="sidebar__items__container__link" href="/rssFeed"><img class="sidebar__items__container__item" src="../Resources/Svg/rss.svg"></a>',
-
     ];
 
     let html = `
@@ -76,6 +75,8 @@ async function createSidebar(selected, user) {
     <a class="navbar__links__link" href="/home">Home</a>
     <a class="navbar__links__link" href="/books">Books</a>
     <a class="navbar__links__link" href="/search">Search</a>
+    <a class="navbar__links__link" href="/liked">Liked Books</a>
+    <a class="navbar__links__link" href="/bookmarked">Bookmarked Books</a>
     <a class="navbar__links__link" href="/view-groups">Groups</a>
     <a class="navbar__links__link" href="/help">FAQ</a>
     <a class="navbar__links__link" href="/about">About</a>

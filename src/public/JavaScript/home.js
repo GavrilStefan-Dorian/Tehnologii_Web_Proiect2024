@@ -26,7 +26,6 @@ function createBookList(id, title, books) {
 
 function createBook(id, title, author, image, rating, numRatings) {
     let totalBookStarsCount = Math.round(parseFloat(rating));
-    console.log(rating);
     return `
     <a class="books__items__item" href="/book/${id}">
         <div class="books__items__item__cover">
