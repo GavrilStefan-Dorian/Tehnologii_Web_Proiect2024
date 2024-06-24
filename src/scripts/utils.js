@@ -196,6 +196,13 @@ function authenticateToken(req, res, next) {
         }
 
         req.user = decoded;
+
+        if(req.user.banned)
+        {
+            sendError(res, 403, "User banned");
+            return;
+        }
+
         next();
     });
 }

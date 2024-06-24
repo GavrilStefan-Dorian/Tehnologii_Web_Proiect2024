@@ -34,6 +34,7 @@ const viewBooksRoute = require("./Routes/view_books");
 const { resetGetRoute, resetPostRoute, contactPostRoute, forgotPostRoute} = require('./Routes/send_email');
 const {loginRoute, registerRoute, postLoginRoute, postRegisterRoute, forgotPassRoute} = require("./Routes/login");
 const {helpRoute, contactRoute, aboutRoute, adminRoute} = require("./Routes/misc");
+const {postBook, deleteBookRoute, banUserRoute, addGroupRoute, deleteGroupRoute} = require("./Routes/admin");
 const {viewGroupsRoute, groupPageRoute, joinGroupRoute, leaveGroupRoute,} = require("./Routes/groups");
 
 const routes = [
@@ -101,7 +102,17 @@ const routes = [
 
     likedRoute,
 
-    bookmarkedRoute
+    bookmarkedRoute,
+
+    postBook,
+
+    deleteBookRoute,
+
+    banUserRoute,
+
+    addGroupRoute,
+
+    deleteGroupRoute
 ];
 
 // function sendUrl(url, res) {

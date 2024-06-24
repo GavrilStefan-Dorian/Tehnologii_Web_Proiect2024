@@ -12,6 +12,7 @@
 
 .book__image {
   height: $xl * 6;
+  object-fit: cover;
   flex-grow: 0;
 }
 
@@ -349,4 +350,26 @@
   color: $neutral-800;
   font-size: $xs * 2;
   font-weight: 400;
+}
+
+@media (max-width: 1024px) {
+  .book {
+    flex-direction: column;
+  }
+
+  .book__image {
+    align-self: center;
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 512px) {
+  .details__reviews__item__header {
+    flex-direction: column;
+    gap: $xs;
+  }
+
+  .details__reviews__item__header__buttons__button {
+    display: none;
+  }
 }

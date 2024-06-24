@@ -5,7 +5,7 @@ const {authenticateToken, requireLogin, readFileContents, getUser, sendHTML} = r
 
 function buildGroupList(type, groups) {
     let html = `createGroupList("${type}", [`;
-    groups.forEach((group, index) => {    
+    groups.forEach((group, index) => {
         html += `createGroup("${type}", "${group.group_id}", "${group.name}", "${group.description}", "${group.img}", "${new Date(group.creation_date).toLocaleDateString()}", "${group.member_count}"),`;
     });
     html += ']),';
@@ -58,22 +58,30 @@ const viewGroupsRoute = new Route('/view-groups', 'GET', async (req, res) => {
         }
         authenticateToken(req, res, async () => {
             requireLogin(req, res, async () => {
-                const userGroups = await getUserGroupsData(req.user.userId);
-                const popularGroups = await getPopularGroupsWithoutUser(req.user.userId);
+                try {
+                    const userGroups = await getUserGroupsData(req.user.userId);
+                    const popularGroups = await getPopularGroupsWithoutUser(req.user.userId);
 
-                let groupsBuilder = "const groupLists = [";
-                let popularsBuilder = "const popularLists = [";
+                    let groupsBuilder = "const groupLists = [";
+                    let popularsBuilder = "const popularLists = [";
 
-                groupsBuilder += buildGroupList("Your Groups", userGroups);
-                popularsBuilder += buildGroupList("Popular Groups", popularGroups);
+                    groupsBuilder += buildGroupList("Your Groups", userGroups);
+                    popularsBuilder += buildGroupList("Popular Groups", popularGroups);
 
-                groupsBuilder += "];";
-                popularsBuilder += "];";
+                    groupsBuilder += "];";
+                    popularsBuilder += "];";
 
-                contents = getUser(req, contents);
-                contents = contents.replace("[|groups|]", groupsBuilder);
-                contents = contents.replace("[|populars|]", popularsBuilder);
-                sendHTML(contents, res);
+                    contents = getUser(req, contents);
+                    contents = contents.replace("[|groups|]", groupsBuilder);
+                    contents = contents.replace("[|populars|]", popularsBuilder);
+                    sendHTML(contents, res);
+                }
+                catch (ex)
+                {
+                    console.log(ex);
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                }
             })
         })
     } catch (ex) {
@@ -93,8 +101,9 @@ let groupPageRoute = new Route((req) => {
     req.groupId = params[2];
     return true;
 }, 'GET', async (req, res) => {
-        authenticateToken(req, res, () => {
-            requireLogin(req, res, async () => {
+    authenticateToken(req, res, () => {
+        requireLogin(req, res, async () => {
+            try {
                 let contents = readFileContents('./public/Pages/group-page.html', res);
                 if (contents === null) {
                     res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -123,7 +132,7 @@ let groupPageRoute = new Route((req) => {
                     }
                 });
 
-                seenBookIds = {}; 
+                seenBookIds = {};
                 const uniqueReadingBooks = readingBooks.filter(book => {
                     if (seenBookIds[book.book_id]) {
                         return false;
@@ -133,7 +142,7 @@ let groupPageRoute = new Route((req) => {
                     }
                 });
 
-                seenBookIds = {}; 
+                seenBookIds = {};
                 const uniqueFinishedBooks = finishedBooks.filter(book => {
                     if (seenBookIds[book.book_id]) {
                         return false;
@@ -146,11 +155,11 @@ let groupPageRoute = new Route((req) => {
                 let toReadBuilder = "const toReadBooks = [";
                 toReadBuilder += buildBooksList(uniqueToReadBooks);
                 toReadBuilder += "];";
-                
+
                 let readingBuilder = "const readingBooks = [";
                 readingBuilder += buildBooksList(uniqueReadingBooks);
                 readingBuilder += "];";
-                
+
                 let finishedBuilder = "const finishedBooks = [";
                 finishedBuilder += buildBooksList(uniqueFinishedBooks);
                 finishedBuilder += "];";
@@ -169,15 +178,15 @@ let groupPageRoute = new Route((req) => {
                 contents = getUser(req, contents);
                 contents = contents.replace("[|members|]", membersBuilder);
 
-                
+
                 let toReadUserBuilder = "const toReadUsers = [";
                 toReadUserBuilder += buildUserStatusSection(toReadBooks);
                 toReadUserBuilder += "];";
-                
+
                 let readingUserBuilder = "const readingUsers = [";
                 readingUserBuilder += buildUserStatusSection(readingBooks);
                 readingUserBuilder += "];";
-                
+
                 let finishedUserBuilder = "const finishedUsers = [";
                 finishedUserBuilder += buildUserStatusSection(finishedBooks);
                 finishedUserBuilder += "];";
@@ -188,13 +197,20 @@ let groupPageRoute = new Route((req) => {
 
 
                 sendHTML(contents, res);
-            });
+            }
+            catch (ex)
+            {
+                console.log(ex);
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end('Internal server error');
+            }
         });
     });
+});
 
- 
 
-    // '/groups/:groupId/members'
+
+// '/groups/:groupId/members'
 const joinGroupRoute = new Route((req) => {
     const params = req.url.split('/');
     if(params[1] !== "groups")

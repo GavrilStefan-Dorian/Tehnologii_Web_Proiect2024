@@ -24,21 +24,29 @@ const booksRoute = new Route('/books', 'GET', async (req, res) => {
 
         authenticateToken(req, res, () => {
             requireLogin(req, res, async () => {
-                contents = getUser(req, contents);
+                try {
+                    contents = getUser(req, contents);
 
-                contents = contents.replace("[|siderbarIndex|]", 1);
+                    contents = contents.replace("[|siderbarIndex|]", 1);
 
-                const books = await getBooksWithStatuses(req.user.userId);
+                    const books = await getBooksWithStatuses(req.user.userId);
 
-                let booksBuilder = "const bookLists = [";
-                booksBuilder += buildList("To Read", books.filter(x => x.status === "to_read"));
-                booksBuilder += buildList("Reading", books.filter(x => x.status === "reading"));
-                booksBuilder += buildList("Finished", books.filter(x => x.status === "read"));
-                booksBuilder += "];";
+                    let booksBuilder = "const bookLists = [";
+                    booksBuilder += buildList("To Read", books.filter(x => x.status === "to_read"));
+                    booksBuilder += buildList("Reading", books.filter(x => x.status === "reading"));
+                    booksBuilder += buildList("Finished", books.filter(x => x.status === "read"));
+                    booksBuilder += "];";
 
-                contents = contents.replace("[|books|]", booksBuilder);
+                    contents = contents.replace("[|books|]", booksBuilder);
 
-                sendHTML(contents, res);
+                    sendHTML(contents, res);
+                }
+                catch (ex)
+                {
+                    console.log(ex);
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                }
             })
         });
     }
@@ -62,19 +70,27 @@ const likedRoute = new Route('/liked', 'GET', async (req, res) => {
 
         authenticateToken(req, res, () => {
             requireLogin(req, res, async () => {
-                contents = getUser(req, contents);
+                try {
+                    contents = getUser(req, contents);
 
-                contents = contents.replace("[|siderbarIndex|]", 3);
+                    contents = contents.replace("[|siderbarIndex|]", 3);
 
-                const books = await getLikedBooksFull(req.user.userId);
+                    const books = await getLikedBooksFull(req.user.userId);
 
-                let booksBuilder = "const bookLists = [";
-                booksBuilder += buildList("Liked Books", books);
-                booksBuilder += "];";
+                    let booksBuilder = "const bookLists = [";
+                    booksBuilder += buildList("Liked Books", books);
+                    booksBuilder += "];";
 
-                contents = contents.replace("[|books|]", booksBuilder);
+                    contents = contents.replace("[|books|]", booksBuilder);
 
-                sendHTML(contents, res);
+                    sendHTML(contents, res);
+                }
+                catch (ex)
+                {
+                    console.log(ex);
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                }
             })
         });
     }
@@ -98,19 +114,27 @@ const bookmarkedRoute = new Route('/bookmarked', 'GET', async (req, res) => {
 
         authenticateToken(req, res, () => {
             requireLogin(req, res, async () => {
-                contents = getUser(req, contents);
+                try {
+                    contents = getUser(req, contents);
 
-                contents = contents.replace("[|siderbarIndex|]", 4);
+                    contents = contents.replace("[|siderbarIndex|]", 4);
 
-                const books = await getBookmarkedBooksFull(req.user.userId);
+                    const books = await getBookmarkedBooksFull(req.user.userId);
 
-                let booksBuilder = "const bookLists = [";
-                booksBuilder += buildList("Bookmarked Books", books);
-                booksBuilder += "];";
+                    let booksBuilder = "const bookLists = [";
+                    booksBuilder += buildList("Bookmarked Books", books);
+                    booksBuilder += "];";
 
-                contents = contents.replace("[|books|]", booksBuilder);
+                    contents = contents.replace("[|books|]", booksBuilder);
 
-                sendHTML(contents, res);
+                    sendHTML(contents, res);
+                }
+                catch (ex)
+                {
+                    console.log(ex);
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal server error');
+                }
             })
         });
     }
