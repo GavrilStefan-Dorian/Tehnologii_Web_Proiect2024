@@ -100,7 +100,7 @@ async function createSidebar(selected, user) {
     html += `
 </div>
 <div class="navbar">
-    ${user ? `<div class="navbar__profile">
+    ${user ? `<div class="navbar__profile" style="background-color: ${getColorFromUserId(user.userId)};">
         <p class="navbar__profile__text">${user.username[0].toUpperCase()}</p>
     </div>` : ""}
     <img class="navbar__menu" src="../Resources/Svg/menu.svg">
