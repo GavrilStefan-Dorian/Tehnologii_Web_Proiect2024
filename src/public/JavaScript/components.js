@@ -3,6 +3,15 @@ var navbar = null;
 let logged = false;
 let token;
 
+function getColorFromUserId(userId) {
+    const hue = (userId * 137.508) % 360; // Arbitrary multiplier, for variation
+
+    const color = `hsl(${hue}, 70%, 50%)`;
+
+    return color;
+}
+
+
 async function createSidebar(selected, user) {
     token = document.cookie.split(';').find(c => c.trim().startsWith('jwt='));
     
@@ -26,7 +35,7 @@ async function createSidebar(selected, user) {
     let html = `
 <div class="sidebar">
     <div class="sidebar__items">
-         ${user ? `    <div class="navbar__profile">\n        <p class="navbar__profile__text">${user.username[0].toUpperCase()}</p>\n    </div>` : ""}
+         ${user ? `    <div class="navbar__profile" style="background-color: ${getColorFromUserId(user.userId)};">\n        <p class="navbar__profile__text">${user.username[0].toUpperCase()}</p>\n    </div>` : ""}
          <div class="sidebar__scrollable">
 
     `;

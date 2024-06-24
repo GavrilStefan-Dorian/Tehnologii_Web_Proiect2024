@@ -285,8 +285,8 @@
     const htmlReviews = [];
     reviews.forEach(x => {
         if(user && x.user_id === user.user_id)
-            htmlReviews.unshift(createReview(x.username, x.creation_date, x.description, x.rating, x.updated, true, edit));
-        else htmlReviews.push(createReview(x.username, x.creation_date, x.description, x.rating, x.updated))
+            htmlReviews.unshift(createReview(x.user_id, x.username, x.creation_date, x.description, x.rating, x.updated, true, edit));
+        else htmlReviews.push(createReview(x.user_id, x.username, x.creation_date, x.description, x.rating, x.updated))
     });
     const reviewList = document.getElementsByClassName("details__reviews")[0];
     htmlReviews.forEach(x => reviewList.innerHTML += x);
@@ -305,7 +305,7 @@
         if(htmlReviews.length === 0)
             reviewList.innerHTML = "";
 
-        reviewList.innerHTML = createReview(user.username, Date.now(), text, userRating, user.updated === false, true, edit) + reviewList.innerHTML;
+        reviewList.innerHTML = createReview(user.userId, user.username, Date.now(), text, userRating, user.updated === false, true, edit) + reviewList.innerHTML;
         user.updated = false;
         user.id = -1;
         user.description = text;

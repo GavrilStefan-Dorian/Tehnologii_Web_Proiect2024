@@ -31,7 +31,7 @@ const bookRoute = new Route((req) => {
             if(!user && userReviews)
                 user = {
                     username: userReviews[0].username,
-                    user_id: userReviews[0].user_id
+                    userId: userReviews[0].user_id
                 };
 
             const book = await getBook(req.book, user_id);

@@ -1,9 +1,17 @@
-function createReview(name, date, text, rating, updated, editable, edit) {
+function getColorFromUserId(userId) {
+    const hue = (userId * 137.508) % 360; // Arbitrary multiplier, for variation
+
+    const color = `hsl(${hue}, 70%, 50%)`;
+
+    return color;
+}
+
+function createReview(userId, name, date, text, rating, updated, editable, edit) {
     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     let parsedDate  = new Date(date);
     return `<div ${editable ? "id='editable'" : ""} class="details__reviews__item">
                 <div class="details__reviews__item__header">
-                    <div class="navbar__profile">
+                    <div class="navbar__profile" style="background-color: ${getColorFromUserId(userId)};>
                         <p class="navbar__profile__text">${name[0].toUpperCase()}</p>
                     </div>
                     <div class="details__reviews__item__header__info">

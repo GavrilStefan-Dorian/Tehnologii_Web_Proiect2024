@@ -1,13 +1,31 @@
-function createMember(username) {
+function getColorFromUserId(userId) {
+    const hue = (userId * 137.508) % 360; // Arbitrary multiplier, for variation
+
+    const color = `hsl(${hue}, 70%, 50%)`;
+
+    return color;
+}
+
+function createMember(username, userId) {
     return `
         <div class="member">
-        <div class="member__avatar">\n
+        <div class="member__avatar" style="background-color: ${getColorFromUserId(userId)};>\n
             <p class="member__avatar__text">${username[0].toUpperCase()}</p>\n
         </div>
 
         <p class="member__name">${username}</p>
         </div>
     `;
+}
+
+function createUserStatus(book_id, username, status, userId) {
+    let section;
+    document.getElementById(`books__list__item${book_id}&${status}`).outerHTML +=  `
+    <div class="member">
+    <div class="member__avatar" style="background-color: ${getColorFromUserId(userId)};>\n
+        <p class="member__avatar__text">${username[0].toUpperCase()}</p>\n
+    </div>
+`;
 }
 
 

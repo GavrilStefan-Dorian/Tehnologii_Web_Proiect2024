@@ -12,19 +12,37 @@ function buildGroupList(type, groups) {
     return html;
 }
 
+
 function buildMembersSection(users) {
     let html = ``;
     users.forEach(user => {
-        html += `createMember("${user.username}"),`
+        html += `createMember("${user.username}", "${user.user_id}"),`
     });
 
     return html;
 }
 
+function buildUserStatusSection(books) {
+    let html = ``;
+    const limit = 5;
+
+    books.slice(0, limit).forEach(x => {
+        html += `createUserStatus("${x.book_id}", "${x.user_name}", "${x.status}", "${x.user_id}"),`
+    });
+
+    const remainingCount = books.length - limit;
+    if(remainingCount > 0) {
+        html += `createUserStatus("${x.book_id}", "+${remainingBooksCount}", "${x.status}", "${x.user_id}"),`;
+    }
+
+    return html;
+}
+
+
 function buildBooksList(books) {
     let html = ``;
     books.forEach(x => {
-        html += `createBook("${x.book_id}", "${x.title}", "${x.author}", "${x.coverimg}", "${x.boo_rating}", "${x.boo_numratings}"),`;
+        html += `createBook("${x.book_id}", "${x.title}", "${x.author}", "${x.coverimg}", "${x.boo_rating}", "${x.boo_numratings}", "${x.status}"),`;
     })
 
     return html;
@@ -94,16 +112,47 @@ let groupPageRoute = new Route((req) => {
                 const readingBooks = await getGroupMembersAndBooks(req.groupId, 'reading');
                 const finishedBooks = await getGroupMembersAndBooks(req.groupId, 'read');
 
+                let seenBookIds = {};
+
+                const uniqueToReadBooks = toReadBooks.filter(book => {
+                    if (seenBookIds[book.book_id]) {
+                        return false;
+                    } else {
+                        seenBookIds[book.book_id] = true;
+                        return true;
+                    }
+                });
+
+                seenBookIds = {}; 
+                const uniqueReadingBooks = readingBooks.filter(book => {
+                    if (seenBookIds[book.book_id]) {
+                        return false;
+                    } else {
+                        seenBookIds[book.book_id] = true;
+                        return true;
+                    }
+                });
+
+                seenBookIds = {}; 
+                const uniqueFinishedBooks = finishedBooks.filter(book => {
+                    if (seenBookIds[book.book_id]) {
+                        return false;
+                    } else {
+                        seenBookIds[book.book_id] = true;
+                        return true;
+                    }
+                });
+
                 let toReadBuilder = "const toReadBooks = [";
-                toReadBuilder += buildBooksList(toReadBooks);
+                toReadBuilder += buildBooksList(uniqueToReadBooks);
                 toReadBuilder += "];";
                 
                 let readingBuilder = "const readingBooks = [";
-                readingBuilder += buildBooksList(readingBooks);
+                readingBuilder += buildBooksList(uniqueReadingBooks);
                 readingBuilder += "];";
                 
                 let finishedBuilder = "const finishedBooks = [";
-                finishedBuilder += buildBooksList(finishedBooks);
+                finishedBuilder += buildBooksList(uniqueFinishedBooks);
                 finishedBuilder += "];";
 
                 contents = contents.replace("[|toReadBooks|]", toReadBuilder);
@@ -119,6 +168,24 @@ let groupPageRoute = new Route((req) => {
 
                 contents = getUser(req, contents);
                 contents = contents.replace("[|members|]", membersBuilder);
+
+                
+                let toReadUserBuilder = "const toReadUsers = [";
+                toReadUserBuilder += buildUserStatusSection(toReadBooks);
+                toReadUserBuilder += "];";
+                
+                let readingUserBuilder = "const readingUsers = [";
+                readingUserBuilder += buildUserStatusSection(readingBooks);
+                readingUserBuilder += "];";
+                
+                let finishedUserBuilder = "const finishedUsers = [";
+                finishedUserBuilder += buildUserStatusSection(finishedBooks);
+                finishedUserBuilder += "];";
+
+                contents = contents.replace("[|toReadUsers|]", toReadUserBuilder);
+                contents = contents.replace("[|readingUsers|]", readingUserBuilder);
+                contents = contents.replace("[|finishedUsers|]", finishedUserBuilder);
+
 
                 sendHTML(contents, res);
             });
