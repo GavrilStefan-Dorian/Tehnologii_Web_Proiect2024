@@ -89,14 +89,14 @@ async function getTopBooks()
 {
     if(!topBooks)
     {
-        topBooks = await sql`SELECT books.*, AVG(reviews.rating) AS avg_rating
+        topBooks = await sql`SELECT books.*, AVG(reviews.rating) AS boo_rating, COUNT(reviews.rating) as boo_numratings
                 FROM books
                 JOIN (
                     SELECT book_id, rating
                     FROM reviews
                 ) AS reviews ON books.book_id = reviews.book_id
                 GROUP BY books.book_id
-                ORDER BY avg_rating DESC, books.title;`;
+                ORDER BY boo_rating DESC, books.title;`;
     }
 
     return topBooks;
@@ -107,14 +107,14 @@ async function getPopularBooks()
 {
     if(!popularBooks)
     {
-        popularBooks = await sql`SELECT books.*, AVG(reviews.rating) AS avg_rating
+        popularBooks = await sql`SELECT books.*, AVG(reviews.rating) AS boo_rating, COUNT(reviews.rating) as boo_numratings
 FROM books
 JOIN (
     SELECT book_id, rating
     FROM reviews
 ) AS reviews ON books.book_id = reviews.book_id
 GROUP BY books.book_id
-ORDER BY POWER(current_date - books.publishdate, 1 / (current_date - books.publishdate)) DESC;`;
+ORDER BY (AVG(reviews.rating) - POWER(AVG(reviews.rating) - (AVG(reviews.rating) - (current_date - books.publishdate)::float / 1000), 2)) DESC;`;
     }
 
     return popularBooks;
@@ -122,7 +122,15 @@ ORDER BY POWER(current_date - books.publishdate, 1 / (current_date - books.publi
 
 async function getRecentBooks()
 {
-    return sql`SELECT * FROM books ORDER BY publishdate DESC`;
+    return sql`SELECT books.*, COALESCE(AVG(reviews.rating), 0) AS boo_rating, COUNT(reviews.rating) as boo_numratings
+                FROM books
+                LEFT JOIN (
+                    SELECT book_id, rating
+                    FROM reviews
+                    GROUP BY reviews.book_id, reviews.rating
+                ) AS reviews ON books.book_id = reviews.book_id
+                GROUP BY books.book_id
+                ORDER BY books.publishdate DESC`;
 }
 
 

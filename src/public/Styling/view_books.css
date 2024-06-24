@@ -52,7 +52,7 @@ body {
 
 .books__items__item {
   width: 192px;
-  height: 192px;
+  height: 216px;
   border-radius: 8px;
   background-color: #FFFFFF;
   box-shadow: 0px 4px 6px -1px rgba(31, 31, 31, 0.1);
@@ -98,6 +98,91 @@ body {
   color: #262626;
   font-weight: 400;
   font-size: 12px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.books__list__item__info__rating {
+  padding-left: 8px;
+  padding-bottom: 4px;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+.books__list__item__info__rating__star {
+  filter: invert(67%) sepia(79%) saturate(1071%) hue-rotate(350deg) brightness(103%) contrast(96%);
+  width: 12px;
+}
+
+.books__list__item__info__rating__empty {
+  filter: invert(94%) sepia(13%) saturate(16%) hue-rotate(352deg) brightness(81%) contrast(86%);
+  width: 12px;
+}
+
+.books__list__item__info__rating_text {
+  color: #262626;
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+  margin-left: 2px;
+}
+
+.books__list__item__info__ratings {
+  padding-left: 8px;
+  padding-bottom: 4px;
+  color: #262626;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.books__sort {
+  margin-left: 64px;
+  margin-top: 16px;
+  height: 36px;
+  position: relative;
+}
+
+.books__sort__button {
+  width: auto;
+  background-color: #FFFFFF;
+  border-radius: 9999px;
+  padding: 12px 24px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 6px -1px rgba(31, 31, 31, 0.1);
+}
+
+.books__sort__button__text {
+  color: #262626;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.books__sort__items {
+  display: none;
+  flex-direction: column;
+  border-radius: 8px;
+  left: 0;
+  position: absolute;
+  background-color: #FFFFFF;
+  min-width: 256px;
+  box-shadow: 0px 4px 6px -1px rgba(31, 31, 31, 0.1);
+  z-index: 1;
+  transform: translateY(-4px);
+}
+
+.books__sort__items__item {
+  padding: 8px;
+  color: #262626;
+}
+
+.books__sort__items__item:hover {
+  background-color: #F0F0F0;
 }
 
 /*# sourceMappingURL=view_books.css.map */

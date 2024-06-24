@@ -24,7 +24,9 @@ function createBookList(id, title, books) {
     return html;
 }
 
-function createBook(id, title, author, image) {
+function createBook(id, title, author, image, rating, numRatings) {
+    let totalBookStarsCount = Math.round(parseFloat(rating));
+    console.log(rating);
     return `
     <a class="books__items__item" href="/book/${id}">
         <div class="books__items__item__cover">
@@ -35,6 +37,16 @@ function createBook(id, title, author, image) {
           <p class="books__items__item__data__title">${title}</p>
           <p class="books__items__item__data__author">${author}</p>
         </div>
+        
+        <div class="books__list__item__info__rating">
+            <img class="books__list__item__info__rating__${totalBookStarsCount >= 1 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+            <img class="books__list__item__info__rating__${totalBookStarsCount >= 2 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+            <img class="books__list__item__info__rating__${totalBookStarsCount >= 3 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+            <img class="books__list__item__info__rating__${totalBookStarsCount >= 4 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+            <img class="books__list__item__info__rating__${totalBookStarsCount >= 5 ? "star" : "empty"}" src="../Resources/Svg/star.svg">
+            <p class="books__list__item__info__rating_text">${parseFloat(rating).toFixed(2)}</p>
+        </div>
+        <p class="books__list__item__info__ratings">${numRatings} ratings</p>
       </a>
     `;
 }
