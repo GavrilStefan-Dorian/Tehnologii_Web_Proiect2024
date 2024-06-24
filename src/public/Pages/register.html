@@ -11,43 +11,87 @@
 
 <body>
   <script src="../JavaScript/components.js"></script>
-  <!-- <script src="../JavaScript/req_wrapper_jwt.js"></script> -->
   <script>
     [|user|]
     createSidebar(0, user);
 
     document.addEventListener('DOMContentLoaded', function () {
-      // handleNavigation();
+
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
       document.querySelector('.register-form').addEventListener('submit', async function (event) {
         event.preventDefault();
 
         const form = event.target;
-        const formData = {
-          username: form.username.value,
-          email: form.email.value,
-          password: form.password.value,
-          confirm_password: form.confirm_password.value
+        const username = form.username.value.trim();
+        const email = form.email.value.trim();
+        const password = form.password.value;
+        const confirmPassword = form.confirm_password.value;
+
+        let valid = true;
+
+        // Clear prev errors
+        document.querySelectorAll('.error-message').forEach(el => el.remove());
+
+        if (!username) {
+          showError(form.username, "Username is required.");
+          valid = false;
+        }
+
+        if (!email) {
+          showError(form.email, "Email is required.");
+          valid = false;
+        } else if (!validateEmail(email)) {
+          showError(form.email, "Invalid email format.");
+          valid = false;
+        }
+
+        if (!passwordPattern.test(password)) {
+          showError(form.password, "Password must contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.");
+          valid = false;
+        }
+
+        if (password !== confirmPassword) {
+          showError(form.confirm_password, "Passwords do not match.");
+          valid = false;
+        }
+
+        if (!valid) {
+          return;
         }
 
         try {
-          const response = await fetch('/register', {
-            method: 'POST',
-            body: JSON.stringify(formData)
-          });
+          const response = await fetch(`/register?username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
 
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
 
-          const responseData = await response.json();
+          const responseData = await response.text();
           window.location.href = '/login';
 
         } catch (error) {
           console.error("Fetch error:", error);
-          alert("An error occurred while logging in.");
+          showError(form, "An error occurred while registering.");
         }
       });
+
+      function showError(element, message) {
+        const errorElement = document.createElement('div');
+        errorElement.className = 'error-message';
+        errorElement.innerText = message;
+        element.parentElement.appendChild(errorElement);
+      }
+
+      function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+      }
     });
   </script>
   <div class="register-container">
@@ -57,16 +101,16 @@
       </div>
       <form class="register-form">
         <div class="register-form__input-container">
-          <input type="text" name="username" placeholder="Username" class="register-form__input" required>
+          <input type="text" name="username" placeholder="Username" class="register-form__input" required autocomplete="username">
         </div>
         <div class="register-form__input-container">
-          <input type="email" name="email" placeholder="Email" class="register-form__input">
+          <input type="email" name="email" placeholder="Email" class="register-form__input" title="Please offer a valid email address." required autocomplete="email">
         </div>
         <div class="register-form__input-container">
-          <input type="password" name="password" placeholder="Password" class="register-form__input">
+          <input type="password" name="password" placeholder="Password" class="register-form__input" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Password must contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character." required autocomplete="new_password">
         </div>
         <div class="register-form__input-container">
-          <input type="password" name="confirm_password" placeholder="Confirm Password" class="register-form__input">
+          <input type="password" name="confirm_password" placeholder="Confirm Password" class="register-form__input" required autocomplete="new_password">
         </div>
         <div class="register-form__button-container">
           <button type="submit" class="register-form__button">Register</button>

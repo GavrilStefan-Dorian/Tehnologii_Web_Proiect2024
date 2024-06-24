@@ -16,6 +16,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('contact-form').addEventListener('submit', async function(e) {
       e.preventDefault();
+
       const form = e.target;
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
@@ -29,7 +30,12 @@
       });
 
       const result = await response.json();
-      alert(result.message);
+      
+      const submitButton = document.getElementById('contact-form__submit-button');
+      submitButton.style.opacity = 0.75;
+      submitButton.textContent = 'Sent!';
+      submitButton.disabled = true;
+
     });
     });
   </script>
@@ -42,7 +48,7 @@
           <input type="text" placeholder="Name" name="name" class="contact-form-wrapper__input" required>
           <input type="email" placeholder="E-mail" name="email" class="contact-form-wrapper__input" required>
           <textarea placeholder="What can we help you with?" name="message" class="contact-form-wrapper__textarea" required></textarea>
-          <button type="submit" class="contact-form-wrapper__submit">Submit</button>
+          <button type="submit" id="contact-form__submit-button" class="contact-form-wrapper__submit">Submit</button>
         </form>
       </div>
     </div>

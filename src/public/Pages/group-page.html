@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../Styling/sidebar.css">
   <script src="../JavaScript/components.js"></script>
   <script src="../JavaScript/books.js"></script>
+  <script src="../JavaScript/groups.js"></script>
   <!-- <script src="../JavaScript/req_wrapper_jwt.js"></script>  -->
   <link rel="stylesheet" href="../Styling/books.css">
 </head>
@@ -20,7 +21,7 @@
     </div>
   </div>
   
-  <div class="content">
+  <div class="content-wrapper">
     <div class="group-sections">
       <div class="group-section">
         <h2 class="group-section__title">To Read</h2>
@@ -35,24 +36,15 @@
         <div class="group-section__items" id="finished-section"></div>
       </div>
     </div>
+    <div class = "user-statuses">
+
+    </div>
   </div>
 
-  <div class="members-sidebar">
+  <div class="members-sidebar" id="members-sidebar">
     <div class="members-header">
       <h3 class="members-header__title">Members</h3>
-      <button class="members-header__invite-btn">Invite</button>
-    </div>
-    <div class="member">
-      <img src="../Resources/Images/Profile.png" alt="Avatar" class="member__avatar">
-      <p class="member__name">User 1</p>
-    </div>
-    <div class="member">
-      <img src="../Resources/Images/Profile.png" alt="Avatar" class="member__avatar">
-      <p class="member__name">User 2</p>
-    </div>
-    <div class="member">
-      <img src="../Resources/Images/Profile.png" alt="Avatar" class="member__avatar">
-      <p class="member__name">User 3</p>
+      <!-- <button class="members-header__invite-btn">Invite</button> -->
     </div>
   </div>
   
@@ -64,26 +56,21 @@
 <script src="../JavaScript/script.js"></script>
 <script>
   function loadGroupData() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const groupName = urlParams.get('group');
-    const imageSrc = urlParams.get('img');
-    const desc = urlParams.get('desc');
+    [|group|]
+
+    const groupName = group[1];
+    const imageSrc = group[4];
+    const desc = group[2];
+
     if (groupName) {
       document.querySelector('.group-info-wrapper__overlay').style.backgroundImage = `url(${imageSrc})`;
       document.getElementById('group-name').textContent = decodeURIComponent(groupName);
       document.getElementById('group-description').textContent = decodeURIComponent(desc);
-      
-      // Simulated book data for demonstration
-      const toReadBooks = [
-        createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-    ];
-    const readingBooks = [
-      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-    ];
-    const finishedBooks = [
-      createBook("Atomic Habits", "James Clear", "../Resources/Images/Book.png", "4.08", "123,493"),
-    ];
+
+
+    [|toReadBooks|]
+    [|readingBooks|]
+    [|finishedBooks|]
     
     // Populate 'To Read' section
     const toReadSection = document.getElementById("to-read-section");
@@ -102,14 +89,44 @@
     finishedBooks.forEach(book => {
       finishedSection.innerHTML += book;
     });
+
+
+    // const members = [
+    //   createMember("Brosky"),
+    // ];
+    [|members|]
+
+    const membersSidebar = document.getElementById("members-sidebar");
+    members.forEach(member => {
+      membersSidebar.innerHTML += member;
+    })
+
+
+    [|toReadUsers|]
+    [|readingUsers|]
+    [|finishedUsers|]
+
+    // Populate 'To Read' section
+    const toReadUserStatus = document.getElementById("to-read-section");
+    toReadUsers.forEach(book => {
+      // toReadUserStatus.innerHTML += book;
+    });
+    
+    // Populate 'Reading' section
+    const readingUserStatus = document.getElementById("reading-section");
+    readingUsers.forEach(book => {
+      // readingUserStatus.innerHTML.getElementById(book.book_id) += book;
+    });
+    
+    // Populate 'Finished' section
+    const finishedUserStatus = document.getElementById("finished-section");
+    finishedUsers.forEach(book => {
+      // finishedUserStatusinnerHTML += book;
+    });
   }
 }
 
 loadGroupData();
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   handleNavigation();
-// });
   </script>
 </body>
 </html>

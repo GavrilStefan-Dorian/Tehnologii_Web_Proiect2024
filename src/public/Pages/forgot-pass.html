@@ -31,7 +31,11 @@
       });
 
       const result = await response.json();
-      alert(result.message);
+
+      const submitButton = document.getElementById('forgot-pass-form__submit-button');
+      submitButton.style.opacity = 0.75;
+      submitButton.textContent = 'Email with reset link sent!';
+      submitButton.disabled = true;
     });
     });
   </script>
@@ -45,7 +49,7 @@
           <input type="email" placeholder="E-mail" name="email" class="input-container__input" required>
         </div>
         <div class="button-container">
-          <button type="submit" class="button-container__button">Reset Password</button>
+          <button type="submit" id="forgot-pass-form__submit-button" class="button-container__button">Reset Password</button>
         </div>
         <div class="forgot-pass-form-footer">
           <a href="/login" class="forgot-pass-form-footer__link">Remembered your password? Login</a>

@@ -7,45 +7,33 @@
 <link rel="stylesheet" href="../Styling/view-groups.css">
   <link rel="stylesheet" href="../Styling/sidebar.css">
   <script src="../JavaScript/components.js"></script>
-  <!-- <script src="../JavaScript/req_wrapper_jwt.js"></script>  -->
+  <script src="../JavaScript/groups.js"></script>
 </head>
 <body>
   <div class="sidebar-padded">
-    <div class="main-content">
-      <div class="main-content__header">
-        <div class="search-group">
-          <input type="text" class="search-group__bar" placeholder="Search">
-        </div>
-      </div>
-      
-      <div class="your-groups">
-        <div class="your-groups__header">
-          <h2>Your groups</h2>
-          <a href="#" class="your-groups__see-all">See all</a>
-        </div>
-        <div class="group-cards-container" id="your-groups-container">
-        </div>
-      </div>
-      
-      <div class="popular-groups">
-        <div class="popular-groups__header">
-          <h2>Popular groups</h2>
-          <a href="#" class="popular-groups__see-all">See all</a>
-        </div>
-    <div class="group-cards-container group-cards-container--popular">
+    <div class="search-group">
+      <input type="text" class="search-group__bar" placeholder="Search">
+    </div>
+    <div class="list">
+            <!-- Groups will be dynamically inserted here -->
+    </div>
+    <div class="popular-list">
+      <!-- Populars will be dynamically inserted here -->
     </div>
   </div>
-</div>
-</div>
+
   <script>
     [|user|]
     createSidebar(5, user);
-    
-    // document.addEventListener('DOMContentLoaded', function() {
-    //   handleNavigation();
-    // });
-    </script>
 
-<script src="../JavaScript/script.js"></script>
+    [|groups|]
+    [|populars|]
+
+    const groupList = document.getElementsByClassName("list")[0];
+    const popularList =  document.getElementsByClassName("popular-list")[0];
+
+    groupLists.forEach(x => groupList.innerHTML += x);
+    popularLists.forEach(x => groupList.innerHTML += x);
+    </script>
 </body>
-</html>
+</html> 

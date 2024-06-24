@@ -5,6 +5,11 @@ const {getLikedBooks, getBookmarkedBooks, getBookStatuses, getUserReviews} = req
 const jwt = require("jsonwebtoken");
 const {jwtSecret} = require("./config");
 
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  }
+
 function readFileContents(url)
 {
     if (!fs.existsSync(url) || !fs.lstatSync(url).isFile()) {
@@ -239,5 +244,6 @@ module.exports = {
     getUserBookData,
     authenticateToken,
     requireLogin,
-    getUser
+    getUser,
+    validateEmail
 }

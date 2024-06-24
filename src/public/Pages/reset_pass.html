@@ -4,24 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reset Password</title>
+  <link rel="stylesheet" href="../Styling/reset_pass.css">
+  <link rel="stylesheet" href="../Styling/sidebar.css">
+  <script src="../JavaScript/components.js"></script>
 </head>
 <body>
-  <h1>Reset Password</h1>
+  <!-- <h1>Reset Password</h1>
   <form id="reset-password-form">
     <input type="hidden" id="token" name="token" value="">
     <label for="newPassword">New Password:</label>
     <input type="password" id="newPassword" name="newPassword" required>
     <button type="submit">Reset Password</button>
-  </form>
+  </form> -->
 
   <script>
+    createSidebar(0);
+
     document.addEventListener('DOMContentLoaded', function() {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get('token');
       document.getElementById('token').value = token;
 
-      document.getElementById('reset-password-form').addEventListener('submit', async function(e) {
+      document.getElementById('reset-pass-form').addEventListener('submit', async function(e) {
         e.preventDefault();
+
         const form = e.target;
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
@@ -35,9 +41,32 @@
         });
 
         const result = await response.json();
-        alert(result.message);
+        const submitButton = document.getElementById('reset-pass-form__submit-button');
+        submitButton.style.opacity = 0.75;
+        submitButton.textContent = 'Password was reset!';
+        submitButton.disabled = true;
       });
     });
   </script>
+
+<div class="reset-pass-container">
+  <div class="reset-pass-form-container">
+    <div class="reset-pass-form-header">
+      <h2 class="reset-pass-form-header__title">Reset Password</h2>
+    </div>
+    <form id="reset-pass-form">
+      <input type="hidden" id="token" name="token" value="">
+      <div class="input-container">
+        <input type="password" placeholder="Password" id="newPassword" name="newPassword" class="input-container__input" required autocomplete="current-password">
+      </div>
+      <div class="button-container">
+        <button type="submit" id="reset-pass-form__submit-button" class="button-container__button">Reset</button>
+      </div>
+      <div class="reset-pass-form-footer">
+        <a href="/login" class="reset-pass-form-footer__link">Remembered your password? Login</a>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
 </html>

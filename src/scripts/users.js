@@ -20,6 +20,22 @@ async function getUserByEmail(email, callback) {
     }
 }
 
+async function getUserById(id, callback) {
+    try {
+        const result = await sql`SELECT * FROM users WHERE user_id = ${id}`;
+        if (result.length > 0) {
+            console.log('User fetched:', result[0]);
+            callback(null, result[0]);
+        } else {
+            console.log('User not found');
+            callback(null, null);
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        callback(error, null);
+    }
+}
+
 async function storeResetToken(userId, token) {
     const expiration = Date.now() + 3600000; // Token expires in 1 hour
     await sql`INSERT INTO reset_tokens (user_id, token, expiration) VALUES (${userId}, ${token}, ${expiration})`;
@@ -113,6 +129,7 @@ async function deleteUser(userId, callback) {
 }
 
 module.exports = {
+    getUserById,
     getUsers,
     getUserByEmail,
     getUserByName,

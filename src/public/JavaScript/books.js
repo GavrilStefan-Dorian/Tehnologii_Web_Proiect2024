@@ -14,10 +14,10 @@ function createBookList(title, books) {
     return html;
 }
 
-function createBook(id, title, author, image, rating, ratings) {
+function createBook(id, title, author, image, rating, ratings, status = '') {
     let totalBookStarsCount = Math.round(parseFloat(rating));
     return `
-                 <div class="books__list__item">
+                 <div class="books__list__item" id="books__list__item${id}&${status}">
                     <img class="books__list__item__image" src=${image}>
                     <div class="books__list__item__info">
                         <p class="books__list__item__info__title">${title}</p>

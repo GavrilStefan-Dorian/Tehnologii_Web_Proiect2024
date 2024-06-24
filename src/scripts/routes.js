@@ -1,11 +1,26 @@
 const Route = require('./route');
-const { sendFile, sendError, authenticateToken, requireLogin} = require('./utils');
-const { getUserByEmail, insertUser } = require('./users');
+const { sendFile, sendError, authenticateToken, requireLogin, validateEmail} = require('./utils');
+const { getUserByEmail, insertUser, getUserById } = require('./users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtSecret = require('./config').jwtSecret;
 const formidable = require('formidable');
 const generateRSSFeed = require('./rssFeed');
+
+
+// const { groupsRoute,
+//     createGroupRoute,
+//     getGroupRoute,
+//     updateGroupRoute,
+//     deleteGroupRoute,} = require('./Routes/groups')
+
+
+
+// const { groupsRoute,
+//     createGroupRoute,
+//     getGroupRoute,
+//     updateGroupRoute,
+//     deleteGroupRoute,} = require('./Routes/groups')
 
 
 const {homeRoute} = require('./Routes/home');
@@ -19,8 +34,8 @@ const viewBooksRoute = require("./Routes/view_books");
 const { resetGetRoute, resetPostRoute, contactPostRoute, forgotPostRoute} = require('./Routes/send_email');
 const {loginRoute, registerRoute, postLoginRoute, postRegisterRoute, forgotPassRoute} = require("./Routes/login");
 const {helpRoute, contactRoute, aboutRoute, adminRoute} = require("./Routes/misc");
-const {viewGroupsRoute, groupPageRoute} = require("./Routes/groups");
 const {postBook, deleteBookRoute, banUserRoute, addGroupRoute, deleteGroupRoute} = require("./Routes/admin");
+const {viewGroupsRoute, groupPageRoute, joinGroupRoute, leaveGroupRoute,} = require("./Routes/groups");
 
 const routes = [
     new Route('/', homeRoute.method, homeRoute.handler),
@@ -62,6 +77,10 @@ const routes = [
     viewBooksRoute,
 
     viewGroupsRoute,
+
+    joinGroupRoute,
+    
+    leaveGroupRoute,
 
     adminRoute,
 

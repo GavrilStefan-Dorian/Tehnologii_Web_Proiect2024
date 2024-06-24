@@ -26,7 +26,7 @@
         <link>http://localhost:3000/book/${review.book.book_id}</link>
         <description>${escapeXml(review.user.username)} reviewed ${escapeXml(review.book.title)} with ${review.rating} stars: ${escapeXml(review.description)}</description>
         <pubDate>${new Date(review.creation_date).toUTCString()}</pubDate>
-        <guid>http://localhost:3000/book/${review.book.book_id}</guid>
+        <guid>http://localhost:3000/book/${review.book.book_id}#${review.id}</guid>
       </item>
     `;
     });
