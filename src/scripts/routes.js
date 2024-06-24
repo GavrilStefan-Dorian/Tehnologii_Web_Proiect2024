@@ -20,6 +20,7 @@ const { resetGetRoute, resetPostRoute, contactPostRoute, forgotPostRoute} = requ
 const {loginRoute, registerRoute, postLoginRoute, postRegisterRoute, forgotPassRoute} = require("./Routes/login");
 const {helpRoute, contactRoute, aboutRoute, adminRoute} = require("./Routes/misc");
 const {viewGroupsRoute, groupPageRoute} = require("./Routes/groups");
+const {postBook, deleteBookRoute, banUserRoute, addGroupRoute, deleteGroupRoute} = require("./Routes/admin");
 
 const routes = [
     new Route('/', homeRoute.method, homeRoute.handler),
@@ -82,7 +83,17 @@ const routes = [
 
     likedRoute,
 
-    bookmarkedRoute
+    bookmarkedRoute,
+
+    postBook,
+
+    deleteBookRoute,
+
+    banUserRoute,
+
+    addGroupRoute,
+
+    deleteGroupRoute
 ];
 
 // function sendUrl(url, res) {

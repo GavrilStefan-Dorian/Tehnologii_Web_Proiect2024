@@ -190,5 +190,6 @@ module.exports = {
     getLatestBooks,
     getRecentBooks,
     extractBookReviewsDBK,
-    sql
+    sql,
+    insertBook
 }

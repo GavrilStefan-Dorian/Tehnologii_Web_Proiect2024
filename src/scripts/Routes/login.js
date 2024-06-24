@@ -68,6 +68,9 @@ const postLoginRoute = new Route('/login', 'POST', (req, res) => {
             } else if (!user) {
                 res.writeHead(401, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ error: 'Invalid credentials' }));
+            } else if (user.banned) {
+                res.writeHead(403, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'User banned' }));
             } else {
                 bcrypt.compare(password, user.password, (err, result) => {
                     if (err) {

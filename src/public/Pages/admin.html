@@ -27,44 +27,143 @@
         <div class="action-card">
           <h2 class="action-card__title">Ban User</h2>
           <form class="action-card__form">
-            <input type="text" class="action-card__input" placeholder="Enter user email or username">
-            <button type="submit" class="action-card__button">Ban</button>
+            <input type="text" id="user_ban" class="action-card__input" placeholder="Enter user email">
+            <button onclick="banUser()" class="action-card__button">Ban</button>
           </form>
         </div>
         <div class="action-card">
           <h2 class="action-card__title">Add Book</h2>
-          <form class="action-card__form">
-            <input type="text" class="action-card__input" placeholder="Enter book name">
-            <input type="text" class="action-card__input" placeholder="Enter book author">
-            <textarea class="action-card__textarea" placeholder="Enter book description"></textarea>
-            <input type="file" class="action-card__file-upload" accept="image/*">
-            <button type="submit" class="action-card__button">Add Book</button>
-          </form>
+            <input type="text" id="book_id" name="book_id" class="action-card__input" placeholder="Enter book id">
+            <input type="text" id="title" name="title" class="action-card__input" placeholder="Enter book title">
+            <input type="text" id="author" name="author" class="action-card__input" placeholder="Enter book author">
+            <input type="text" id="genres" name="genres" class="action-card__input" placeholder="Enter book genres (genre1, genre2, genre3)">
+            <textarea class="action-card__textarea" id="description" name="description" placeholder="Enter book description"></textarea>
+            <input type="date" id="publishdate" name="publishdate" class="action-card__input" placeholder="Enter book publish date">
+            <input type="url" id="coverimg" name="coverimg" class="action-card__input" placeholder="Enter book image url">
+            <button onclick="sendBook()" class="action-card__button">Add Book</button>
         </div>
         <div class="action-card">
           <h2 class="action-card__title">Remove Book</h2>
           <form class="action-card__form">
-            <input type="text" class="action-card__input" placeholder="Enter book name / ISBN">
-            <button type="submit" class="action-card__button">Remove</button>
+            <input type="text" class="action-card__input" id="delete_book" placeholder="Enter book id">
+            <button onclick="deleteBook()" class="action-card__button">Remove</button>
           </form>
         </div>
         <div class="action-card">
           <h2 class="action-card__title">Add Group</h2>
           <form class="action-card__form">
-            <input type="text" class="action-card__input" placeholder="Enter group name">
-            <textarea class="action-card__textarea" placeholder="Enter group description"></textarea>
-            <button type="submit" class="action-card__button">Add Group</button>
+            <input type="text" id="group_name" class="action-card__input" placeholder="Enter group name">
+            <textarea class="action-card__textarea" id="description_group" name="description" placeholder="Enter book description"></textarea>
+            <input type="url" id="coverimg_group" name="coverimg" class="action-card__input" placeholder="Enter book image url">
+            <button onclick="addGroup()" class="action-card__button">Add Group</button>
           </form>
         </div>
         <div class="action-card">
           <h2 class="action-card__title">Remove Group</h2>
           <form class="action-card__form">
-            <input type="text" class="action-card__input" placeholder="Enter group name">
-            <button type="submit" class="action-card__button">Remove</button>
+            <input type="text" id="group_id" class="action-card__input" placeholder="Enter group id">
+            <button onclick="deleteGroup()" class="action-card__button">Remove</button>
           </form>
         </div>
       </div>
     </div>
   </div>
+  <script>
+    function sendBook()
+    {
+      const book_id = document.getElementById("book_id").value;
+      const title = document.getElementById("title").value;
+      const author = document.getElementById("author").value;
+      const genres = document.getElementById("genres").value;
+      const description = document.getElementById("description").value;
+      const publishdate = document.getElementById("publishdate").value;
+      const coverimg = document.getElementById("coverimg").value;
+
+      fetch(`/book`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          bookId: book_id,
+          title: title,
+          author: author,
+          genres: genres,
+          description: description,
+          publishdate: publishdate,
+          coverimg: coverimg
+        })
+      }).then(x => location.reload());
+    }
+
+    function deleteBook()
+    {
+      const book_id = document.getElementById("delete_book").value;
+
+      fetch(`/book`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          bookId: book_id,
+        })
+      }).then(x => location.reload());
+    }
+
+    function banUser()
+    {
+      const user = document.getElementById("user_ban").value;
+
+      fetch(`/ban`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: user,
+        })
+      }).then(x => location.reload());
+    }
+
+    function addGroup()
+    {
+      const name = document.getElementById("group_name").value;
+      const description = document.getElementById("description_group").value;
+      const img = document.getElementById("coverimg_group").value;
+
+      fetch(`/add_group`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          description: description,
+          image: img,
+        })
+      }).then(x => location.reload());
+    }
+
+    function deleteGroup()
+    {
+      const group_id = document.getElementById("group_id").value;
+
+      fetch(`/group`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + document.cookie.split(';').find(c => c.trim().startsWith('jwt=')), // not sure if necessary, nolonger using the handleNav
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          group_id: group_id,
+        })
+      }).then(x => location.reload());
+    }
+  </script>
 </body>
 </html>

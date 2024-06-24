@@ -104,5 +104,6 @@ module.exports = {
     helpRoute,
     contactRoute,
     aboutRoute,
-    adminRoute
+    adminRoute,
+    restrictToAdmin
 }
