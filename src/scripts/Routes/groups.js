@@ -23,20 +23,49 @@ function buildMembersSection(users) {
 }
 
 function buildUserStatusSection(books) {
-    let html = ``;
-    const limit = 5;
+    let html = '';
+    const limit = 4;
 
-    books.slice(0, limit).forEach(x => {
-        html += `createUserStatus("${x.book_id}", "${x.user_name}", "${x.status}", "${x.user_id}"),`
+    const bookStatusCounts = {};
+    books.forEach(book => {
+        const key = `${book.book_id}_${book.status}`;
+        if (!bookStatusCounts[key]) {
+            bookStatusCounts[key] = {
+                book_id: book.book_id,
+                status: book.status,
+                user_id: book.user_id,
+                count: 0,
+                users: []
+            };
+        }
+        bookStatusCounts[key].count++;
+        if (!bookStatusCounts[key].users.includes(book.user_id)) {
+            bookStatusCounts[key].users.push(book.user_id);
+        }
     });
 
-    const remainingCount = books.length - limit;
-    if(remainingCount > 0) {
-        html += `createUserStatus("${x.book_id}", "+${remainingBooksCount}", "${x.status}", "${x.user_id}"),`;
-    }
+    Object.values(bookStatusCounts).forEach(statusEntry => {
+        const { book_id, status, user_id, count, users } = statusEntry;
+
+        const remainingCount = count - limit;
+        if (remainingCount > 0) {
+            html += `createUserStatus("${book_id}", "+ ${remainingCount} more", "${status}", "${user_id}"),`;
+        }
+
+        const firstFive = books.filter(b => b.book_id === book_id && b.status === status).slice(0, limit);
+        firstFive.forEach((x, index) => {
+            html += `createUserStatus("${x.book_id}", "${x.user_name}", "${x.status}", "${x.user_id}"),`;
+        });
+
+
+    });
+
+    console.log('Generated HTML:', html);
 
     return html;
 }
+
+
 
 
 function buildBooksList(books) {
