@@ -15,7 +15,7 @@
     <p id="title" class="books__title__text"></p>
     <div onmouseenter="onDropdownHover()" onmouseleave="onDropdownLeave()" id="sorter" class="books__sort">
       <div class="books__sort__button">
-        <p id="sortName" class="books__sort__button__text">No sorting</p>
+        <p id="sortName" class="books__sort__button__text" style="display: none">No sorting</p>
       </div>
       <div id="dropdown" class="books__sort__items" style="display: none">
         <p onclick='sort(0)' class="books__sort__items__item">No sorting</p>
@@ -33,14 +33,16 @@
   </div>
 
   <script>
+    
     [|user|]
     createSidebar(1, user);
-
+    
     // This will be replaced with lists of books
     [|title|]
     [|books|]
-
+    
     let url = window.location.href;
+    document.getElementById("sortName").style.display = url.includes("genre") ? "" : "display: none";
     const sortName = document.getElementById("sortName");
     document.getElementById("sorter").style.display = url.includes("genre") ? "block" : "none";
 
