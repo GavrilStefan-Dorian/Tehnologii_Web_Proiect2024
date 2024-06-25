@@ -174,7 +174,7 @@
             <ul>
               <li>
                 Generates a JWT token containing user information and role
-                (admin or user) that expires in 1 hour.
+                (admin or client) that expires in 1 hour.
               </li>
               <li>
                 The token is signed using the secret key defined in the
@@ -258,8 +258,6 @@
                 On valid input, hashes the password by employing Node's bcrypt library.
               </li>
             </ul>
-          </li>
-          <li>
           </li>
           <li>
             <strong>Response Handling:</strong>
@@ -458,12 +456,6 @@
           <img src="images/book.png" alt="book-img" />
           <figcaption>Book page</figcaption>
         </figure>
-        <p>
-          The Create Visit endpoint facilitates the addition of new visit
-          records to the database. It handles POST requests to create new visit
-          entries for inmates, capturing various details such as visitor
-          information, visit nature, date, and duration.
-        </p>
         <ol>
           <li>
             <strong>Request Handling:</strong>
@@ -529,6 +521,7 @@
               </li>
             </ul>
           </li>
+          <li>
             <strong>Database Query:</strong>
             <ul>
               <li>
@@ -660,10 +653,8 @@
                 Accepts only GET requests for the html. Other methods result in a 405 Method
                 Not Allowed response.
               </li>
-              <li>
             </ul>
           </li>
-          <li>
           <li>
             <strong>Database Operations:</strong>
             <ul>
@@ -746,10 +737,7 @@
           Downloading the relevant data of a book is dependant on this endpoint.
         </p>
         <p>
-          The Export endpoint facilitates exporting various data sets from the
-          system in different formats (JSON, CSV, HTML). It handles GET requests
-          and ensures that only authenticated admin users with valid JWT tokens
-          can access the export functionality.
+          The download endpoint is used for exporting data in formats CSV, XML, DocBook.
         </p>
         <ol>
           <li>
