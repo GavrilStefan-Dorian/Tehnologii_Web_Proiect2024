@@ -15,9 +15,16 @@ function buildGroupList(type, groups) {
 
 function buildMembersSection(users) {
     let html = ``;
-    users.forEach(user => {
+    const limit = 5;
+    users.slice(0, limit).forEach(user => {
         html += `createMember("${user.username}", "${user.user_id}"),`
     });
+
+    const remainingCount = users.length - limit;
+
+    html += `\`<div class="member">
+                    <p class="member__avatar__text member__avatar__summary">+ ${remainingCount} more</p>
+            </div>\``;
 
     return html;
 }
